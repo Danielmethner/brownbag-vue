@@ -36,7 +36,7 @@ export const router = new Router({
       path: '/broker',
       name: 'broker',
       // lazy-loaded
-      component: () => import('./components/BrokerAdmin.vue')
+      component: () => import('./components/BoardBroker.vue')
     },
     {
       path: '/mod',
