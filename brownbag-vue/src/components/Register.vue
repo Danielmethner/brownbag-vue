@@ -2,8 +2,10 @@
   <div class="col-md-12">
     <div class="card card-container">
       <img id="profile-img" src="../assets/logo.png" class="profile-img-card" />
+      <h3>Create Account</h3>
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
+
           <div class="form-group">
             <label for="username">Username</label>
             <input
@@ -111,6 +113,9 @@ export default {
 </script>
 
 <style scoped>
+h3 {
+  color: rgb(33, 37, 41);
+}
 label {
   display: block;
   margin-top: 10px;

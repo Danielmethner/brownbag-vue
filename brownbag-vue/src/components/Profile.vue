@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>
-        <strong>{{currentUser.username}}</strong> Profile
-      </h3>
+      <h1>
+        User Profile
+      </h1>
     </header>
     <p>
       <strong>Token:</strong>
@@ -12,10 +12,6 @@
     <p>
       <strong>Id:</strong>
       {{currentUser.id}}
-    </p>
-    <p>
-      <strong>Email:</strong>
-      {{currentUser.email}}
     </p>
     <strong>Authorities:</strong>
     <ul>

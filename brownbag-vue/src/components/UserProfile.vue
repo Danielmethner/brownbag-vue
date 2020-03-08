@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>Moderator Data</h3>
+      <h3>User Data</h3>
     </header>
   </div>
 </template>
@@ -10,7 +10,7 @@
 import UserService from '../service/user.service';
 
 export default {
-  name: 'Moderator',
+  name: 'UserProfile',
   data() {
     return {
       content: ''

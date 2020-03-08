@@ -4,6 +4,9 @@
       <h1>Value Investing</h1>
       <h2>Basics of Trading</h2>
     </header>
+    <body>
+      <p>Please create an account to get started!</p>
+    </body>
   </div>
 </template>
 
@@ -35,5 +38,11 @@ export default {
 <style scoped>
 header {
   display: block;
+  padding-top: 2em;
+  text-align: center;
+}
+
+body {
+  padding-top: 2em;
 }
 </style>

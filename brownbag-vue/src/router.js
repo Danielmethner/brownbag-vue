@@ -39,17 +39,10 @@ export const router = new Router({
       component: () => import('./components/BoardBroker.vue')
     },
     {
-      path: '/mod',
-      name: 'moderator',
+      path: '/portfolio',
+      name: 'portfolio',
       // lazy-loaded
-      component: () => import('./components/BoardModerator.vue')
-    },
-    {
-      path: '/user',
-      name: 'user',
-      role: 'user',
-      // lazy-loaded
-      component: () => import('./components/BoardUser.vue')
+      component: () => import('./components/Portfolio.vue')
     }
   ]
 });
