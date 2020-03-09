@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container">
-      <img id="profile-img" src="../assets/logo.png" class="profile-img-card" />
+      <img id="profile-img" src="../../assets/logo.png" class="profile-img-card" />
       <h3>Login</h3>
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import User from "../model/user";
+import User from "../../model/user";
 
 export default {
   name: "Login",

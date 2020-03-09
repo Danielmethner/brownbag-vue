@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <router-link to="/home" class="nav-link navbar-brand">
-      <font-awesome-icon icon="home" /> Home
+      <font-awesome-icon icon="home" />Home
     </router-link>
     <div class="navbar-nav mr-auto">
       <li class="nav-item">
@@ -9,6 +9,12 @@
       </li>
       <li class="nav-item">
         <router-link v-if="userIsTrader" to="/portfolio" class="nav-link">Portfolio</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link v-if="userIsTrader" to="/orderbook" class="nav-link">Orderbook</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link v-if="userIsTrader" to="/tradingdesk" class="nav-link">Trading Desk</router-link>
       </li>
 
       <li v-if="showAdminBoard" class="nav-item">

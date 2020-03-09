@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './components/Home.vue';
-import Login from './components/Login.vue';
-import Register from './components/Register.vue';
+import Login from './components/auth/Login.vue';
+import Register from './components/auth/Register.vue';
 
 Vue.use(Router);
 
@@ -30,7 +30,7 @@ export const router = new Router({
       path: '/profile',
       name: 'profile',
       // lazy-loaded
-      component: () => import('./components/Profile.vue')
+      component: () => import('./components/auth/Profile.vue')
     },
     {
       path: '/broker',
@@ -42,7 +42,19 @@ export const router = new Router({
       path: '/portfolio',
       name: 'portfolio',
       // lazy-loaded
-      component: () => import('./components/Portfolio.vue')
+      component: () => import('./components/trader/Portfolio.vue')
+    },
+    {
+      path: '/orderbook',
+      name: 'orderbook',
+      // lazy-loaded
+      component: () => import('./components/trader/Orderbook.vue')
+    },
+    {
+      path: '/tradingdesk',
+      name: 'tradingdesk',
+      // lazy-loaded
+      component: () => import('./components/trader/Tradingdesk.vue')
     }
   ]
 });
