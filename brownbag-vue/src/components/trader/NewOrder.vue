@@ -1,27 +1,40 @@
 <template>
-  <div class="row">
+  <div id="content" class="row">
     <div class="col-md-12">
-      <table class="table table-striped">
-        <thead class="table-dark">
-          <tr class="bg-success"></tr>
-          <tr>
-            <th scope="col">Order ID</th>
-            <th scope="col">Asset</th>
-            <th scope="col">Buy/ Sell</th>
-            <th scope="col">Qty</th>
-            <th scope="col">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="order in myorders" v-bind:key="order.id">
-            <td>{{order.id}}</td>
-            <td>{{order.asset.name}}</td>
-            <td>{{order.direction}}</td>
-            <td>{{order.qty}}</td>
-            <td>$ {{order.price}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <form class="card p-4 bg-light">
+        <h2 class="text-center">Place new Order</h2>
+        
+        <div class="form-group">
+          <label for="inputAddress">Order ID</label>
+          <label readonly  type="text" class="form-control" id="inputAddress" value="1234 Main St">523</label>
+        </div>
+
+        <div class="form-group">
+          <label for="inputAddress">Asset</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="Deutsche Bank AG">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Price</label>
+            <input type="email" class="form-control" id="inputEmail4" placeholder="20.00">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Qty</label>
+            <input type="password" class="form-control" id="inputPassword4" placeholder="30,000">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="inputAddress">Order Amount</label>
+          <label readonly  type="text" class="form-control" id="inputAddress" value="1234 Main St">600,000</label>
+        </div>
+        
+        <div class="form-group col-md-12">
+          <button type="submit" class="btn btn-success btn-block">Place Order</button>	
+          <button type="submit" class="btn btn-dark btn-block">Clear Form</button>			    
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -45,5 +58,12 @@ export default {
 };
 </script>
 
-<style>
+<style>>
+  #content {
+    margin: 0 auto;
+  }
+  
+  .row {
+    max-width: 500px;
+  }
 </style>
