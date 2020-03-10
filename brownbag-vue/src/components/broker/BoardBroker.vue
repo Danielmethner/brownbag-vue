@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import UserService from '../service/user.service';
+import UserService from '../../service/user.service';
 
 export default {
   name: 'Admin',

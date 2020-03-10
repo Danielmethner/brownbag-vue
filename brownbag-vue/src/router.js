@@ -36,7 +36,7 @@ export const router = new Router({
       path: '/broker',
       name: 'broker',
       // lazy-loaded
-      component: () => import('./components/BoardBroker.vue')
+      component: () => import('./components/broker/BoardBroker.vue')
     },
     {
       path: '/portfolio',
