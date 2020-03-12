@@ -37,9 +37,6 @@ export default {
 .jumbotron {
   padding: 2em;
 }
-.container {
-  min-width: 800px;
-}
 
 .amtPositive {
   color: green;
