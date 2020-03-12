@@ -1,58 +1,11 @@
 <template>
-  <!-- <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <router-link to="/home" class="nav-link navbar-brand">
-      <font-awesome-icon icon="home" />Home
-    </router-link>
-    <div class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <router-link v-if="currentUser" to="/profile" class="nav-link">Profile</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link v-if="userIsTrader" to="/portfolio" class="nav-link">Portfolio</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link v-if="userIsTrader" to="/orderbook" class="nav-link">Orderbook</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link v-if="userIsTrader" to="/tradingdesk" class="nav-link">Trading Desk</router-link>
-      </li>
-
-      <li v-if="showAdminBoard" class="nav-item">
-        <router-link to="/admin" class="nav-link">Admin Board</router-link>
-      </li>
-    </div>
-
-    <div v-if="!currentUser" class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <router-link to="/register" class="nav-link">
-          <font-awesome-icon icon="user-plus" />Sign Up
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/login" class="nav-link">
-          <font-awesome-icon icon="sign-in-alt" />Login
-        </router-link>
-      </li>
-    </div>
-
-    <div v-if="currentUser" class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <router-link to="/profile" class="nav-link">
-          <font-awesome-icon icon="user" />
-          User: {{ currentUser.username }}
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href @click.prevent="logOut">
-          <font-awesome-icon icon="sign-out-alt" />LogOut
-        </a>
-      </li>
-    </div>
-  </nav>-->
-
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">Home</b-navbar-brand>
+    <b-navbar class="bg-dark" toggleable="md" type="dark" variant="info">
+      <b-navbar-brand>
+        <router-link to="/home" class="nav-link nav-brand">
+          <font-awesome-icon icon="home" />Home
+        </router-link>
+      </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -66,16 +19,28 @@
         <b-navbar-nav>
           <router-link v-if="userIsTrader" to="/tradingdesk" class="nav-link">Trading Desk</router-link>
         </b-navbar-nav>
+        <!-- Public pages-->
+        <b-navbar-nav v-if="!currentUser">
+          <router-link to="/contact" class="nav-link">Contact</router-link>
+          <router-link to="/imprint" class="nav-link">Imprint</router-link>
+        </b-navbar-nav>
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <router-link to="/profile" class="nav-link">
+          <router-link v-if="currentUser" to="/profile" class="nav-link">
             <font-awesome-icon icon="user" />
             User: {{ currentUser.username }}
           </router-link>
-          <a class="nav-link" href @click.prevent="logOut">
+          <a v-if="currentUser" class="nav-link" href @click.prevent="logOut">
             <font-awesome-icon icon="sign-out-alt" />LogOut
           </a>
+          <!-- Public pages-->
+          <b-navbar-nav v-if="!currentUser">
+            <router-link to="/login" class="nav-link">
+              <font-awesome-icon icon="sign-in-alt" /> Login
+            </router-link>
+            <router-link to="/register" class="nav-link"><font-awesome-icon icon="user-plus" /> Sign-up</router-link>
+          </b-navbar-nav>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -118,6 +83,12 @@ export default {
 </script>
 
 <style scoped>
+.nav-brand {
+  color: white !important;
+}
+.nav-link {
+  color: white !important;
+}
 .bg-dark {
   background-color: royalblue !important;
 }

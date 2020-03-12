@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <header class="jumbotron">
       <h1>Trading Desk</h1>
       <h3>Place and modify orders</h3>

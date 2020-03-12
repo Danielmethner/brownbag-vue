@@ -59,11 +59,4 @@ export default {
 </script>
 
 <style>
-  #content {
-    margin: 0 auto;
-  }
-  
-  .row {
-    max-width: 500px;
-  }
 </style>

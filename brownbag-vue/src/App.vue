@@ -1,31 +1,46 @@
 <template>
   <div id="app">
     <Navbar></Navbar>
-    <div class="container">
+    <div id="content">
       <router-view />
+      <div id="push"></div>
+    </div>
+    <div id="footer">
+      <Footer></Footer>
     </div>
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 export default {
   components: {
-    Navbar
+    Navbar,
+    Footer
   }
 };
 </script>
-<style scoped>
-html {
-  padding: 0;
+<style>
+* {
   margin: 0;
+  padding: 0;
 }
+html,
 body {
-  padding: 0;
-  margin: 0;
+  height: 100%;
 }
 #app {
-  padding: 0;
-  margin: 0;
+  height: 100vh;
+}
+#content {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: -4em;
+}
+#footer,
+#push {
+  height: 4em;
 }
 </style>

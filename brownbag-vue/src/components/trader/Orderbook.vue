@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div class="row">
       <div class="col-md-10">
         <header class="jumbotron">
@@ -128,10 +128,6 @@ export default {
 .jumbotron {
   padding: 2em;
 }
-.container {
-  min-width: 800px;
-}
-
 .amtPositive {
   color: green;
 }

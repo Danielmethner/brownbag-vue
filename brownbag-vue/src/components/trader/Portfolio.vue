@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <header class="jumbotron">
       <h1>Portfolio</h1>
       <h3>Overview over Your current holdings</h3>
@@ -108,9 +108,6 @@ export default {
 <style>
 .jumbotron {
   padding: 2em;
-}
-.container {
-  min-width: 800px;
 }
 
 .amtPositive {

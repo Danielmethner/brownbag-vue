@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div>
     <header class="col-md-12">
       <h1>Value Investing</h1>
-      <h2>Basics of Trading</h2>
+      <h2>How do get started</h2>
     </header>
     <body>
       <p>Please create an account to get started!</p>
