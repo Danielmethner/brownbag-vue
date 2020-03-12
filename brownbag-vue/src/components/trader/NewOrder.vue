@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: "MyOrders",
+  name: "NewOrder",
   data() {
     return {
       myorders: [
@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style>>
+<style>
   #content {
     margin: 0 auto;
   }

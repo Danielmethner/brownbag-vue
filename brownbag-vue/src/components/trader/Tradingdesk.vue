@@ -9,8 +9,8 @@
         <b-tab title="My Orders" active>
           <MyOrders></MyOrders>
         </b-tab>
-        <b-tab title="Place new Order">
-          <p>I'm the second tab</p>
+        <b-tab title="New Order">
+          <NewOrder></NewOrder>
         </b-tab>
       </b-tabs>
     </div>
@@ -19,6 +19,7 @@
 
 <script>
 import MyOrders from "@/components/trader/MyOrders";
+import NewOrder from "@/components/trader/NewOrder";
 export default {
   name: "TradingDesk",
   data() {
@@ -27,7 +28,8 @@ export default {
     };
   },
   components: {
-    MyOrders
+    MyOrders,
+    NewOrder
   }
 };
 </script>
