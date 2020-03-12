@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
+  <!-- <nav class="navbar navbar-expand navbar-dark bg-dark">
     <router-link to="/home" class="nav-link navbar-brand">
       <font-awesome-icon icon="home" />Home
     </router-link>
@@ -48,7 +48,38 @@
         </a>
       </li>
     </div>
-  </nav>
+  </nav>-->
+
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="#">Home</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <router-link v-if="userIsTrader" to="/portfolio" class="nav-link">Portfolio</router-link>
+        </b-navbar-nav>
+        <b-navbar-nav>
+          <router-link v-if="userIsTrader" to="/orderbook" class="nav-link">Orderbook</router-link>
+        </b-navbar-nav>
+        <b-navbar-nav>
+          <router-link v-if="userIsTrader" to="/tradingdesk" class="nav-link">Trading Desk</router-link>
+        </b-navbar-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <router-link to="/profile" class="nav-link">
+            <font-awesome-icon icon="user" />
+            User: {{ currentUser.username }}
+          </router-link>
+          <a class="nav-link" href @click.prevent="logOut">
+            <font-awesome-icon icon="sign-out-alt" />LogOut
+          </a>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
 </template>
 
 <script>
