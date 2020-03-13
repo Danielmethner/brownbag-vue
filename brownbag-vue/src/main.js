@@ -5,12 +5,11 @@ import store from './store';
 import Bootstrap from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VeeValidate from 'vee-validate';
-import {Tabs, Tab}  from 'vue-tabs-component';
+import {Tabs, Tab}  from 'vue-tabs-component'; // tab in order field
 
-Vue.component('tabs', Tabs);
-Vue.component('tab', Tab);
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 import {
   faHome,
   faUser,
@@ -19,16 +18,15 @@ import {
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.component('tabs', Tabs);
+Vue.component('tab', Tab);
 
-Vue.use(Tabs);
 Vue.use(Bootstrap);
-
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
-
-Vue.config.productionTip = false;
+Vue.use(Tabs);
 Vue.use(VeeValidate);
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.config.productionTip = false;
 
 Vue.filter('toCurrency', function (value) {
   if (typeof value !== "number") {
@@ -41,8 +39,6 @@ Vue.filter('toCurrency', function (value) {
   });
   return formatter.format(value);
 });
-
-
 
 new Vue({
   router,

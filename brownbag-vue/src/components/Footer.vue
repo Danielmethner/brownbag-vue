@@ -23,7 +23,7 @@ export default {
           items: [
             { title: "Overview", destination: { name: "WebPageAboutUs" } },
             {
-              title: "Our Team",
+              title: "Architecture",
               destination: { name: "WebPageAboutUsOurTeam" }
             }
           ]
@@ -33,13 +33,8 @@ export default {
           items: [
             { title: "Overview", destination: { name: "WebPageWhatWeDo" } },
             {
-              title: "Securities Analysis",
-              destination: { name: "WebPageWhatWeDoSecuritiesAnalysis" }
-            },
-            { title: "CRM", destination: { name: "WebPageWhatWeDoCRM" } },
-            {
-              title: "IT Training",
-              destination: { name: "WebPageWhatWeDoTraining" }
+              title: "Stock Trading Simulation",
+              destination: { name: "Tradingdesk" }
             }
           ]
         },
