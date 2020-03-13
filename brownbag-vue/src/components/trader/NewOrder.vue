@@ -5,9 +5,9 @@
       <form class="card p-4 bg-light">
         <h2 class="text-center">Place new Order</h2>
 
-        <div class="form-group">
+        <div class="form-group col-12">
           <b-form-group label="Trading direction">
-            <div class="btn-group btn-group-toggle">
+            <div class="btn-group btn-group-toggle trade-dir">
               <label class="btn btn-lg button-dir" v-bind:class="btnFormat('buy')" >
                 <input
                   type="radio"
@@ -33,7 +33,7 @@
         </div>
         <!-- :options="options" -->
         <!-- button-variant="outline-success" -->
-        <div class="form-group">
+        <div class="form-group col-12">
           <label for="inputAddress">Order ID</label>
           <label
             readonly
@@ -44,34 +44,32 @@
           >523</label>
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-12">
           <label for="inputAddress">Asset</label>
           <input type="text" class="form-control" id="inputAddress" placeholder="Deutsche Bank AG" />
         </div>
 
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="inputEmail4">Price</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="20.00" />
-          </div>
-          <div class="form-group col-md-6">
-            <label for="inputPassword4">Qty</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="30,000" />
-          </div>
+        <div class="form-group col-12">
+          <label for="inputEmail4">Price</label>
+          <input type="number" min="0" step="0.01" class="form-control" id="inputEmail4" placeholder="20.00" v-model="newOrder.price"/>
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-12">
+          <label for="inputPassword4">Qty</label>
+          <input type="number" min="0" class="form-control" id="inputPassword4" placeholder="30,000" v-model="newOrder.qty"/>
+        </div>
+
+        <div class="form-group col-12">
           <label for="inputAddress">Order Amount</label>
           <label
             readonly
             type="text"
             class="form-control"
             id="inputAddress"
-            value="1234 Main St"
-          >600,000</label>
+          >{{newOrderAmt | toCurrency}}</label>
         </div>
 
-        <div class="form-group col-md-12">
+        <div class="form-group col-12">
           <button type="submit" class="btn btn-primary btn-block">Place Order</button>
           <button type="submit" class="btn btn-dark btn-block">Clear Form</button>
         </div>
@@ -101,8 +99,19 @@ export default {
           qty: 100,
           price: 20
         }
-      ]
+      ],
+      newOrder: {
+        asset: null,
+        price: 22,
+        qty: 12.8
+      }
     };
+  },
+  computed: {
+    newOrderAmt: function() {
+      let amt = this.newOrder.price * this.newOrder.qty;
+      return amt;
+    }
   }
 };
 </script>
@@ -116,8 +125,16 @@ export default {
 }
 .button-dir {
   min-width: 100px;
+  max-width: 50%;
 }
 .form-group {
+  margin: 0 auto;
   text-align:left;
+  min-width: 50%;
+  padding: 5px;
+}
+.trade-dir{
+margin: 0 auto;
+  max-width: 50%;
 }
 </style>

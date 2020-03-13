@@ -33,7 +33,7 @@ export default {
           items: [
             { title: "Overview", destination: { name: "WebPageWhatWeDo" } },
             {
-              title: "Stock Trading Simulation",
+              title: "Trading Simulation",
               destination: { name: "Tradingdesk" }
             }
           ]
