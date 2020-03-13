@@ -117,4 +117,7 @@ export default {
 .button-dir {
   min-width: 100px;
 }
+.form-group {
+  text-align:left;
+}
 </style>
