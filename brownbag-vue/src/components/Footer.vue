@@ -21,31 +21,31 @@ export default {
         {
           title: "ABOUT US",
           items: [
-            { title: "Overview", destination: { name: "WebPageAboutUs" } },
+            { title: "Overview", destination: { name: "" } },
             {
               title: "Architecture",
-              destination: { name: "WebPageAboutUsOurTeam" }
+              destination: { name: "" }
             }
           ]
         },
         {
           title: "WHAT WE DO",
           items: [
-            { title: "Overview", destination: { name: "WebPageWhatWeDo" } },
+            { title: "Overview", destination: { name: "" } },
             {
               title: "Trading Simulation",
-              destination: { name: "Tradingdesk" }
+              destination: { name: "" }
             }
           ]
         },
         {
           title: "IMPRINT",
           items: [
-            { title: "Overview", destination: { name: "WebPageImprint" } },
-            { title: "Contact", destination: { name: "WebPageContact" } },
+            { title: "Overview", destination: { name: "" } },
+            { title: "Contact", destination: { name: "" } },
             {
               title: "Data Privacy",
-              destination: { name: "WebPageImprintDataPrivacy" }
+              destination: { name: "" }
             }
           ]
         }

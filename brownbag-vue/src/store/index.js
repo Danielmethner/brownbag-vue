@@ -10,3 +10,8 @@ export default new Vuex.Store({
     auth
   }
 });
+
+export const GLOBAL = {
+  API_BASE_URL : process.env.VUE_APP_API_URL
+}
+

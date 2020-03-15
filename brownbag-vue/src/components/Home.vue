@@ -6,6 +6,8 @@
     </header>
     <body>
       <p>Please create an account to get started!</p>
+      <p>Current Mode: <b>{{mode}}</b></p>
+      <button @click="action()" class="btn btn-primary">Button</button>
     </body>
   </div>
 </template>
@@ -17,8 +19,17 @@ export default {
   name: 'Home',
   data() {
     return {
-      content: ''
+      content: '',
+      mode: process.env.NODE_ENV
     };
+  },
+  methods:  {
+    action() {
+      console.log("a method");
+      console.log(process.env.NODE_ENV);
+      console.log(process.env.VUE_APP_MYVAR);
+      console.log(process.env.VUE_APP_API_URL);
+    }
   },
   mounted() {
     UserService.getPublicContent().then(

@@ -1,12 +1,11 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:8081/api/auth/';
-// const API_URL = 'https://brownbag-api.herokuapp.com/api/auth/';
+import {GLOBAL} from '../store/index.js'
+const API_AUTH= '/api/auth/';
 
 class AuthService {
   login(user) {
     return axios
-      .post(API_URL + 'signin', {
+      .post(GLOBAL.API_BASE_URL + API_AUTH + 'signin', {
         username: user.username,
         password: user.password
       })
@@ -24,7 +23,7 @@ class AuthService {
   }
 
   register(user) {
-    return axios.post(API_URL + 'signup', {
+    return axios.post(GLOBAL.API_BASE_URL + API_AUTH + 'signup', {
       username: user.username,
       password: user.password
     });
