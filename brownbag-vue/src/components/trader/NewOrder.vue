@@ -94,21 +94,15 @@
 </template>
 
 <script>
-import OrderService from '../../service/order.service';
+// import OrderService from '../../service/order.service';
+import AssetService from "../../service/asset.service";
 
 export default {
   name: "radio1",
   data() {
     return {
+      assets: [],
       mode: "buy",
-      assets: [
-        {value: null,
-         text: "Please select Asset"},
-         {value: 1,
-         text: "Government Bond"},
-         {value: 2,
-         text: "Jollibee"}
-      ],
       btnFormat: function(direction) {
         if (direction == "buy") {
           return this.mode == "buy" ? "btn-success" : "btn-outline-success";
@@ -126,7 +120,7 @@ export default {
         }
       ],
       newOrder: {
-        asset: 1,
+        asset: null,
         direction: "BUY",
         price: 22,
         qty: 12
@@ -139,10 +133,19 @@ export default {
       return amt;
     }
   },
-  methods:  {
+  mounted() {
+    this.assets = [{ value: null, text: "Please Select Asset" }];
+    AssetService.getAllSec().then(response => {
+      response.data.forEach(asset => {
+        let dropdownItem = { value: asset.id, text: asset.name };
+        this.assets.push(dropdownItem);
+      });
+    });
+  },
+  methods: {
     placeOrder() {
-      console.log("placeOrder");
-      console.log(OrderService.placeOrder(this.newOrder));
+      // console.log("placeOrder");
+      // console.log(OrderService.placeOrder(this.newOrder));
     }
   }
 };
@@ -150,7 +153,7 @@ export default {
 
 <style scoped>
 #asset {
-    text-align: left;
+  text-align: left;
 }
 #content {
   /* max-width: 500px; */
@@ -162,7 +165,7 @@ export default {
   min-width: 100px;
   max-width: 50%;
 }
-.dd { 
+.dd {
   text-align: left;
   vertical-align: top;
 }
