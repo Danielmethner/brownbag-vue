@@ -13,8 +13,14 @@ class AuthService {
         if (response.data.accessToken) {
           localStorage.setItem('user', JSON.stringify(response.data));
         }
-
         return response.data;
+      },
+      error => {
+        this.message =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+        this.successful = false;
       });
   }
 

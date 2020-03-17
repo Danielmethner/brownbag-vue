@@ -1,34 +1,37 @@
 <template>
-  <div>
-    <header class="col-md-12">
-      <h1>Value Investing</h1>
-      <h2>How do get started</h2>
-    </header>
-    <body>
-      <p>Please create an account to get started!</p>
-      <p>Current Mode: <b>{{mode}}</b></p>
-      <button @click="action()" class="btn btn-primary">Button</button>
-    </body>
-  </div>
+<div>
+  <header class="col-md-12">
+    <h1>Value Investing</h1>
+    <h2>How do get started</h2>
+  </header>
+  <body>
+    <p>Please create an account to get started!</p>
+    <p>
+      Current Mode:
+      <b>{{mode}}</b>
+    </p>
+    <button @click="action()" class="btn btn-primary">Button</button>
+  </body>
+</div>
 </template>
 
 <script>
-import UserService from '../service/user.service';
-
+import UserService from "../service/user.service";
+import authHeader from "../service/auth-header";
+import axios from "axios";
 export default {
-  name: 'Home',
+  name: "Home",
   data() {
     return {
-      content: '',
+      content: "",
       mode: process.env.NODE_ENV
     };
   },
-  methods:  {
+  methods: {
     action() {
-      console.log("a method");
-      console.log(process.env.NODE_ENV);
-      console.log(process.env.VUE_APP_MYVAR);
-      console.log(process.env.VUE_APP_API_URL);
+      axios.get("http://localhost:8081/api/order/user", {
+        headers: authHeader()
+      });
     }
   },
   mounted() {

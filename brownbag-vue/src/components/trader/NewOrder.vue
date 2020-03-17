@@ -8,21 +8,21 @@
         <div class="form-group col-12">
           <b-form-group label="Trading direction">
             <div class="btn-group btn-group-toggle trade-dir">
-              <label class="btn btn-lg button-dir" v-bind:class="btnFormat('buy')">
+              <label class="btn btn-lg button-dir" v-bind:class="btnFormat('BUY')">
                 <input
                   type="radio"
                   name="options"
-                  value="buy"
+                  value="BUY"
                   id="buy"
                   v-model="newOrder.direction"
                   autocomplete="off"
                 />Buy
               </label>
-              <label class="btn btn-lg button-dir" v-bind:class="btnFormat('sell')">
+              <label class="btn btn-lg button-dir" v-bind:class="btnFormat('SELL')">
                 <input
                   type="radio"
                   name="options"
-                  value="sell"
+                  value="SELL"
                   id="sell"
                   v-model="newOrder.direction"
                   autocomplete="off"
@@ -84,6 +84,9 @@
           >{{newOrderAmt | toCurrency}}</label>
         </div>
 
+        <div class="form-group col-12" >
+          <label type="text" class="submit-feedback">{{status}}</label>
+        </div>
         <div class="form-group col-12">
           <button @click="placeOrder()" class="btn btn-primary btn-block">Place Order</button>
           <button class="btn btn-dark btn-block">Clear Form</button>
@@ -94,37 +97,31 @@
 </template>
 
 <script>
-// import OrderService from '../../service/order.service';
 import AssetService from "../../service/asset.service";
-
+import OrderService from "../../service/order.service";
 export default {
   name: "radio1",
   data() {
     return {
       assets: [],
-      mode: "buy",
       btnFormat: function(direction) {
-        if (direction == "buy") {
-          return this.mode == "buy" ? "btn-success" : "btn-outline-success";
+        if (direction == "BUY") {
+          return this.newOrder.direction == "BUY"
+            ? "btn-success"
+            : "btn-outline-success";
         } else {
-          return this.mode == "sell" ? "btn-danger" : "btn-outline-danger";
+          return this.newOrder.direction == "SELL"
+            ? "btn-danger"
+            : "btn-outline-danger";
         }
       },
-      myorders: [
-        {
-          id: 1,
-          asset: null,
-          direction: "BUY",
-          qty: 100,
-          price: 20
-        }
-      ],
       newOrder: {
-        asset: null,
+        asset: 2,
         direction: "BUY",
         price: 22,
         qty: 12
-      }
+      },
+      status: ""
     };
   },
   computed: {
@@ -144,8 +141,12 @@ export default {
   },
   methods: {
     placeOrder() {
-      // console.log("placeOrder");
-      // console.log(OrderService.placeOrder(this.newOrder));
+      OrderService.placeOrder(this.newOrder).then(response => {
+        this.status = response.data;
+      },
+      error => {
+        this.status = "Error: " && error
+      });
     }
   }
 };
@@ -174,6 +175,9 @@ export default {
   text-align: left;
   min-width: 50%;
   padding: 5px;
+}
+.submit-feedback{
+  min-height: 19px;
 }
 .trade-dir {
   margin: 0 auto;

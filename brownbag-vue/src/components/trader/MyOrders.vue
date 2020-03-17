@@ -16,7 +16,7 @@
           <tr v-for="order in myorders" v-bind:key="order.id">
             <td>{{order.id}}</td>
             <td>{{order.asset.name}}</td>
-            <td>{{order.direction}}</td>
+            <td><label>{{order.direction}}</label></td>
             <td>{{order.qty}}</td>
             <td>$ {{order.price}}</td>
           </tr>
@@ -27,20 +27,21 @@
 </template>
 
 <script>
+import OrderService from "../../service/order.service";
+
 export default {
   name: "MyOrders",
   data() {
     return {
-      myorders: [
-        {
-          id: 1,
-          asset: { name: "Deutsche Bank" },
-          direction: "BUY",
-          qty: 100,
-          price: 20
-        }
-      ]
+      myorders: []
     };
+  },
+  mounted() {
+    OrderService.getOrdersByUser().then(response => {
+      response.data.forEach(order => {
+        this.myorders.push(order);
+      });
+    });
   }
 };
 </script>
