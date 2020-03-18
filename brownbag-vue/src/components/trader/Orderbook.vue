@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-10">
+      <div class="col-md-12">
         <header class="jumbotron">
           <h1>Orderbook</h1>
           <h3>Current market orders by Yourself and others</h3>
@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-6">
         <table class="table table-striped">
           <thead class="table-dark">
             <tr class="bg-success">
@@ -23,7 +23,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="order in orderbook.buyorders" v-bind:key="order.id">
+            <tr v-for="order in orderbook.buyOrders" v-bind:key="order.id">
               <td>{{order.id}}</td>
               <td>{{order.asset.name}}</td>
               <td>{{order.qty}}</td>
@@ -32,7 +32,7 @@
           </tbody>
         </table>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-6">
         <table class="table table-striped">
           <thead class="table-dark">
             <tr class="bg-success">
@@ -46,7 +46,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="sellorder in orderbook.sellorders" v-bind:key="sellorder.id">
+            <tr v-for="sellorder in orderbook.sellOrders" v-bind:key="sellorder.id">
               <td>{{sellorder.id}}</td>
               <td>{{sellorder.asset.name}}</td>
               <td>- {{sellorder.qty}}</td>
@@ -60,67 +60,28 @@
 </template>
 
 <script>
+import OrderService from "../../service/order.service";
 export default {
   name: "UserProfile",
   data() {
     return {
       content: "",
       orderbook: {
-        buyorders: [
-          {
-            asset: { name: "Deutsche Bank" },
-            id: 1,
-            qty: 100,
-            price: 20
-          },
-          {
-            asset: { name: "Deutsche Bank" },
-            id: 24,
-            qty: 200,
-            price: 12
-          },
-          {
-            asset: { name: "Deutsche Bank" },
-            id: 32,
-            qty: 150,
-            price: 22
-          }
-        ],
-        sellorders: [
-          {
-            asset: { name: "Deutsche Bank" },
-            id: 12,
-            qty: 100,
-            price: 20
-          },
-          {
-            asset: { name: "Deutsche Bank" },
-            id: 22,
-            qty: 200,
-            price: 12
-          },
-          {
-            asset: { name: "Deutsche Bank" },
-            id: 30,
-            qty: 150,
-            price: 22
-          }
-        ]
+        buyOrders: [],
+        sellOrders: []
       }
     };
   },
   mounted() {
-    // UserService.getUserBoard().then(
-    //   response => {
-    //     this.content = response.data;
-    //   },
-    //   error => {
-    //     this.content =
-    //       (error.response && error.response.data) ||
-    //       error.message ||
-    //       error.toString();
-    //   }
-    // );
+    OrderService.getOrdersByPlaced().then(response => {
+      response.data.forEach(order => {
+        if ((order.direction == "BUY")) {
+          this.orderbook.buyOrders.push(order);
+        } else {
+          this.orderbook.sellOrders.push(order);
+        }
+      });
+    });
   }
 };
 </script>

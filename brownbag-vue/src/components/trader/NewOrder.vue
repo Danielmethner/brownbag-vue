@@ -133,6 +133,7 @@ export default {
   mounted() {
     this.assets = [{ value: null, text: "Please Select Asset" }];
     AssetService.getAllSec().then(response => {
+
       response.data.forEach(asset => {
         let dropdownItem = { value: asset.id, text: asset.name };
         this.assets.push(dropdownItem);

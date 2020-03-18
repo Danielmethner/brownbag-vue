@@ -18,7 +18,7 @@
           <tr v-for="order in myorders" v-bind:key="order.id">
             <td>{{order.id}}</td>
             <td>{{order.asset.name}}</td>
-            <td><label>{{order.direction}}</label></td>
+            <td :class="formatDir(order.direction)" ><b>{{order.direction}}</b></td>
             <td>{{order.qty}}</td>
             <td>{{order.qty_exec}}</td>
             <td>$ {{order.price}}</td>
@@ -41,14 +41,27 @@ export default {
     };
   },
   mounted() {
-    OrderService.getOrdersByUser().then(response => {
-      response.data.forEach(order => {
-        this.myorders.push(order);
+    this.getMyOrders();
+  },
+  methods: {
+    getMyOrders() {
+      OrderService.getOrdersByUser().then(response => {
+        this.myorders = [];
+        response.data.forEach(order => {
+          this.myorders.push(order);
+        });
       });
-    });
+    },
+    formatDir(direction) {
+      console.log(direction);
+      return direction == "BUY" ? 'text-success' : 'text-danger';
+    }
   }
 };
 </script>
 
-<style>
+<style scoped>
+.buy {
+color: green !important;
+}
 </style>

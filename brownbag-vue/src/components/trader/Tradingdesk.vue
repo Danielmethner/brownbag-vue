@@ -6,8 +6,8 @@
     </header>
     <div>
       <b-tabs content-class="mt-3">
-        <b-tab title="My Orders" active>
-          <MyOrders></MyOrders>
+        <b-tab title="My Orders" active @click="getMyOrders()">
+          <MyOrders ref="myOrders"></MyOrders>
         </b-tab>
         <b-tab title="New Order">
           <NewOrder></NewOrder>
@@ -26,6 +26,12 @@ export default {
     return {
       content: ""
     };
+  },
+  methods: {
+    getMyOrders() {
+      console.log("getting my orders");
+      this.$refs.myOrders.getMyOrders();
+    }
   },
   components: {
     MyOrders,

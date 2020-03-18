@@ -8,7 +8,7 @@
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Asset</th>
             <th scope="col">Qty</th>
             <th scope="col">Buy Price</th>
@@ -24,12 +24,12 @@
             <th scope="row">{{position.id}}</th>
             <td>{{position.asset.name}}</td>
             <td>{{position.qty}}</td>
-            <td>$ {{position.buyPrice}}</td>
-            <td>$ {{position.asset.currPrice}}</td>
-            <td>$ {{position.buyVal()}}</td>
-            <td>$ {{position.currVal()}}</td>
-            <td v-bind:class="position.pl() > 0  ? 'amtPositive' : 'amtNegative'">$ {{position.pl()}}</td>
-            <td v-bind:class="position.pl() > 0  ? 'amtPositive' : 'amtNegative'">{{position.plPerc()}} %</td>
+            <td>$ {{position.priceAvg}}</td>
+            <!-- <td>$ {{position.asset.currPrice}}</td> -->
+            <!-- <td>$ {{position.buyVal()}}</td> -->
+            <!-- <td>$ {{position.currVal()}}</td> -->
+            <!-- <td v-bind:class="position.pl() > 0  ? 'amtPositive' : 'amtNegative'">$ {{position.pl()}}</td> -->
+            <!-- <td v-bind:class="position.pl() > 0  ? 'amtPositive' : 'amtNegative'">{{position.plPerc()}} %</td> -->
           </tr>
         </tbody>
       </table>
@@ -38,70 +38,27 @@
 </template>
 
 <script>
-// import UserService from "../service/user.service";
-// Create our number formatter.
-// var formatter = new Intl.NumberFormat('en-US', {
-//   style: 'currency',
-//   currency: 'USD',
-// });
+import PosService from "../../service/pos.service";
+
 
 export default {
   name: "UserProfile",
   data() {
     return {
       content: "",
-      positions: [
-        {
-          asset: { name: "Deutsche Bank", currPrice: 100 },
-          id: 1,
-          qty: 100,
-          buyPrice: 20,
-          buyVal: function() {
-            return this.qty * this.buyPrice;
-          },
-          currVal: function() {
-            return this.qty * this.asset.currPrice;
-          },
-          pl: function() {
-            return this.currVal() - this.buyVal();
-          },
-          plPerc: function() {
-            return this.pl() / (this.buyVal() / 100);
-          }
-        },
-        {
-          asset: { name: "Cash", currPrice: 11 },
-          id: 2,
-          qty: 100,
-          buyPrice: 20,
-          buyVal: function() {
-            return this.qty * this.buyPrice;
-          },
-          currVal: function() {
-            return this.qty * this.asset.currPrice;
-          },
-          pl: function() {
-            return this.currVal() - this.buyVal();
-          },
-          plPerc: function() {
-            return this.pl() / (this.buyVal() / 100);
-          }
-        }
-      ]
+      positions: []
     };
   },
   mounted() {
-    // UserService.getUserBoard().then(
-    //   response => {
-    //     this.content = response.data;
-    //   },
-    //   error => {
-    //     this.content =
-    //       (error.response && error.response.data) ||
-    //       error.message ||
-    //       error.toString();
-    //   }
-    // );
+    PosService.getPosByUser().then(response => {
+      response.data.forEach(pos => {
+        console.log(pos);
+        this.positions.push(pos);
+      });
+    });
+  },
+  calculated() {
+
   }
 };
 </script>
