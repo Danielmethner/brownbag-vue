@@ -9,7 +9,9 @@
             <th scope="col">Asset</th>
             <th scope="col">Buy/ Sell</th>
             <th scope="col">Qty</th>
+            <th scope="col">Qty Executed</th>
             <th scope="col">Price</th>
+            <th scope="col">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -18,7 +20,9 @@
             <td>{{order.asset.name}}</td>
             <td><label>{{order.direction}}</label></td>
             <td>{{order.qty}}</td>
+            <td>{{order.qty_exec}}</td>
             <td>$ {{order.price}}</td>
+            <td>{{order.orderStatus.name}}</td>
           </tr>
         </tbody>
       </table>
