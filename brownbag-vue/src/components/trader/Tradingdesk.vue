@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     getMyOrders() {
-      console.log("getting my orders");
       this.$refs.myOrders.getMyOrders();
     }
   },

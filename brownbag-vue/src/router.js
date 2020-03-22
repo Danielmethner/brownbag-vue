@@ -69,6 +69,13 @@ export const router = new Router({
       // lazy-loaded
       component: () => import('./components/trader/Tradingdesk.vue')
     },
+    {
+      path: '/assets',
+      name: 'assets',
+      // lazy-loaded
+      component: () => import('./components/asset/AssetBase.vue')
+    },
+
 
   ]
 });

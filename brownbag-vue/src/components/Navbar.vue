@@ -11,13 +11,16 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <router-link v-if="userIsTrader" to="/portfolio" class="nav-link">Portfolio</router-link>
+          <router-link v-if="currentUser" to="/portfolio" class="nav-link">Portfolio</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link v-if="userIsTrader" to="/orderbook" class="nav-link">Orderbook</router-link>
+          <router-link v-if="currentUser" to="/orderbook" class="nav-link">Orderbook</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link v-if="userIsTrader" to="/tradingdesk" class="nav-link">Trading Desk</router-link>
+          <router-link v-if="currentUser" to="/tradingdesk" class="nav-link">Trading Desk</router-link>
+        </b-navbar-nav>
+        <b-navbar-nav>
+          <router-link v-if="currentUser" to="/assets" class="nav-link">Assets</router-link>
         </b-navbar-nav>
         <!-- Public pages-->
         <b-navbar-nav v-if="!currentUser">
@@ -37,9 +40,11 @@
           <!-- Public pages-->
           <b-navbar-nav v-if="!currentUser">
             <router-link to="/login" class="nav-link">
-              <font-awesome-icon icon="sign-in-alt" /> Login
+              <font-awesome-icon icon="sign-in-alt" />Login
             </router-link>
-            <router-link to="/register" class="nav-link"><font-awesome-icon icon="user-plus" /> Sign-up</router-link>
+            <router-link to="/register" class="nav-link">
+              <font-awesome-icon icon="user-plus" />Sign-up
+            </router-link>
           </b-navbar-nav>
         </b-navbar-nav>
       </b-collapse>
@@ -69,7 +74,6 @@ export default {
       if (this.currentUser && this.currentUser.roles) {
         return this.currentUser.roles.includes("ROLE_ADMIN");
       }
-
       return false;
     }
   },

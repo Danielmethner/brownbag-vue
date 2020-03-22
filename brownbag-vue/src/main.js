@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Vuex from 'vuex';
 import App from './App.vue';
 import { router } from './router';
 import store from './store';
@@ -24,6 +25,7 @@ Vue.component('tab', Tab);
 
 Vue.use(Bootstrap);
 Vue.use(Tabs);
+Vue.use(Vuex);
 Vue.use(VeeValidate);
 
 Vue.config.productionTip = false;
