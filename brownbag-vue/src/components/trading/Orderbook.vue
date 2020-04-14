@@ -1,13 +1,11 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-12">
-        <header class="jumbotron">
-          <h1>Orderbook</h1>
-          <h3>Current market orders by Yourself and others</h3>
-        </header>
+      <div class="col-md-6 text-center">
+        <h4>Current market orders by Yourself and others</h4>
       </div>
     </div>
+
     <div class="row">
       <div class="col-md-6">
         <table class="table table-striped">
@@ -72,16 +70,23 @@ export default {
       }
     };
   },
-  mounted() {
-    OrderService.getOrdersByPlaced().then(response => {
-      response.data.forEach(order => {
-        if ((order.direction == "BUY")) {
-          this.orderbook.buyOrders.push(order);
-        } else {
-          this.orderbook.sellOrders.push(order);
-        }
+  methods: {
+    refreshOrderbook() {
+      this.orderbook.buyOrders = [];
+      this.orderbook.sellOrders = [];
+      OrderService.getOrdersByPlaced().then(response => {
+        response.data.forEach(order => {
+          if (order.direction == "BUY") {
+            this.orderbook.buyOrders.push(order);
+          } else {
+            this.orderbook.sellOrders.push(order);
+          }
+        });
       });
-    });
+    }
+  },
+  mounted() {
+    this.refreshOrderbook();
   }
 };
 </script>

@@ -6,8 +6,14 @@
     </header>
     <div>
       <b-tabs content-class="mt-3">
+        <b-tab title="Public Orderbook" @click="refreshOrderbook()">
+          <Orderbook ref="orderbook"></Orderbook>
+        </b-tab>
         <b-tab title="My Orders" active @click="getMyOrders()">
           <MyOrders ref="myOrders"></MyOrders>
+        </b-tab>
+        <b-tab title="My Portfolio">
+          <Portfolio></Portfolio>
         </b-tab>
         <b-tab title="New Order">
           <NewOrder></NewOrder>
@@ -18,8 +24,10 @@
 </template>
 
 <script>
-import MyOrders from "@/components/trader/MyOrders";
-import NewOrder from "@/components/trader/NewOrder";
+import MyOrders from "@/components/trading/MyOrders";
+import NewOrder from "@/components/trading/NewOrder";
+import Orderbook from "@/components/trading/Orderbook";
+import Portfolio from "@/components/trading/Portfolio";
 export default {
   name: "TradingDesk",
   data() {
@@ -30,11 +38,16 @@ export default {
   methods: {
     getMyOrders() {
       this.$refs.myOrders.getMyOrders();
+    },
+    refreshOrderbook() {
+      this.$refs.orderbook.refreshOrderbook();
     }
   },
   components: {
     MyOrders,
-    NewOrder
+    NewOrder,
+    Orderbook,
+    Portfolio
   }
 };
 </script>

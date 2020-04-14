@@ -14,9 +14,6 @@
           <router-link v-if="currentUser" to="/portfolio" class="nav-link">Portfolio</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link v-if="currentUser" to="/orderbook" class="nav-link">Orderbook</router-link>
-        </b-navbar-nav>
-        <b-navbar-nav>
           <router-link v-if="currentUser" to="/tradingdesk" class="nav-link">Trading Desk</router-link>
         </b-navbar-nav>
         <b-navbar-nav>

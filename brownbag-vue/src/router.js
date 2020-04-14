@@ -55,19 +55,13 @@ export const router = new Router({
       path: '/portfolio',
       name: 'portfolio',
       // lazy-loaded
-      component: () => import('./components/trader/Portfolio.vue')
-    },
-    {
-      path: '/orderbook',
-      name: 'orderbook',
-      // lazy-loaded
-      component: () => import('./components/trader/Orderbook.vue')
+      component: () => import('./components/trading/Portfolio.vue')
     },
     {
       path: '/tradingdesk',
       name: 'tradingdesk',
       // lazy-loaded
-      component: () => import('./components/trader/Tradingdesk.vue')
+      component: () => import('./components/trading/Tradingdesk.vue')
     },
     {
       path: '/assets',
