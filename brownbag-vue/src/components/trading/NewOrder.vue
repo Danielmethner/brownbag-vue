@@ -19,7 +19,7 @@
                       name="options"
                       value="BUY"
                       id="buy"
-                      v-model="newOrder.direction"
+                      v-model="newOrder.orderDir"
                       autocomplete="off"
                     />Buy
                   </label>
@@ -29,7 +29,7 @@
                       name="options"
                       value="SELL"
                       id="sell"
-                      v-model="newOrder.direction"
+                      v-model="newOrder.orderDir"
                       autocomplete="off"
                     />Sell
                   </label>
@@ -51,7 +51,7 @@
 
             <div class="form-group col-12">
               <label for="inputAsset">Asset</label>
-              <b-form-select v-model="newOrder.asset" :options="assets"></b-form-select>
+              <b-form-select v-model="newOrder.assetId" :options="assets"></b-form-select>
             </div>
 
             <div class="form-group col-12">
@@ -63,7 +63,7 @@
                 class="form-control"
                 id="inputEmail4"
                 placeholder="20.00"
-                v-model="newOrder.price"
+                v-model="newOrder.priceLimit"
               />
             </div>
 
@@ -113,20 +113,21 @@ export default {
       assets: [],
       btnFormat: function(direction) {
         if (direction == "BUY") {
-          return this.newOrder.direction == "BUY"
+          return this.newOrder.orderDir == "BUY"
             ? "btn-success"
             : "btn-outline-success";
         } else {
-          return this.newOrder.direction == "SELL"
+          return this.newOrder.orderDir == "SELL"
             ? "btn-danger"
             : "btn-outline-danger";
         }
       },
       newOrder: {
-        asset: 2,
-        direction: "BUY",
-        price: 22,
-        qty: 12
+        assetId: 2,
+        orderDir: "BUY",
+        priceLimit: 22,
+        qty: 12,
+        orderType: "STEX"
       },
       status: ""
     };

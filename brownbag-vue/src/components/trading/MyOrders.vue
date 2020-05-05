@@ -24,14 +24,14 @@
             <tbody>
               <tr v-for="order in myorders" v-bind:key="order.id">
                 <td>{{order.id}}</td>
-                <td>{{order.asset.name}}</td>
-                <td :class="formatDir(order.direction)">
-                  <b>{{order.direction}}</b>
+                <td>{{order.assetName}}</td>
+                <td :class="formatDir(order.orderDir)">
+                  <b>{{order.orderDir}}</b>
                 </td>
                 <td>{{order.qty}}</td>
-                <td>{{order.qty_exec}}</td>
-                <td>$ {{order.price}}</td>
-                <td>{{order.orderStatus.name}}</td>
+                <td>{{order.qtyExec}}</td>
+                <td>$ {{order.priceLimit}}</td>
+                <td>{{order.orderStatus}}</td>
               </tr>
             </tbody>
           </table>

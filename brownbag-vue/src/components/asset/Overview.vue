@@ -29,10 +29,10 @@
             </tr>
             <tr>
               <td>
-                <b>Is ETP</b>
+                <b>Asset Group</b>
               </td>
               <td>
-                <b>{{asset.share}}</b>
+                <b>{{asset.assetGrp}}</b>
               </td>
             </tr>
             <tr>
@@ -40,7 +40,23 @@
                 <b>Issuer</b>
               </td>
               <td>
-                <b  v-if="asset.issuer">{{asset.issuer.name}}</b>
+                <b>{{asset.issuerName}}</b>
+              </td>
+            </tr>
+                        <tr>
+              <td>
+                <b>Created</b>
+              </td>
+              <td>
+                <b>{{asset.timestampCreate}}</b>
+              </td>
+            </tr>
+                        <tr>
+              <td>
+                <b>Total Shares</b>
+              </td>
+              <td>
+                <b>{{asset.totalShares}}</b>
               </td>
             </tr>
           </tbody>

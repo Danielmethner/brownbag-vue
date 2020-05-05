@@ -22,7 +22,7 @@
             <tbody>
               <tr v-for="position in positions" v-bind:key="position.id">
                 <th scope="row">{{position.id}}</th>
-                <td>{{position.asset.name}}</td>
+                <td>{{position.assetName}}</td>
                 <td>{{position.qty}}</td>
                 <td>$ {{position.priceAvg}}</td>
                 <!-- <td>$ {{position.asset.currPrice}}</td> -->

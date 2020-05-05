@@ -23,9 +23,9 @@
           <tbody>
             <tr v-for="order in orderbook.buyOrders" v-bind:key="order.id">
               <td>{{order.id}}</td>
-              <td>{{order.asset.name}}</td>
+              <td>{{order.assetName}}</td>
               <td>{{order.qty}}</td>
-              <td>$ {{order.price}}</td>
+              <td>$ {{order.priceLimit}}</td>
             </tr>
           </tbody>
         </table>
@@ -46,9 +46,9 @@
           <tbody>
             <tr v-for="sellorder in orderbook.sellOrders" v-bind:key="sellorder.id">
               <td>{{sellorder.id}}</td>
-              <td>{{sellorder.asset.name}}</td>
-              <td>- {{sellorder.qty}}</td>
-              <td>$ {{sellorder.price}}</td>
+              <td>{{sellorder.assetName}}</td>
+              <td>{{sellorder.qty}}</td>
+              <td>$ {{sellorder.priceLimit}}</td>
             </tr>
           </tbody>
         </table>
@@ -76,7 +76,7 @@ export default {
       this.orderbook.sellOrders = [];
       OrderService.getOrdersByPlaced().then(response => {
         response.data.forEach(order => {
-          if (order.direction == "BUY") {
+          if (order.orderDir == "BUY") {
             this.orderbook.buyOrders.push(order);
           } else {
             this.orderbook.sellOrders.push(order);

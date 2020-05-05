@@ -24,8 +24,8 @@
               <b-tab title="Overview" active @click="showAsset()">
                 <Overview ref="overview"></Overview>
               </b-tab>
-              <b-tab title="Balance Sheet">
-                <BalanceSheet></BalanceSheet>
+              <b-tab title="Balance Sheet" @click="showBalSheet()">
+                <BalanceSheet ref="balsheet"></BalanceSheet>
               </b-tab>
 
               <b-tab title="Income Statement">
@@ -58,6 +58,11 @@ export default {
       this.refreshAssets();
       if (this.assetId) {
         this.$refs.overview.showAsset(this.assetId);
+      }
+    },
+    showBalSheet() {
+      if (this.assetId) {
+        this.$refs.balsheet.showAsset(this.assetId);
       }
     },
     refreshAssets() {
