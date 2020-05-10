@@ -3,12 +3,13 @@ import Vuex from 'vuex';
 
 import { auth } from './auth.module';
 import { asset } from './asset.module';
+import { party } from './party.module';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    auth, asset
+    auth, asset, party
   }
 });
 

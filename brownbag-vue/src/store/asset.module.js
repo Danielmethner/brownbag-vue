@@ -1,5 +1,3 @@
-// import AssetService from '../service/asset.service';
-
 export const asset = {
 	namespaced: true,
 	state: { assets: [{ 'faef': 1 }], assetsDD: [{}] },

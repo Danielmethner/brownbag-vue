@@ -11,10 +11,17 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <router-link v-if="currentUser" to="/tradingdesk" class="nav-link">Trading Desk</router-link>
+          <router-link v-if="currentUser" to="/private" class="nav-link">Private Affairs</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link v-if="currentUser" to="/assets" class="nav-link">Assets</router-link>
+          <router-link
+            v-if="currentUser"
+            to="/business"
+            class="nav-link"
+          >Business Management</router-link>
+        </b-navbar-nav>
+        <b-navbar-nav>
+          <router-link v-if="currentUser" to="/tradingdesk" class="nav-link">Market Research</router-link>
         </b-navbar-nav>
         <!-- Public pages-->
         <b-navbar-nav v-if="!currentUser">
@@ -47,6 +54,8 @@
 </template>
 
 <script>
+// import store from "../store";
+
 export default {
   computed: {
     currentUser() {

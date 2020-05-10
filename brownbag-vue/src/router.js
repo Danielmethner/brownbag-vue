@@ -52,25 +52,23 @@ export const router = new Router({
       component: () => import('./components/broker/BoardBroker.vue')
     },
     {
-      path: '/portfolio',
-      name: 'portfolio',
+      path: '/private',
+      name: 'private',
       // lazy-loaded
-      component: () => import('./components/trading/Portfolio.vue')
+      component: () => import('./components/private/PrivateBase.vue')
+    },
+    {
+      path: '/business',
+      name: 'business',
+      // lazy-loaded
+      component: () => import('./components/business/BusinessBase.vue')
     },
     {
       path: '/tradingdesk',
       name: 'tradingdesk',
       // lazy-loaded
       component: () => import('./components/trading/Tradingdesk.vue')
-    },
-    {
-      path: '/assets',
-      name: 'assets',
-      // lazy-loaded
-      component: () => import('./components/asset/AssetBase.vue')
-    },
-
-
+    }
   ]
 });
 
