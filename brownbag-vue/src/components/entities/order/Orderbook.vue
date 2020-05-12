@@ -2,7 +2,6 @@
   <div>
     <div class="row">
       <div class="col-md-6 text-center">
-        <h4>Current market orders by Yourself and others</h4>
       </div>
     </div>
 

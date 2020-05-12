@@ -4,7 +4,6 @@
       <div class="col-md-12">
         <header class="jumbotron">
           <h1>Assets</h1>
-          <h3>Check Master Data of Assets</h3>
         </header>
       </div>
     </div>

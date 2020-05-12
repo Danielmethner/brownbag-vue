@@ -3,7 +3,6 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-12 text-center">
-          <h4>Place new order</h4>
         </div>
       </div>
 
