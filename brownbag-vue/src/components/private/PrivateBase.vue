@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     genNewOrder() {
-      this.$refs.newOrder.genNewOrder(this.$store.state.party.privatePerson.id);
+      this.$refs.newOrder.genNewOrder(this.$store.state.party.privatePerson, true);
     },
     getPortfolio() {
       this.$refs.portfolio.getPortfolio();

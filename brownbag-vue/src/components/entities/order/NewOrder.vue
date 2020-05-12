@@ -2,15 +2,14 @@
   <div id="content" class="row justify-content-md-center">
     <div class="col-md-6">
       <div class="row">
-        <div class="col-md-12 text-center">
-        </div>
+        <div class="col-md-12 text-center"></div>
       </div>
 
       <div class="row">
         <div class="col-md-12">
           <div class="card p-4 bg-light">
-            <div class="form-group col-12">
-              <b-form-group label="Trading direction">
+            <div class="form-group row">
+              <b-form-group>
                 <div class="btn-group btn-group-toggle trade-dir">
                   <label class="btn btn-lg button-dir" v-bind:class="btnFormat('BUY')">
                     <input
@@ -35,38 +34,30 @@
                 </div>
               </b-form-group>
             </div>
-            <!-- :options="options" -->
-            <!-- button-variant="outline-success" -->
-            <div class="form-group col-12">
+            <!-- <div class="form-group row">
               <label for="inputAddress">Order ID</label>
               <label
                 readonly
                 type="text"
                 class="form-control"
                 id="inputAddress"
-                value="1234 Main St"
               >523</label>
+            </div> -->
+            <div class="form-group row">
+              <label for="inputAddress">Ordering Party</label>
+              <label
+                readonly
+                type="text"
+                class="form-control"
+                id="party"
+              >{{newOrder.partyName}}</label>
             </div>
-
-            <div class="form-group col-12">
+            <div class="form-group row">
               <label for="inputAsset">Asset</label>
               <b-form-select v-model="newOrder.assetId" :options="assets"></b-form-select>
             </div>
 
-            <div class="form-group col-12">
-              <label for="inputPrice">Price</label>
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                class="form-control"
-                id="inputEmail4"
-                placeholder="0.00"
-                v-model="newOrder.priceLimit"
-              />
-            </div>
-
-            <div class="form-group col-12">
+            <div class="form-group row">
               <label for="inputPassword4">Qty</label>
               <input
                 type="number"
@@ -78,22 +69,50 @@
               />
             </div>
 
-            <div class="form-group col-12">
-              <label for="inputAddress">Order Amount</label>
-              <label
-                readonly
-                type="text"
+            <div class="form-group row">
+              <label for="inputPrice">Price</label>
+              <input
+                type="number"
+                min="0"
+                step="0.01"
                 class="form-control"
-                id="inputAddress"
-              >{{newOrderAmt | toCurrency}}</label>
+                id="price"
+                placeholder="0.00"
+                v-model="newOrder.priceLimit"
+              />
             </div>
 
-            <div class="form-group col-12">
+            <div class="form-group row">
+              <div class="form-group col">
+                <label for="orderAmount">Order Amount</label>
+                <label
+                  readonly
+                  type="text"
+                  class="form-control"
+                  id="orderAmount"
+                >{{newOrderAmt | toCurrency}}</label>
+              </div>
+              <div class="form-group col">
+                <label for="avblFunds">Available Funds</label>
+                <label
+                  readonly
+                  type="text"
+                  class="form-control"
+                  id="avblFunds"
+                >{{newOrder.qtyAvbl | toCurrency}}</label>
+              </div>
+            </div>
+
+            <div class="form-group row">
               <label type="text" class="submit-feedback">{{status}}</label>
             </div>
-            <div class="form-group col-12">
-              <button @click="placeOrder()" class="btn btn-primary btn-block">Place Order</button>
-              <button class="btn btn-dark btn-block">Clear Form</button>
+            <div class="form-group row">
+              <div class="form-group col-6">
+                <button @click="placeOrder()" class="btn btn-primary btn-block">Place Order</button>
+              </div>
+              <div class="form-group col-6">
+                <button class="btn btn-dark btn-block">Clear Form</button>
+              </div>
             </div>
           </div>
         </div>
@@ -105,6 +124,7 @@
 <script>
 import AssetService from "@/service/asset.service";
 import OrderService from "@/service/order.service";
+import PartyService from "@/service/party.service";
 export default {
   name: "radio1",
   data() {
@@ -126,8 +146,10 @@ export default {
         orderDir: "BUY",
         priceLimit: null,
         qty: null,
+        qtyAvbl: 0,
         orderType: "STEX",
-        partyId: 0 
+        partyId: 0,
+        partyName: ''
       },
       status: ""
     };
@@ -148,12 +170,44 @@ export default {
     });
   },
   methods: {
-    genNewOrder(partyId) {
-      //TODO: getAvblQty
+    setParty(party) {
+      this.newOrder.partyId = party.id;
+      this.newOrder.partyName = party.name;
+      PartyService.getAvblQty( this.newOrder.partyId).then(response => {
+        this.newOrder.qtyAvbl = response.data;
+      });
+    },
+    genNewOrder(party, isPrivate) {
       // SET PARTY ID
-      this.newOrder.partyId = partyId;
+      if (party.id == null) {
+        if(isPrivate) {
+          PartyService.getPrivatePerson().then(response => {
+            this.setParty(response.data);
+          });
+        }
+      } else {
+        this.setParty(party);
+      } 
+      
+
     },
     placeOrder() {
+      if(this.newOrder.assetId == null) {
+        this.status = "Error: No asset selected";
+        return;
+      }
+      if(this.newOrder.qty <= 0) {
+        this.status = "Error: Order Quantity must be greater 0";
+        return;
+      }
+      if(this.newOrder.priceLimit <= 0) {
+        this.status = "Error: Price Limit must be greater 0";
+        return;
+      }
+      if(this.newOrderAmt > this.newOrder.qtyAvbl) {
+        this.status = "Error: Order Quantity must be greater 0";
+        return;
+      }
       OrderService.placeOrder(this.newOrder).then(
         response => {
           this.status = response.data;

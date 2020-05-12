@@ -10,13 +10,11 @@
       Current Mode:
       <b>{{mode}}</b>
     </p>
-    <button @click="action()" class="btn btn-primary">Button</button>
   </body>
 </div>
 </template>
 
 <script>
-import UserService from "../service/user.service";
 import authHeader from "../service/auth-header";
 import axios from "axios";
 export default {
@@ -33,19 +31,6 @@ export default {
         headers: authHeader()
       });
     }
-  },
-  mounted() {
-    UserService.getPublicContent().then(
-      response => {
-        this.content = response.data;
-      },
-      error => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
   }
 };
 </script>
