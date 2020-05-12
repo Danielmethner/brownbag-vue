@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import MyOrders from "@/components/trading/MyOrders";
-import NewOrder from "@/components/trading/NewOrder";
-import Orderbook from "@/components/trading/Orderbook";
-import Portfolio from "@/components/trading/Portfolio";
+import MyOrders from "@/components/entities/order/MyOrders";
+import NewOrder from "@/components/entities/order/NewOrder";
+import Orderbook from "@/components/entities/order/Orderbook";
+import Portfolio from "@/components/entities/pos/Portfolio";
 // import AssetBase from "@/components/asset/AssetBase";
 export default {
   name: "TradingDesk",

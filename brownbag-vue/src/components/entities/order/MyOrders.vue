@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import OrderService from "../../service/order.service";
+import OrderService from "@/service/order.service";
 
 export default {
   name: "MyOrders",

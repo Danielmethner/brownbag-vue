@@ -51,8 +51,8 @@
 </template>
 
 <script>
-import User from "../../model/user";
-
+import User from "@/model/user";
+import PartyService from "@/service/party.service";
 export default {
   name: "Login",
   data() {
@@ -85,6 +85,9 @@ export default {
           this.$store.dispatch("auth/login", this.user).then(
             () => {
               this.$router.push("/profile");
+              PartyService.getPrivatePerson().then(response => {
+                this.$store.commit("party/privatePerson", response.data);
+              });
             },
             error => {
               this.loading = false;

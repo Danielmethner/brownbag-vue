@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import MyOrders from "@/components/private/MyOrders";
-import NewOrder from "@/components/private/NewOrder";
-import Orderbook from "@/components/private/Orderbook";
-import Portfolio from "@/components/pos/Portfolio";
+import MyOrders from "@/components/entities/order/MyOrders";
+import NewOrder from "@/components/entities/order/NewOrder";
+import Orderbook from "@/components/entities/order/Orderbook";
+import Portfolio from "@/components/entities/pos/Portfolio";
 // import AssetBase from "@/components/asset/AssetBase";
-import PartyService from "../../service/party.service";
+// import PartyService from "../../service/party.service";
 export default {
   name: "BusinessBase",
   data() {
@@ -46,24 +46,24 @@ export default {
     };
   },
   computed: {
-    businessListDD() {
-      console.log("computed property");
-      if (this.$store.state.party.businessListDD.length <= 1) {
-        PartyService.getAll().then(response => {
-          this.$store.commit("party/businessList", response.data);
-          // let aBusinessListDD = [{ value: 0, text: "Please Select Business" }];
-          let aBusinessListDD = [];
-          response.data.forEach(business => {
-            let dropdownItem = { value: business.id, text: business.name };
-            aBusinessListDD.push(dropdownItem);
-          });
-          this.$store.commit("party/businessListDD", aBusinessListDD);
-          return aBusinessListDD;
-        });
-      } else {
-        return this.$store.state.party.businessListDD;
-      }
-    }
+    // businessListDD() {
+    //   console.log("computed property");
+    //   if (this.$store.state.party.businessListDD.length <= 1) {
+    //     PartyService.getAll().then(response => {
+    //       this.$store.commit("party/businessList", response.data);
+    //       // let aBusinessListDD = [{ value: 0, text: "Please Select Business" }];
+    //       let aBusinessListDD = [];
+    //       response.data.forEach(business => {
+    //         let dropdownItem = { value: business.id, text: business.name };
+    //         aBusinessListDD.push(dropdownItem);
+    //       });
+    //       this.$store.commit("party/businessListDD", aBusinessListDD);
+    //       return aBusinessListDD;
+    //     });
+    //   } else {
+    //     return this.$store.state.party.businessListDD;
+    //   }
+    // }
   },
   methods: {
     // getMyOrders() {

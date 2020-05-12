@@ -6,7 +6,7 @@
           <h4>Place new order</h4>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col-md-12">
           <div class="card p-4 bg-light">
@@ -62,7 +62,7 @@
                 step="0.01"
                 class="form-control"
                 id="inputEmail4"
-                placeholder="20.00"
+                placeholder="0.00"
                 v-model="newOrder.priceLimit"
               />
             </div>
@@ -74,7 +74,7 @@
                 min="0"
                 class="form-control"
                 id="inputPassword4"
-                placeholder="30,000"
+                placeholder="0,0"
                 v-model="newOrder.qty"
               />
             </div>
@@ -104,8 +104,8 @@
 </template>
 
 <script>
-import AssetService from "../../service/asset.service";
-import OrderService from "../../service/order.service";
+import AssetService from "@/service/asset.service";
+import OrderService from "@/service/order.service";
 export default {
   name: "radio1",
   data() {
@@ -123,18 +123,19 @@ export default {
         }
       },
       newOrder: {
-        assetId: 2,
+        assetId: null,
         orderDir: "BUY",
-        priceLimit: 22,
-        qty: 12,
-        orderType: "STEX"
+        priceLimit: null,
+        qty: null,
+        orderType: "STEX",
+        partyId: 0 
       },
       status: ""
     };
   },
   computed: {
     newOrderAmt: function() {
-      let amt = this.newOrder.price * this.newOrder.qty;
+      let amt = this.newOrder.priceLimit * this.newOrder.qty;
       return amt;
     }
   },
@@ -148,6 +149,11 @@ export default {
     });
   },
   methods: {
+    genNewOrder(partyId) {
+      //TODO: getAvblQty
+      // SET PARTY ID
+      this.newOrder.partyId = partyId;
+    },
     placeOrder() {
       OrderService.placeOrder(this.newOrder).then(
         response => {

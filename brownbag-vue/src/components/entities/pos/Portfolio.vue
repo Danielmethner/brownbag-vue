@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="row">
-        <div class="col-md-12  text-center">
+        <div class="col-md-12 text-center">
           <h4>Your portfolio</h4>
         </div>
       </div>
@@ -40,23 +40,36 @@
 </template>
 
 <script>
-import PosService from "../../service/pos.service";
+import PosService from "@/service/pos.service";
 
 export default {
-  name: "UserProfile",
+  name: "Portfolio",
   data() {
     return {
       content: "",
-      positions: []
+      positions: [],
+      party: null
     };
   },
   mounted() {
     PosService.getPosByUser().then(response => {
+      this.positions = [];
       response.data.forEach(pos => {
-        console.log(pos);
         this.positions.push(pos);
       });
     });
+    PosService.getPosPrivateByUser().then(response => {
+      this.positions = [];
+      response.data.forEach(pos => {
+        this.positions.push(pos);
+      });
+    });
+    // PosService.getPosByParty(party).then(response => {
+    //   this.positions = [];
+    //   response.data.forEach(pos => {
+    //     this.positions.push(pos);
+    //   });
+    // });
   },
   calculated() {}
 };

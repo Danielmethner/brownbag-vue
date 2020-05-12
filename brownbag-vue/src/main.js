@@ -7,7 +7,7 @@ import Bootstrap from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VeeValidate from 'vee-validate';
 import {Tabs, Tab}  from 'vue-tabs-component'; // tab in order field
-
+import moment from 'moment';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
@@ -40,6 +40,13 @@ Vue.filter('toCurrency', function (value) {
     minimumFractionDigits: 2
   });
   return formatter.format(value);
+});
+
+
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(String(value)).format('DD. MMM  YYYY hh:mm:ss')
+  }
 });
 
 new Vue({

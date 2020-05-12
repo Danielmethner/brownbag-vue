@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import AssetService from "../../service/asset.service";
+import AssetService from "@/service/asset.service";
 
 export default {
   name: "IncomeStatement",

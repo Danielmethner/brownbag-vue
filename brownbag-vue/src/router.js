@@ -67,7 +67,13 @@ export const router = new Router({
       path: '/tradingdesk',
       name: 'tradingdesk',
       // lazy-loaded
-      component: () => import('./components/trading/Tradingdesk.vue')
+      component: () => import('./components/market-research/Tradingdesk.vue')
+    },
+    {
+      path: '/Log',
+      name: 'log',
+      // lazy-loaded
+      component: () => import('./components/settings/Log.vue')
     }
   ]
 });

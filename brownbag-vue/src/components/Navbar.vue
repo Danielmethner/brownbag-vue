@@ -14,14 +14,13 @@
           <router-link v-if="currentUser" to="/private" class="nav-link">Private Affairs</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link
-            v-if="currentUser"
-            to="/business"
-            class="nav-link"
-          >Business Management</router-link>
+          <router-link v-if="currentUser" to="/business" class="nav-link">Business Management</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
           <router-link v-if="currentUser" to="/tradingdesk" class="nav-link">Market Research</router-link>
+        </b-navbar-nav>
+        <b-navbar-nav>
+          <router-link v-if="currentUser" to="/log" class="nav-link">Application Log</router-link>
         </b-navbar-nav>
         <!-- Public pages-->
         <b-navbar-nav v-if="!currentUser">
