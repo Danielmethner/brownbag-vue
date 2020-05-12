@@ -6,7 +6,7 @@
         hover
         :items="myorders"
         :fields="headers"
-        head-variant="light"
+       thead-tr-class="table-info"
         sort-icon-left
       >
         <template v-slot:cell(orderDir)="data">
@@ -29,12 +29,12 @@ export default {
     return {
       myorders: [],
       headers: [
-        { label: "Order ID", key: "id" },
+        { label: "Order ID", key: "id", sortable: true },
         { label: "Asset", key: "assetName", sortable: true },
         { label: "Buy/ Sell", key: "orderDir", sortable: true },
-        { label: "Quantity", key: "qty" },
-        { label: "Qty Exec", key: "qtyExec" },
-        { label: "Price", key: "priceLimit" },
+        { label: "Quantity", key: "qty", sortable: true },
+        { label: "Qty Exec", key: "qtyExec", sortable: true },
+        { label: "Price", key: "priceLimit", sortable: true },
         {
           label: "Status",
           key: "orderStatus",
