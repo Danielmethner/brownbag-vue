@@ -1,42 +1,21 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-12  text-center">
-          <h4>Order placed by yourself</h4>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <table class="table table-striped">
-            <thead class="table-dark">
-              <tr class="bg-success"></tr>
-              <tr>
-                <th scope="col">Order ID</th>
-                <th scope="col">Asset</th>
-                <th scope="col">Buy/ Sell</th>
-                <th scope="col">Qty</th>
-                <th scope="col">Qty Executed</th>
-                <th scope="col">Price</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="order in myorders" v-bind:key="order.id">
-                <td>{{order.id}}</td>
-                <td>{{order.assetName}}</td>
-                <td :class="formatDir(order.orderDir)">
-                  <b>{{order.orderDir}}</b>
-                </td>
-                <td>{{order.qty}}</td>
-                <td>{{order.qtyExec}}</td>
-                <td>$ {{order.priceLimit}}</td>
-                <td>{{order.orderStatus}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <b-table
+        striped
+        hover
+        :items="myorders"
+        :fields="headers"
+        head-variant="light"
+        sort-icon-left
+      >
+        <template v-slot:cell(orderDir)="data">
+          <span class="font-weight-bold" :class="formatDir(data.item.orderDir)">{{ data.item.orderDir }}</span>
+        </template>
+        <template v-slot:cell(qty)="data">{{ data.item.qty }}</template>
+        <template v-slot:cell(qtyExec)="data">{{ data.item.qtyExec }}</template>
+        <template v-slot:cell(priceLimit)="data">{{ data.item.priceLimit | toCurrency }}</template>
+      </b-table>
     </div>
   </div>
 </template>
@@ -48,7 +27,21 @@ export default {
   name: "MyOrders",
   data() {
     return {
-      myorders: []
+      myorders: [],
+      headers: [
+        { label: "Order ID", key: "id" },
+        { label: "Asset", key: "assetName", sortable: true },
+        { label: "Buy/ Sell", key: "orderDir", sortable: true },
+        { label: "Quantity", key: "qty" },
+        { label: "Qty Exec", key: "qtyExec" },
+        { label: "Price", key: "priceLimit" },
+        {
+          label: "Status",
+          key: "orderStatus",
+          sortable: true,
+          filterByFormatted: true
+        }
+      ]
     };
   },
   mounted() {
@@ -73,5 +66,8 @@ export default {
 <style scoped>
 .buy {
   color: green !important;
+}
+.sell {
+  color: red !important;
 }
 </style>

@@ -3,10 +3,11 @@ import Vuex from 'vuex';
 import App from './App.vue';
 import { router } from './router';
 import store from './store';
-import Bootstrap from 'bootstrap-vue';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VeeValidate from 'vee-validate';
-import {Tabs, Tab}  from 'vue-tabs-component'; // tab in order field
+import { Tabs, Tab } from 'vue-tabs-component'; // tab in order field
 import moment from 'moment';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -23,13 +24,22 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('tabs', Tabs);
 Vue.component('tab', Tab);
 
-Vue.use(Bootstrap);
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 Vue.use(Tabs);
 Vue.use(Vuex);
-Vue.use(VeeValidate);
+Vue.use(VeeValidate, {
+  // This is the default
+  inject: true,
+  // Important to name this something other than 'fields'
+  fieldsBagName: 'veeFields',
+  // This is not required but avoids possible naming conflicts
+  errorBagName: 'veeErrors'
+});
 
 Vue.config.productionTip = false;
 
+// MONETARY AMOUNT
 Vue.filter('toCurrency', function (value) {
   if (typeof value !== "number") {
     return value;
@@ -42,10 +52,17 @@ Vue.filter('toCurrency', function (value) {
   return formatter.format(value);
 });
 
-
-Vue.filter('formatDate', function(value) {
+// TIMESTAMP
+Vue.filter('formatDate', function (value) {
   if (value) {
     return moment(String(value)).format('DD. MMM  YYYY hh:mm:ss')
+  }
+});
+
+// BUY/SELL
+Vue.filter('buySell', function (value) {
+  if (value === 'BUY') {
+    return 
   }
 });
 
