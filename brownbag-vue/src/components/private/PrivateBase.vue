@@ -5,10 +5,10 @@
     </header>
     <div>
       <b-tabs content-class="mt-3">
-        <b-tab title="My Portfolio" active @click="getPortfolio()">
+        <b-tab title="My Portfolio" @click="getPortfolio()">
           <Portfolio ref="portfolio"></Portfolio>
         </b-tab>
-        <b-tab title="My Orders" active @click="getMyOrders()">
+        <b-tab title="My Orders" @click="getMyOrders()">
           <MyOrders ref="myOrders"></MyOrders>
         </b-tab>
         <!-- <b-tab title="Balance Sheet">
@@ -32,6 +32,7 @@ import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
 import Orderbook from "@/components/entities/order/Orderbook";
 // import AssetBase from "@/components/asset/AssetBase";
+import PartyService from "../../service/party.service";
 export default {
   name: "PrivateBase",
   data() {
@@ -39,18 +40,29 @@ export default {
       content: ""
     };
   },
+  mounted() {
+    this.getPortfolio();
+
+  },
   methods: {
+    getPrivatePerson() {
+      let party = this.$store.state.party.privatePerson;
+      if (party == null || party.id == null) {
+        PartyService.getPrivatePerson().then(response => {
+          this.$store.commit("party/privatePerson", response.data);
+        });
+      }
+      return this.$store.state.party.privatePerson;
+    },    
+    getMyOrders() {
+      this.$refs.myOrders.getMyOrders(this.getPrivatePerson().id);
+    },
     genNewOrder() {
-      this.$refs.newOrder.genNewOrder(this.$store.state.party.privatePerson, true);
+      // SET PARTY ID
+      this.$refs.newOrder.genNewOrder(this.getPrivatePerson());
     },
     getPortfolio() {
-      this.$refs.portfolio.getPortfolio();
-    },
-    getMyOrders() {
-      this.$refs.myOrders.getMyOrders();
-    },
-    refreshOrderbook() {
-      this.$refs.orderbook.refreshOrderbook();
+      this.$refs.portfolio.getPortfolio(this.getPrivatePerson().id);
     }
   },
   components: {

@@ -8,12 +8,10 @@
         :fields="headers"
         thead-tr-class="table-info"
         sort-icon-left
-      ></b-table>    
+      ></b-table>
     </div>
   </div>
 </template>
-
-            <!-- head-variant="dark" -->
 <script>
 import PosService from "@/service/pos.service";
 
@@ -31,29 +29,21 @@ export default {
         { label: "Qty Blocked", key: "qtyBlocked", sortable: true },
         { label: "Buy Price", key: "priceAvg", sortable: true },
         { label: "Curr. Price", key: "priceAvg", sortable: true },
-        { label: "P/L [%]", key: "priceLimit", sortable: true },
+        { label: "P/L [%]", key: "priceLimit", sortable: true }
       ]
     };
   },
   methods: {
-    getPortfolio() {
-      PosService.getPosPrivateByUser().then(response => {
-        this.positions = [];
+    getPortfolio(partyId) {
+      this.positions = [];
+      PosService.getPosByPartyId(partyId).then(response => {
         response.data.forEach(pos => {
           this.positions.push(pos);
         });
       });
     }
   },
-  mounted() {
-
-    // PosService.getPosByParty(party).then(response => {
-    //   this.positions = [];
-    //   response.data.forEach(pos => {
-    //     this.positions.push(pos);
-    //   });
-    // });
-  },
+  mounted() {},
   calculated() {}
 };
 </script>

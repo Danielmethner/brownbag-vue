@@ -81,7 +81,6 @@
                 v-model="newOrder.priceLimit"
               />
             </div>
-
             <div class="form-group row">
               <div class="form-group col">
                 <label for="orderAmount">Order Amount</label>
@@ -149,7 +148,7 @@ export default {
         qtyAvbl: 0,
         orderType: "STEX",
         partyId: 0,
-        partyName: ''
+        partyName: 'No business selected!'
       },
       status: ""
     };
@@ -177,35 +176,31 @@ export default {
         this.newOrder.qtyAvbl = response.data;
       });
     },
-    genNewOrder(party, isPrivate) {
-      // SET PARTY ID
-      if (party.id == null) {
-        if(isPrivate) {
-          PartyService.getPrivatePerson().then(response => {
-            this.setParty(response.data);
-          });
-        }
-      } else {
+    genNewOrder(party) {
+
         this.setParty(party);
-      } 
-      
+
 
     },
     placeOrder() {
+      if(this.newOrder.partyId == null || this.newOrder.partyId == 0) {
+        this.status = "Error: No business selected!";
+        return;
+      }
       if(this.newOrder.assetId == null) {
-        this.status = "Error: No asset selected";
+        this.status = "Error: No asset selected!";
         return;
       }
       if(this.newOrder.qty <= 0) {
-        this.status = "Error: Order Quantity must be greater 0";
+        this.status = "Error: Order Quantity must be greater 0!";
         return;
       }
       if(this.newOrder.priceLimit <= 0) {
-        this.status = "Error: Price Limit must be greater 0";
+        this.status = "Error: Price Limit must be greater 0!";
         return;
       }
       if(this.newOrderAmt > this.newOrder.qtyAvbl) {
-        this.status = "Error: Order Quantity must be greater 0";
+        this.status = "Error: Order Quantity must be greater 0!";
         return;
       }
       OrderService.placeOrder(this.newOrder).then(

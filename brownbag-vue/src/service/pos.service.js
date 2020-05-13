@@ -17,7 +17,7 @@ class PosService {
       .get(GLOBAL.API_BASE_URL + POS_PRIV_GET_BY_USER, { headers: jsonHeader() });
   }
 
-  getPosByParty(partyId) {
+  getPosByPartyId(partyId) {
     return axios
       .get(GLOBAL.API_BASE_URL + POS_GET_BY_PARTY_ID + partyId, { headers: jsonHeader() });
   }

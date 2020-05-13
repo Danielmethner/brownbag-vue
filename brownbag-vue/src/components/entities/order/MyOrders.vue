@@ -45,12 +45,11 @@ export default {
     };
   },
   mounted() {
-    this.getMyOrders();
   },
   methods: {
-    getMyOrders() {
-      OrderService.getOrdersByUser().then(response => {
-        this.myorders = [];
+    getMyOrders(partyId) {
+      this.myorders = [];
+      OrderService.getByParty(partyId).then(response => {
         response.data.forEach(order => {
           this.myorders.push(order);
         });

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { GLOBAL } from '../store/index.js';
 const ORDER_STEX_PLACE = '/api/order/stex/place';
 const ORDER_GET_BY_USER = '/api/order/stex/user'
+const ORDER_GET_BY_PARTY = '/api/order/stex/party/'
 const ORDER_GET_PLACED = '/api/order/stex/all'
 import jsonHeader from './json-header';
 
@@ -16,9 +17,13 @@ class OrderService {
       .get(GLOBAL.API_BASE_URL + ORDER_GET_BY_USER, { headers: jsonHeader() });
   }
 
-  getByParty() {
-    return axios
-      .get(GLOBAL.API_BASE_URL + ORDER_GET_BY_USER, { headers: jsonHeader() });
+  getByParty(partyId) {
+    if(partyId != null) {
+      return axios
+        .get(GLOBAL.API_BASE_URL + ORDER_GET_BY_PARTY + partyId, { headers: jsonHeader() });
+    } else {
+      return null;
+    }
   }
 
   getOrdersByPlaced() {

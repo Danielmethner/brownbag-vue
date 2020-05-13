@@ -1,6 +1,6 @@
 export const party = {
 	namespaced: true,
-	state: { businessList: [{}], businessListDD: [{}], privatePerson: {} },
+	state: { businessList: [{}], businessListDD: [{}], privatePerson: {}, business: {} },
 	mutations: {
 		businessList(state, businessList) {
 			state.businessList = businessList
@@ -15,6 +15,9 @@ export const party = {
 	getters: {
 		businessList: state => state.businessList,
 		businessListDD: state => state.businessListDD,
-		privatePerson: state => state.privatePerson
-	}
-}
+		privatePerson: state => state.privatePerson,
+		business: (state) => (id) => {
+			return state.businessList.find(business => business.id === id)
+		}
+    }
+  }
