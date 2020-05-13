@@ -91,7 +91,6 @@ export default {
       }      
     },
     getPortfolio() {
-      console.log("business id" + this.businessId);
       if(this.businessId) {
         this.$refs.portfolio.getPortfolio(this.businessId);
       }

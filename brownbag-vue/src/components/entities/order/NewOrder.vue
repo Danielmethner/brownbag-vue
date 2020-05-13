@@ -34,42 +34,44 @@
                 </div>
               </b-form-group>
             </div>
-            <!-- <div class="form-group row">
-              <label for="inputAddress">Order ID</label>
-              <label
-                readonly
-                type="text"
-                class="form-control"
-                id="inputAddress"
-              >523</label>
-            </div> -->
             <div class="form-group row">
+              <div class="form-group col">
               <label for="inputAddress">Ordering Party</label>
-              <label
-                readonly
-                type="text"
-                class="form-control"
-                id="party"
-              >{{newOrder.partyName}}</label>
+              <label readonly type="text" class="form-control" id="party">{{newOrder.partyName}}</label>
+              </div>
             </div>
             <div class="form-group row">
+              <div class="form-group col">
               <label for="inputAsset">Asset</label>
-              <b-form-select v-model="newOrder.assetId" :options="assets"></b-form-select>
+              <b-form-select v-model="newOrder.assetId" :options="assets" @change="changeAsset()"></b-form-select>
+              </div>
             </div>
 
             <div class="form-group row">
-              <label for="inputPassword4">Qty</label>
-              <input
-                type="number"
-                min="0"
-                class="form-control"
-                id="inputPassword4"
-                placeholder="0,0"
-                v-model="newOrder.qty"
-              />
+              <div class="form-group col">
+                <label for="qty">Qty</label>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  id="qty"
+                  placeholder="0,0"
+                  v-model="newOrder.qty"
+                />
+              </div>
+              <div class="form-group col" v-show="isSellOrder">
+                <label for="avblQty">Available Quantity</label>
+                <label
+                  readonly
+                  type="text"
+                  class="form-control"
+                  id="avblQty"
+                >{{newOrder.qtyAvbl}}</label>
+              </div>
             </div>
 
             <div class="form-group row">
+              <div class="form-group col">
               <label for="inputPrice">Price</label>
               <input
                 type="number"
@@ -79,7 +81,7 @@
                 id="price"
                 placeholder="0.00"
                 v-model="newOrder.priceLimit"
-              />
+              /></div>
             </div>
             <div class="form-group row">
               <div class="form-group col">
@@ -91,14 +93,14 @@
                   id="orderAmount"
                 >{{newOrderAmt | toCurrency}}</label>
               </div>
-              <div class="form-group col">
-                <label for="avblFunds">Available Funds</label>
+              <div class="form-group col"  v-show="!isSellOrder">
+                <label for="avblFunds" >Available Funds</label>
                 <label
                   readonly
                   type="text"
                   class="form-control"
                   id="avblFunds"
-                >{{newOrder.qtyAvbl | toCurrency}}</label>
+                >{{newOrder.fundsAvbl | toCurrency}}</label>
               </div>
             </div>
 
@@ -143,12 +145,13 @@ export default {
       newOrder: {
         assetId: null,
         orderDir: "BUY",
-        priceLimit: null,
-        qty: null,
+        priceLimit: 0,
+        qty: 0,
         qtyAvbl: 0,
+        fundsAvbl: 0,
         orderType: "STEX",
         partyId: 0,
-        partyName: 'No business selected!'
+        partyName: "No business selected!"
       },
       status: ""
     };
@@ -157,6 +160,15 @@ export default {
     newOrderAmt: function() {
       let amt = this.newOrder.priceLimit * this.newOrder.qty;
       return amt;
+    },
+    isSellOrder: function() {
+      if (this.newOrder.orderDir == "SELL"){
+        console.log("Is Sell Order");
+        return true;
+      } else {
+        console.log("Is BUY Order");
+        return false;
+      }
     }
   },
   mounted() {
@@ -169,37 +181,44 @@ export default {
     });
   },
   methods: {
-    setParty(party) {
-      this.newOrder.partyId = party.id;
-      this.newOrder.partyName = party.name;
-      PartyService.getAvblQty( this.newOrder.partyId).then(response => {
+    changeAsset() {
+      this.newOrder.qtyAvbl = 0;
+      PartyService.getAvblQty(
+        this.newOrder.partyId,
+        this.newOrder.assetId
+      ).then(response => {
         this.newOrder.qtyAvbl = response.data;
       });
     },
+    setParty(party) {
+      this.newOrder.partyId = party.id;
+      this.newOrder.partyName = party.name;
+    },
     genNewOrder(party) {
+      this.setParty(party);
 
-        this.setParty(party);
-
-
+      PartyService.getAvblQty(this.newOrder.partyId, 1).then(response => {
+        this.newOrder.fundsAvbl = response.data;
+      });
     },
     placeOrder() {
-      if(this.newOrder.partyId == null || this.newOrder.partyId == 0) {
+      if (this.newOrder.partyId == null || this.newOrder.partyId == 0) {
         this.status = "Error: No business selected!";
         return;
       }
-      if(this.newOrder.assetId == null) {
+      if (this.newOrder.assetId == null) {
         this.status = "Error: No asset selected!";
         return;
       }
-      if(this.newOrder.qty <= 0) {
+      if (this.newOrder.qty <= 0) {
         this.status = "Error: Order Quantity must be greater 0!";
         return;
       }
-      if(this.newOrder.priceLimit <= 0) {
+      if (this.newOrder.priceLimit <= 0) {
         this.status = "Error: Price Limit must be greater 0!";
         return;
       }
-      if(this.newOrderAmt > this.newOrder.qtyAvbl) {
+      if (this.newOrderAmt > this.newOrder.qtyAvbl) {
         this.status = "Error: Order Quantity must be greater 0!";
         return;
       }
@@ -217,6 +236,9 @@ export default {
 </script>
 
 <style scoped>
+input {
+  margin-bottom: 8px !important;
+}
 #asset {
   text-align: left;
 }
