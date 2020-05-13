@@ -1,56 +1,42 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-md-6 text-center">
-      </div>
+      <div class="col-md-6 text-center"></div>
     </div>
-
     <div class="row">
       <div class="col-md-6">
-        <table class="table table-striped">
-          <thead class="table-dark">
-            <tr class="bg-success">
-              <th colspan="4" scope="colgroup" class="bg-success">Buy</th>
-            </tr>
-            <tr>
-              <th scope="col">Order ID</th>
-              <th scope="col">Asset</th>
-              <th scope="col">Qty</th>
-              <th scope="col">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="order in orderbook.buyOrders" v-bind:key="order.id">
-              <td>{{order.id}}</td>
-              <td>{{order.assetName}}</td>
-              <td>{{order.qty}}</td>
-              <td>$ {{order.priceLimit}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <b-table
+          striped
+          hover
+          :items="orderbook.buyOrders"
+          :fields="headers"
+          head-variant="dark"
+          sort-icon-left
+        >
+          <template v-slot:thead-top="data">
+            <b-tr>
+              <b-th class="bg-success" colspan="4">BUY</b-th>
+            </b-tr>
+          </template>
+          <template v-slot:cell(priceLimit)="data">{{ data.item.priceLimit | toCurrency }}</template>
+        </b-table>
       </div>
       <div class="col-md-6">
-        <table class="table table-striped">
-          <thead class="table-dark">
-            <tr class="bg-success">
-              <th colspan="4" scope="colgroup" class="bg-danger">Sell</th>
-            </tr>
-            <tr>
-              <th scope="col">Order ID</th>
-              <th scope="col">Asset</th>
-              <th scope="col">Qty</th>
-              <th scope="col">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="sellorder in orderbook.sellOrders" v-bind:key="sellorder.id">
-              <td>{{sellorder.id}}</td>
-              <td>{{sellorder.assetName}}</td>
-              <td>{{sellorder.qty}}</td>
-              <td>$ {{sellorder.priceLimit}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <b-table
+          striped
+          hover
+          :items="orderbook.sellOrders"
+          :fields="headers"
+          head-variant="dark"
+          sort-icon-left
+        >
+          <template v-slot:thead-top="data">
+            <b-tr>
+              <b-th class="bg-danger" colspan="4">SELL</b-th>
+            </b-tr>
+          </template>
+          <template v-slot:cell(priceLimit)="data">{{ data.item.priceLimit | toCurrency }}</template>
+        </b-table>
       </div>
     </div>
   </div>
@@ -66,22 +52,30 @@ export default {
       orderbook: {
         buyOrders: [],
         sellOrders: []
-      }
+      },
+      headers: [
+        { label: "Order ID", key: "id", sortable: true },
+        { label: "Asset", key: "assetName", sortable: true },
+        { label: "Quantity", key: "qty", sortable: true },
+        { label: "Price", key: "priceLimit", sortable: true }
+      ]
     };
   },
   methods: {
-    getOrderbook() {
+    getOrderbook(assetId) {
       this.orderbook.buyOrders = [];
       this.orderbook.sellOrders = [];
-      OrderService.getOrdersByPlaced().then(response => {
-        response.data.forEach(order => {
-          if (order.orderDir == "BUY") {
-            this.orderbook.buyOrders.push(order);
-          } else {
-            this.orderbook.sellOrders.push(order);
-          }
+      if (assetId) {
+        OrderService.getOrdersByPlacedAndAsset(assetId).then(response => {
+          response.data.forEach(order => {
+            if (order.orderDir == "BUY") {
+              this.orderbook.buyOrders.push(order);
+            } else {
+              this.orderbook.sellOrders.push(order);
+            }
+          });
         });
-      });
+      }
     }
   },
   mounted() {

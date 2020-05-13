@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <b-form-select v-model="assetId" :options="assetListDD" @change="changeParty()">
+          <b-form-select v-model="assetId" :options="assetListDD" @change="changeAsset()">
             <option disabled value="0">Please Select Asset</option>
           </b-form-select>
         </div>
@@ -19,9 +19,9 @@
           <b-tab title="Public Orderbook" @click="getOrderbook()">
             <Orderbook ref="orderbook"></Orderbook>
           </b-tab>
-          <!-- <b-tab title="Business Analysis">
-            <Asset></Asset>
-          </b-tab>-->
+          <b-tab title="Balance Sheet" @click="getBalSheet()">
+            <BalSheet ref="balSheet"></BalSheet>
+          </b-tab>
         </b-tabs>
       </div>
     </div>
@@ -34,25 +34,26 @@
 </template>
 
 <script>
-import MyOrders from "@/components/entities/order/MyOrders";
-import NewOrder from "@/components/entities/order/NewOrder";
 import Orderbook from "@/components/entities/order/Orderbook";
-import Portfolio from "@/components/entities/pos/Portfolio";
 import AssetService from "@/service/asset.service";
+import BalSheet from "@/components/entities/party/BalanceSheet";
 export default {
   name: "MarketResearch",
   data() {
     return {
       assetId: 0,
-      assetListDD: []
+      assetListDD: [],
+      issuerId: {}
     };
   },
   mounted() {
     this.getAssets();
   },
   methods: {
-    changeParty() {
+    changeAsset() {
       this.getOrderbook();
+      this.issuerId = this.$store.getters["asset/asset"](this.assetId).issuerId;
+      this.getBalSheet();
     },
     getAssets() {
       if (this.assetListDD.length <= 1) {
@@ -74,13 +75,17 @@ export default {
     },
     getOrderbook() {
       this.$refs.orderbook.getOrderbook(this.assetId);
+    },
+    getBalSheet() {
+      if(this.issuerId){
+        this.$refs.balSheet.getBalSheet(this.issuerId);
+      }
+      
     }
   },
   components: {
-    MyOrders,
-    NewOrder,
     Orderbook,
-    Portfolio
+    BalSheet
   }
 };
 </script>
