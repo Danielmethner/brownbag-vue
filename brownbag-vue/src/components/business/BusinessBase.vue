@@ -6,14 +6,13 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="inputAsset">Select Business</label>
           <b-form-select v-model="businessId" :options="businessListDD" @change="changeParty()">
             <option disabled value="0">Please Select Business</option>
           </b-form-select>
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-show="businessId">
       <div class="col-md-12">
         <b-tabs content-class="mt-3">
           <b-tab title="Portfolio" @click="getPortfolio()">
@@ -22,10 +21,18 @@
           <b-tab title="Orders" @click="getMyOrders()">
             <MyOrders ref="myOrders"></MyOrders>
           </b-tab>
-        <b-tab title="New Order" @click="genNewOrder()">
-          <NewOrder ref="newOrder"></NewOrder>
-        </b-tab>
+          <b-tab title="Balance Sheet" @click="getBalSheet()">
+            <BalSheet ref="balSheet"></BalSheet>
+          </b-tab>
+          <b-tab title="New Order" @click="genNewOrder()">
+            <NewOrder ref="newOrder"></NewOrder>
+          </b-tab>
         </b-tabs>
+      </div>
+    </div>
+    <div class="row"  v-show="!businessId">
+      <div class="col-md-12">
+        <h2>Select a business to view its content!</h2>
       </div>
     </div>
   </div>
@@ -34,8 +41,8 @@
 <script>
 import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
-import Orderbook from "@/components/entities/order/Orderbook";
 import Portfolio from "@/components/entities/pos/Portfolio";
+import BalSheet from "@/components/entities/party/BalanceSheet";
 // import AssetBase from "@/components/asset/AssetBase";
 import PartyService from "../../service/party.service";
 
@@ -51,20 +58,18 @@ export default {
     this.getParties();
   },
 
-	computed: {
-	},
+  computed: {},
   methods: {
     changeParty() {
       this.getPortfolio();
       this.getMyOrders();
       this.genNewOrder();
+      this.getBalSheet();
     },
     getParties() {
-      
       if (this.businessListDD.length <= 1) {
         PartyService.getAll().then(response => {
           this.$store.commit("party/businessList", response.data);
-          // let aBusinessListDD = [{ value: 0, text: "Please Select Business" }];
           this.businessListDD = [];
           response.data.forEach(business => {
             let dropdownItem = { value: business.id, text: business.name };
@@ -78,29 +83,31 @@ export default {
     },
     genNewOrder() {
       this.getParties();
-      if(this.businessId != null){
-        let party = this.$store.getters['party/business'](this.businessId);
+      if (this.businessId != null) {
+        let party = this.$store.getters["party/business"](this.businessId);
         this.$refs.newOrder.genNewOrder(party);
       }
-      
     },
     getMyOrders() {
       this.getParties();
-      if(this.businessId) {
+      if (this.businessId) {
         this.$refs.myOrders.getMyOrders(this.businessId);
-      }      
+      }
     },
     getPortfolio() {
-      if(this.businessId) {
+      if (this.businessId) {
         this.$refs.portfolio.getPortfolio(this.businessId);
       }
+    },
+    getBalSheet() {
+      this.$refs.balSheet.getBalSheet(this.businessId);
     }
   },
   components: {
     MyOrders,
     NewOrder,
-    Orderbook,
-    Portfolio
+    Portfolio,
+    BalSheet
   }
 };
 </script>

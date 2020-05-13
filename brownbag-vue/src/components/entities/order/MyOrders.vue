@@ -1,21 +1,31 @@
 <template>
-  <div class="row">
-    <div class="col-md-12">
-      <b-table
-        striped
-        hover
-        :items="myorders"
-        :fields="headers"
-       thead-tr-class="table-info"
-        sort-icon-left
-      >
-        <template v-slot:cell(orderDir)="data">
-          <span class="font-weight-bold" :class="formatDir(data.item.orderDir)">{{ data.item.orderDir }}</span>
-        </template>
-        <!-- <template v-slot:cell(qty)="data">{{ data.item.qty | toNumber }}</template> -->
-        <template v-slot:cell(qtyExec)="data">{{ data.item.qtyExec }}</template>
-        <template v-slot:cell(priceLimit)="data">{{ data.item.priceLimit | toCurrency }}</template>
-      </b-table>
+  <div>
+    <div class="row"  v-show="myorders.length > 0">
+      <div class="col-md-12">
+        <b-table
+          striped
+          hover
+          :items="myorders"
+          :fields="headers"
+          thead-tr-class="table-info"
+          sort-icon-left
+        >
+          <template v-slot:cell(orderDir)="data">
+            <span
+              class="font-weight-bold"
+              :class="formatDir(data.item.orderDir)"
+            >{{ data.item.orderDir }}</span>
+          </template>
+          <!-- <template v-slot:cell(qty)="data">{{ data.item.qty | toNumber }}</template> -->
+          <template v-slot:cell(qtyExec)="data">{{ data.item.qtyExec }}</template>
+          <template v-slot:cell(priceLimit)="data">{{ data.item.priceLimit | toCurrency }}</template>
+        </b-table>
+      </div>
+    </div>
+    <div class="row" v-show="myorders.length==0">
+      <div class="col-md-12">
+        <h2>This business has not placed any orders yet!</h2>
+      </div>
     </div>
   </div>
 </template>
@@ -44,8 +54,7 @@ export default {
       ]
     };
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     getMyOrders(partyId) {
       this.myorders = [];

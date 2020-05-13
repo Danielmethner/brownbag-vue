@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="card p-4 bg-light">
-            <div class="form-group row">
+            <div class="form-group">
               <b-form-group>
                 <div class="btn-group btn-group-toggle trade-dir">
                   <label class="btn btn-lg button-dir" v-bind:class="btnFormat('BUY')">
@@ -36,14 +36,14 @@
             </div>
             <div class="form-group row">
               <div class="form-group col">
-              <label for="inputAddress">Ordering Party</label>
-              <label readonly type="text" class="form-control" id="party">{{newOrder.partyName}}</label>
+                <label for="inputAddress">Ordering Party</label>
+                <label readonly type="text" class="form-control" id="party">{{newOrder.partyName}}</label>
               </div>
             </div>
             <div class="form-group row">
               <div class="form-group col">
-              <label for="inputAsset">Asset</label>
-              <b-form-select v-model="newOrder.assetId" :options="assets" @change="changeAsset()"></b-form-select>
+                <label for="inputAsset">Asset</label>
+                <b-form-select v-model="newOrder.assetId" :options="assets" @change="changeAsset()"></b-form-select>
               </div>
             </div>
 
@@ -61,27 +61,23 @@
               </div>
               <div class="form-group col" v-show="isSellOrder">
                 <label for="avblQty">Available Quantity</label>
-                <label
-                  readonly
-                  type="text"
-                  class="form-control"
-                  id="avblQty"
-                >{{newOrder.qtyAvbl}}</label>
+                <label readonly type="text" class="form-control" id="avblQty">{{newOrder.qtyAvbl}}</label>
               </div>
             </div>
 
             <div class="form-group row">
               <div class="form-group col">
-              <label for="inputPrice">Price</label>
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                class="form-control"
-                id="price"
-                placeholder="0.00"
-                v-model="newOrder.priceLimit"
-              /></div>
+                <label for="inputPrice">Price</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  class="form-control"
+                  id="price"
+                  placeholder="0.00"
+                  v-model="newOrder.priceLimit"
+                />
+              </div>
             </div>
             <div class="form-group row">
               <div class="form-group col">
@@ -93,8 +89,8 @@
                   id="orderAmount"
                 >{{newOrderAmt | toCurrency}}</label>
               </div>
-              <div class="form-group col"  v-show="!isSellOrder">
-                <label for="avblFunds" >Available Funds</label>
+              <div class="form-group col" v-show="!isSellOrder">
+                <label for="avblFunds">Available Funds</label>
                 <label
                   readonly
                   type="text"
@@ -162,7 +158,7 @@ export default {
       return amt;
     },
     isSellOrder: function() {
-        return this.newOrder.orderDir == "SELL";
+      return this.newOrder.orderDir == "SELL";
     }
   },
   mounted() {
@@ -212,14 +208,17 @@ export default {
         this.status = "Error: Price Limit must be greater 0!";
         return;
       }
-      if (this.newOrderAmt > this.newOrder.qtyAvbl) {
-        this.status = "Error: Order Quantity must be greater 0!";
+      if (
+        !this.isSellOrder &&
+        this.newOrder.qty * this.newOrder.priceLimit > this.newOrder.fundsAvbl
+      ) {
+        this.status = "Error: Insufficient Funds!";
         return;
       }
       OrderService.placeOrder(this.newOrder).then(
         response => {
           this.status = response.data;
-           this.clearForm();
+          this.clearForm();
         },
         error => {
           this.status = "Error: " && error;
@@ -235,7 +234,6 @@ export default {
         this.newOrder.fundsAvbl = response.data;
       });
       // vm.$forceUpdate();
-      
     }
   }
 };

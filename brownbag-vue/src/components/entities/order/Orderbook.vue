@@ -70,7 +70,7 @@ export default {
     };
   },
   methods: {
-    refreshOrderbook() {
+    getOrderbook() {
       this.orderbook.buyOrders = [];
       this.orderbook.sellOrders = [];
       OrderService.getOrdersByPlaced().then(response => {
@@ -85,7 +85,7 @@ export default {
     }
   },
   mounted() {
-    this.refreshOrderbook();
+    this.getOrderbook();
   }
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-md-12">
-        <h2>{{balanceSheet.name}}</h2>
+    <div class="row justify-content-md-center">
+      <div class="col-md-6">
+        <h3>{{balanceSheet.name}}</h3>
         <div v-for="section in balanceSheet.sections" v-bind:key="section.name">
           <table class="table table-striped">
             <thead class="table-dark">
@@ -25,23 +25,20 @@
 </template>
 
 <script>
-import AssetService from "@/service/asset.service";
+import PartyService from "@/service/party.service";
 
 export default {
   name: "BalanceSheet",
   data() {
     return {
-      asset: {},
       balanceSheet: {
         name: "Balance Sheet"
       }
     };
   },
   methods: {
-    showAsset(assetId) {
-      console.log("show my asset");
-      this.asset = AssetService.getByIdCache(assetId);
-      AssetService.getBalSheetByPartyId(this.asset.issuerId).then(response => {
+    getBalSheet(partyId) {
+      PartyService.getBalSheetByPartyId(partyId).then(response => {
         this.balanceSheet = {};
         this.balanceSheet = response.data;
       });

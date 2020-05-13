@@ -17,7 +17,7 @@
           <router-link v-if="currentUser" to="/business" class="nav-link">Business Management</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link v-if="currentUser" to="/tradingdesk" class="nav-link">Market Research</router-link>
+          <router-link v-if="currentUser" to="/marketresearch" class="nav-link">Market Research</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
           <router-link v-if="currentUser" to="/log" class="nav-link">Application Log</router-link>
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-// import store from "../store";
 
 export default {
   computed: {

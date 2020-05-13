@@ -11,12 +11,12 @@
         <b-tab title="My Orders" @click="getMyOrders()">
           <MyOrders ref="myOrders"></MyOrders>
         </b-tab>
-        <!-- <b-tab title="Balance Sheet">
-          <BalSheet></BalSheet>
+        <b-tab title="Balance Sheet" @click="getBalSheet()">
+          <BalSheet ref="balSheet"></BalSheet>
         </b-tab>
-        <b-tab title="Income Statement">
+        <!-- <b-tab title="Income Statement">
         <IncomeStatement></IncomeStatement>-->
-        <!-- </b-tab> -->
+        <!-- </b-tab>-->
 
         <b-tab title="New Order" @click="genNewOrder()">
           <NewOrder ref="newOrder"></NewOrder>
@@ -30,7 +30,7 @@
 import Portfolio from "@/components/entities/pos/Portfolio";
 import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
-import Orderbook from "@/components/entities/order/Orderbook";
+import BalSheet from "@/components/entities/party/BalanceSheet";
 // import AssetBase from "@/components/asset/AssetBase";
 import PartyService from "../../service/party.service";
 export default {
@@ -63,13 +63,16 @@ export default {
     },
     getPortfolio() {
       this.$refs.portfolio.getPortfolio(this.getPrivatePerson().id);
+    },
+    getBalSheet(){
+      this.$refs.balSheet.getBalSheet(this.getPrivatePerson().id);
     }
   },
   components: {
     Portfolio,
     MyOrders,
     NewOrder,
-    Orderbook
+    BalSheet
   }
 };
 </script>

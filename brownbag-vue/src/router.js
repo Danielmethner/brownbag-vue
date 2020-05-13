@@ -64,10 +64,10 @@ export const router = new Router({
       component: () => import('./components/business/BusinessBase.vue')
     },
     {
-      path: '/tradingdesk',
-      name: 'tradingdesk',
+      path: '/marketresearch',
+      name: 'marketresearch',
       // lazy-loaded
-      component: () => import('./components/market-research/Tradingdesk.vue')
+      component: () => import('./components/market-research/MarketResearch.vue')
     },
     {
       path: '/Log',
