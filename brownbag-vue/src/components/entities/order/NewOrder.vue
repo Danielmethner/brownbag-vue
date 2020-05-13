@@ -112,7 +112,7 @@
                 <button @click="placeOrder()" class="btn btn-primary btn-block">Place Order</button>
               </div>
               <div class="form-group col-6">
-                <button class="btn btn-dark btn-block">Clear Form</button>
+                <button @click="clearForm()" class="btn btn-dark btn-block">Clear Form</button>
               </div>
             </div>
           </div>
@@ -145,8 +145,8 @@ export default {
       newOrder: {
         assetId: null,
         orderDir: "BUY",
-        priceLimit: 0,
-        qty: 0,
+        priceLimit: null,
+        qty: null,
         qtyAvbl: 0,
         fundsAvbl: 0,
         orderType: "STEX",
@@ -162,13 +162,7 @@ export default {
       return amt;
     },
     isSellOrder: function() {
-      if (this.newOrder.orderDir == "SELL"){
-        console.log("Is Sell Order");
-        return true;
-      } else {
-        console.log("Is BUY Order");
-        return false;
-      }
+        return this.newOrder.orderDir == "SELL";
     }
   },
   mounted() {
@@ -225,11 +219,23 @@ export default {
       OrderService.placeOrder(this.newOrder).then(
         response => {
           this.status = response.data;
+           this.clearForm();
         },
         error => {
           this.status = "Error: " && error;
         }
       );
+    },
+    clearForm() {
+      this.newOrder.assetId = null;
+      this.newOrder.qty = null;
+      this.newOrder.priceLimit = null;
+      this.newOrder.qtyAvbl = 0;
+      PartyService.getAvblQty(this.newOrder.partyId, 1).then(response => {
+        this.newOrder.fundsAvbl = response.data;
+      });
+      // vm.$forceUpdate();
+      
     }
   }
 };

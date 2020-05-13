@@ -8,7 +8,10 @@
         :fields="headers"
         thead-tr-class="table-info"
         sort-icon-left
-      ></b-table>
+      > 
+      <template v-slot:cell(qty)="data">{{ data.item.qty  | toNumber }}</template>       
+        <template v-slot:cell(priceAvg)="data">{{ data.item.priceAvg | toCurrency }}</template>
+      </b-table>
     </div>
   </div>
 </template>
@@ -28,7 +31,7 @@ export default {
         { label: "Qty", key: "qty", sortable: true },
         { label: "Qty Blocked", key: "qtyBlocked", sortable: true },
         { label: "Buy Price", key: "priceAvg", sortable: true },
-        { label: "Curr. Price", key: "priceAvg", sortable: true },
+        { label: "Curr. Price",  sortable: true },
         { label: "P/L [%]", key: "priceLimit", sortable: true }
       ]
     };

@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="jumbotron">
-      <h1>Business Information</h1>
+      <h1>Business Management</h1>
     </header>
     <div class="row">
       <div class="col-md-4">

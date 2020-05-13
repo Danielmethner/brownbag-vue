@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="jumbotron">
-      <h1>Personal Information</h1>
+      <h1>Personal Finance</h1>
     </header>
     <div>
       <b-tabs content-class="mt-3">

@@ -46,12 +46,22 @@ Vue.filter('toCurrency', function (value) {
   }
   var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'EUR',
     minimumFractionDigits: 2
   });
   return formatter.format(value);
 });
-
+Vue.filter('toNumber', function (value) {
+  if (typeof value !== "number") {
+    return value;
+  }
+  var formatter = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    useGrouping: true,
+    minimumFractionDigits: 2
+  });
+  return formatter.format(value);
+});
 // TIMESTAMP
 Vue.filter('formatDate', function (value) {
   if (value) {

@@ -11,7 +11,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <router-link v-if="currentUser" to="/private" class="nav-link">Private Affairs</router-link>
+          <router-link v-if="currentUser" to="/private" class="nav-link">Personal Finance</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
           <router-link v-if="currentUser" to="/business" class="nav-link">Business Management</router-link>

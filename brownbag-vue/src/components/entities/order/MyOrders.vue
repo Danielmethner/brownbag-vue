@@ -12,7 +12,7 @@
         <template v-slot:cell(orderDir)="data">
           <span class="font-weight-bold" :class="formatDir(data.item.orderDir)">{{ data.item.orderDir }}</span>
         </template>
-        <template v-slot:cell(qty)="data">{{ data.item.qty }}</template>
+        <!-- <template v-slot:cell(qty)="data">{{ data.item.qty | toNumber }}</template> -->
         <template v-slot:cell(qtyExec)="data">{{ data.item.qtyExec }}</template>
         <template v-slot:cell(priceLimit)="data">{{ data.item.priceLimit | toCurrency }}</template>
       </b-table>
