@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row"  v-show="myorders.length > 0">
+    <div class="row" v-show="myorders.length > 0">
       <div class="col-md-12">
         <b-table
           striped
@@ -19,12 +19,15 @@
           <!-- <template v-slot:cell(qty)="data">{{ data.item.qty | toNumber }}</template> -->
           <template v-slot:cell(qtyExec)="data">{{ data.item.qtyExec }}</template>
           <template v-slot:cell(priceLimit)="data">{{ data.item.priceLimit | toCurrency }}</template>
+          <template v-slot:cell(discard)="row">
+            <b-button size="sm" variant="outline-danger" @click="discardOrder(row.item)" v-if="discardeable(row.item)" >Discard</b-button>
+          </template>
         </b-table>
       </div>
     </div>
     <div class="row" v-show="myorders.length==0">
       <div class="col-md-12">
-        <h2>This business has not placed any orders yet!</h2>
+        <h2>Please wait. If no orders appear here, the user may not have placed any orders yet.</h2>
       </div>
     </div>
   </div>
@@ -50,12 +53,23 @@ export default {
           key: "orderStatus",
           sortable: true,
           filterByFormatted: true
-        }
+        },
+        {key: "discard" },
       ]
     };
   },
   mounted() {},
   methods: {
+    discardeable(orderStex) {
+      return ['PLACED'].includes(orderStex.orderStatus);
+    },
+    discardOrder(orderStex) {
+      console.log("Discard Order");
+      console.log(orderStex);
+      OrderService.discardOrder(orderStex.id).then(() => {
+        this.getMyOrders(orderStex.partyId);
+      });
+    },
     getMyOrders(partyId) {
       this.myorders = [];
       OrderService.getByParty(partyId).then(response => {

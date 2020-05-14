@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="jumbotron">
-      <h1>Personal Finance</h1>
+      <h1>Personal Finance: {{personName}}</h1>
     </header>
     <div>
       <b-tabs content-class="mt-3">
@@ -42,7 +42,11 @@ export default {
   },
   mounted() {
     this.getPortfolio();
-
+  },
+  computed: {
+    personName: function() {
+      return this.getPrivatePerson().name;
+    }
   },
   methods: {
     getPrivatePerson() {
@@ -53,7 +57,7 @@ export default {
         });
       }
       return this.$store.state.party.privatePerson;
-    },    
+    },
     getMyOrders() {
       this.$refs.myOrders.getMyOrders(this.getPrivatePerson().id);
     },
@@ -64,7 +68,7 @@ export default {
     getPortfolio() {
       this.$refs.portfolio.getPortfolio(this.getPrivatePerson().id);
     },
-    getBalSheet(){
+    getBalSheet() {
       this.$refs.balSheet.getBalSheet(this.getPrivatePerson().id);
     }
   },
