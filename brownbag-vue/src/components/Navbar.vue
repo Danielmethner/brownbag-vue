@@ -20,6 +20,9 @@
           <router-link v-if="currentUser" to="/marketresearch" class="nav-link">Market Research</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
+          <router-link v-if="userIsBroker" to="/brokerage" class="nav-link">Brokerage</router-link>
+        </b-navbar-nav>
+        <b-navbar-nav>
           <router-link v-if="currentUser" to="/log" class="nav-link">Application Log</router-link>
         </b-navbar-nav>
         <!-- Public pages-->
@@ -53,7 +56,6 @@
 </template>
 
 <script>
-
 export default {
   computed: {
     currentUser() {
@@ -67,7 +69,7 @@ export default {
     },
     userIsBroker() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes("ROLE_BROKER");
+        return this.currentUser.roles.includes("Broker");
       }
       return false;
     },

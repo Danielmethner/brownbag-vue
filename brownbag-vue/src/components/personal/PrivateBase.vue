@@ -41,7 +41,10 @@ export default {
     };
   },
   mounted() {
-    this.getPortfolio();
+    PartyService.getPrivatePerson().then(response => {
+      this.$store.commit("party/privatePerson", response.data);
+      this.getPortfolio();
+    });
   },
   computed: {
     personName: function() {

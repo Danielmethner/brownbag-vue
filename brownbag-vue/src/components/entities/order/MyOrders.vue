@@ -64,8 +64,6 @@ export default {
       return ['PLACED'].includes(orderStex.orderStatus);
     },
     discardOrder(orderStex) {
-      console.log("Discard Order");
-      console.log(orderStex);
       OrderService.discardOrder(orderStex.id).then(() => {
         this.getMyOrders(orderStex.partyId);
       });

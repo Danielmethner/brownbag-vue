@@ -46,16 +46,16 @@ export const router = new Router({
       component: () => import('./components/auth/Profile.vue')
     },
     {
-      path: '/broker',
-      name: 'broker',
+      path: '/brokerage',
+      name: 'brokerage',
       // lazy-loaded
-      component: () => import('./components/broker/BoardBroker.vue')
+      component: () => import('./components/broker/BrokerBase.vue')
     },
     {
       path: '/private',
       name: 'private',
       // lazy-loaded
-      component: () => import('./components/private/PrivateBase.vue')
+      component: () => import('./components/personal/PrivateBase.vue')
     },
     {
       path: '/business',
@@ -79,7 +79,7 @@ export const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home', '/contact','/imprint'];
+  const publicPages = ['/login', '/register', '/home', '/contact', '/imprint'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 

@@ -108,7 +108,7 @@
                 <button @click="placeOrder()" class="btn btn-primary btn-block">Place Order</button>
               </div>
               <div class="form-group col-6">
-                <button @click="clearForm()" class="btn btn-dark btn-block">Clear Form</button>
+                <button @click="clearForm(true  )" class="btn btn-dark btn-block">Clear Form</button>
               </div>
             </div>
           </div>
@@ -172,6 +172,7 @@ export default {
   },
   methods: {
     changeAsset() {
+      this.status = "";
       this.newOrder.qtyAvbl = 0;
       PartyService.getAvblQty(
         this.newOrder.partyId,
@@ -181,6 +182,7 @@ export default {
       });
     },
     setParty(party) {
+      this.status = "";
       this.newOrder.partyId = party.id;
       this.newOrder.partyName = party.name;
     },
@@ -218,14 +220,17 @@ export default {
       OrderService.placeOrder(this.newOrder).then(
         response => {
           this.status = response.data;
-          this.clearForm();
+          this.clearForm(false);
         },
         error => {
           this.status = "Error: " && error;
         }
       );
     },
-    clearForm() {
+    clearForm(clearStatus) {
+      if (clearStatus) {
+        this.status = "";
+      }
       this.newOrder.assetId = null;
       this.newOrder.qty = null;
       this.newOrder.priceLimit = null;

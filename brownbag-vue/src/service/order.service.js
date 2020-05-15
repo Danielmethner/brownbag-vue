@@ -6,6 +6,8 @@ const ORDER_GET_BY_PARTY = '/api/order/stex/party/'
 const ORDER_GET_PLACED_AND_ASSET = '/api/order/stex/placed/asset/'
 const ORDER_STEX = '/api/order/stex/'
 const ORDER_DISC = '/disc'
+const ORDER_MATCH_BUY = '/api/order/stex/match/buy/';
+const SELL = '/sell/';
 import jsonHeader from './json-header';
 
 class OrderService {
@@ -36,6 +38,14 @@ class OrderService {
   getOrdersByPlacedAndAsset(assetId) {
     return axios
       .get(GLOBAL.API_BASE_URL + ORDER_GET_PLACED_AND_ASSET + assetId, { headers: jsonHeader() });
+  }
+  matchOrders(orderBuyId, orderSellId) {
+    if (orderBuyId == null || orderSellId == null) {
+      return null;
+    } else {
+      return axios
+        .get(GLOBAL.API_BASE_URL + ORDER_MATCH_BUY + orderBuyId + SELL + orderSellId, { headers: jsonHeader() });
+    }
   }
 }
 
