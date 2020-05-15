@@ -16,12 +16,10 @@ export const router = new Router({
   routes: [
     {
       path: '',
-      name: 'home',
       component: Home
     },
     {
       path: '/',
-      name: 'home',
       component: Home
     },
     {
@@ -84,7 +82,7 @@ export const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home', '/contact', '/imprint'];
+  const publicPages = ['', '/', '/home', '/login', '/register', '/contact', '/imprint'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 
