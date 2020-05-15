@@ -6,17 +6,9 @@
     </header>
     <div class="row">
       <div class="col-md-12">
-                <b-table
-          striped
-          hover
-          :items="logs"
-          :fields="headers"
-           head-variant="dark"
-          sort-icon-left
-        >    
-        <template v-slot:cell(timestamp)="data" >{{ data.item.timestamp }}</template>
+        <b-table striped hover :items="logs" :fields="headers" head-variant="dark" sort-icon-left>
+          <template v-slot:cell(timestamp)="data">{{ data.item.timestamp | formatDate}}</template>
         </b-table>
-       
       </div>
     </div>
   </div>
