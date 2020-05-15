@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col">
         <h4>
-          No accont yet?
+          No account yet?
           <router-link to="/register" class>Sign up here!</router-link>
         </h4>
       </div>
