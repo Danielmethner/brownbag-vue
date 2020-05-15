@@ -1,20 +1,32 @@
 <template>
 <div>
-  <header class="col-md-12">
-    <h1>Value Investing</h1>
-    <h2>How do get started</h2>
+  <header>
+    <div class="row">
+      <div class="col">
+        <h1>Value Investing</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h4>
+          No accont yet?
+          <router-link to="/register" class>Sign up here!</router-link>
+        </h4>
+      </div>
+    </div>
   </header>
   <body>
-    <p>Please create an account to get started!</p>
-    <p>
-      Current Mode:
-      <b>{{mode}}</b>
-    </p>
+    <div class="row">
+      <div class="col-md-12">
+        <Login></Login>
+      </div>
+    </div>
   </body>
 </div>
 </template>
 
 <script>
+import Login from "@/components/auth/Login";
 import authHeader from "../service/auth-header";
 import axios from "axios";
 export default {
@@ -31,6 +43,9 @@ export default {
         headers: authHeader()
       });
     }
+  },
+  components: {
+    Login
   }
 };
 </script>
@@ -38,10 +53,11 @@ export default {
 header {
   display: block;
   padding-top: 2em;
+  padding-bottom: 0;
   text-align: center;
 }
 
 body {
-  padding-top: 2em;
+  padding-top: 0;
 }
 </style>

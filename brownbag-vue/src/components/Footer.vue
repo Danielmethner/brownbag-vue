@@ -43,10 +43,6 @@ export default {
           items: [
             { title: "Overview", destination: { name: "" } },
             { title: "Contact", destination: { name: "" } },
-            {
-              title: "Data Privacy",
-              destination: { name: "" }
-            }
           ]
         }
       ]
