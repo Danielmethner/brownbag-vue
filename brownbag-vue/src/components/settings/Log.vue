@@ -6,23 +6,17 @@
     </header>
     <div class="row">
       <div class="col-md-12">
-        <table class="table table-striped">
-          <thead class="table-dark">
-            <tr class="bg-success"></tr>
-            <tr>
-              <th class="col-md-1">ID</th>
-              <th class="col-md-2">Timestamp</th>
-              <th class="col-md-10">Message</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="entry in logs" v-bind:key="entry.id">
-              <td class="col-md-1">{{entry.id}}</td>
-              <td class="col-md-1">{{entry.timestamp | formatDate}}</td>
-              <td class="col-md-10">{{entry.message}}</td>
-            </tr>
-          </tbody>
-        </table>
+                <b-table
+          striped
+          hover
+          :items="logs"
+          :fields="headers"
+           head-variant="dark"
+          sort-icon-left
+        >    
+        <template v-slot:cell(timestamp)="data" >{{ data.item.timestamp }}</template>
+        </b-table>
+       
       </div>
     </div>
   </div>
@@ -34,10 +28,15 @@ export default {
   name: "Log",
   data() {
     return {
-      logs: []
+      logs: [],
+      headers: [
+        { label: "ID", key: "id", sortable: true },
+        { label: "Timestamp", key: "timestamp", sortable: true },
+        { label: "Message", key: "message", sortable: true }
+      ]
     };
   },
-    mounted() {
+  mounted() {
     this.getLogs();
   },
   methods: {
@@ -54,7 +53,7 @@ export default {
       });
     }
   }
-}
+};
 </script>
 <style>
 .jumbotron {

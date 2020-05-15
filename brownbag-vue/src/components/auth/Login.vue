@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import VeeValidate from 'vee-validate';
+// import VeeValidate from 'vee-validate';
 import User from "@/model/user";
 import PartyService from "@/service/party.service";
 
