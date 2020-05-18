@@ -24,7 +24,7 @@ export default {
       headers: [
         { label: "ID", key: "id", sortable: true },
         { label: "Timestamp", key: "timestamp", sortable: true },
-        { label: "Message", key: "message", sortable: true }
+        { label: "Message", key: "message" }
       ]
     };
   },

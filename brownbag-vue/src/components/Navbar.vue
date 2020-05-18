@@ -3,7 +3,7 @@
     <b-navbar class="bg-dark" toggleable="md" type="dark" variant="info">
       <b-navbar-brand>
         <router-link to="/home" class="nav-link nav-brand">
-          <font-awesome-icon icon="home" />Home
+          <font-awesome-icon icon="home" /> Home
         </router-link>
       </b-navbar-brand>
 
@@ -27,8 +27,8 @@
         </b-navbar-nav>
         <!-- Public pages-->
         <b-navbar-nav v-if="!currentUser">
-          <router-link to="/contact" class="nav-link">Architecture</router-link>
-          <router-link to="/contact" class="nav-link">Trading Simulation</router-link>
+          <router-link to="/architecture" class="nav-link">Architecture</router-link>
+          <router-link to="/trading-simulation" class="nav-link">Trading Simulation</router-link>
           <router-link to="/contact" class="nav-link">Contact</router-link>
           <router-link to="/imprint" class="nav-link">Imprint</router-link>
         </b-navbar-nav>

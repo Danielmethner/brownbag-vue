@@ -1,10 +1,8 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-md-12 div-welcome">
-        <h1>Imprint</h1>
-      </div>
-    </div>
+    <header>
+      <h1>Imprint</h1>
+    </header>
   </div>
 </template>
 

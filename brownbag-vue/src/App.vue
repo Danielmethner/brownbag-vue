@@ -26,6 +26,13 @@ export default {
   margin: 0;
   padding: 0;
 }
+
+header {
+  display: block;
+  padding-top: 2em;
+  padding-bottom: 0;
+  text-align: center;
+}
 html,
 body {
   height: 100%;

@@ -50,14 +50,4 @@ export default {
 };
 </script>
 <style scoped>
-header {
-  display: block;
-  padding-top: 2em;
-  padding-bottom: 0;
-  text-align: center;
-}
-
-body {
-  padding-top: 0;
-}
 </style>

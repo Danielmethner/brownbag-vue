@@ -1,14 +1,14 @@
 <template>
   <div>
     <header>
-      <h1>Contact</h1>
+      <h1>Trading Simulation</h1>
     </header>
   </div>
 </template>
 
 <script>
 export default {
-  name: "contact"
+  name: "TradingSimulation"
 };
 </script>
 
