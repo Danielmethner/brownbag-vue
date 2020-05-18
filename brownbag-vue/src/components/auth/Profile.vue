@@ -35,7 +35,9 @@
                 <b>Authorities</b>
               </td>
               <td>
-                <label v-for="(role,index) in currentUser.roles" :key="index">&rArr; {{role}}</label>
+                <div v-for="(role,index) in currentUser.roles" :key="index">
+                  <label>&rArr; {{role}}</label>
+                </div>
               </td>
             </tr>
           </tbody>
