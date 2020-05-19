@@ -32,7 +32,7 @@
     </div>
     <div class="row"  v-show="!businessId">
       <div class="col-md-12">
-        <h2>Select a business to view its content!</h2>
+        <h4>To find more information about a business here, please select it from the dropdown.</h4>
       </div>
     </div>
   </div>
