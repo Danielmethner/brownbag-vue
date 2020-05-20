@@ -64,6 +64,10 @@ Vue.filter('toNumber', function (value) {
 });
 // TIMESTAMP
 Vue.filter('formatDate', function (value) {
+  let regex = new RegExp('\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d\\+\\d\\d\\d\\d');
+  if (!(regex.test(value))) {
+    return value;
+  }
   if (value) {
     return moment(String(value)).format('DD. MMM  YYYY hh:mm:ss')
   }
@@ -72,7 +76,7 @@ Vue.filter('formatDate', function (value) {
 // BUY/SELL
 Vue.filter('buySell', function (value) {
   if (value === 'BUY') {
-    return 
+    return
   }
 });
 

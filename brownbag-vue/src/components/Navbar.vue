@@ -23,7 +23,7 @@
           <router-link v-if="userIsBroker" to="/brokerage" class="nav-link">Brokerage</router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link v-if="currentUser" to="/log" class="nav-link">Application Log</router-link>
+          <router-link v-if="currentUser" to="/system-control" class="nav-link">System Control</router-link>
         </b-navbar-nav>
         <!-- Public pages-->
         <b-navbar-nav v-if="!currentUser">

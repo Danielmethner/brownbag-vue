@@ -81,10 +81,10 @@ export const router = new Router({
       component: () => import('./components/market-research/MarketResearch.vue')
     },
     {
-      path: '/Log',
-      name: 'log',
+      path: '/system-control',
+      name: 'system-control',
       // lazy-loaded
-      component: () => import('./components/settings/Log.vue')
+      component: () => import('./components/settings/SystemControl.vue')
     }
   ]
 });

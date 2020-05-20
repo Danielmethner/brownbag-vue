@@ -1,9 +1,5 @@
 <template>
   <div>
-    <header class="jumbotron">
-      <h1>Application Log</h1>
-      <h3>Monitor Database Output</h3>
-    </header>
     <div class="row">
       <div class="col-md-12">
         <b-table striped hover :items="logs" :fields="headers" head-variant="dark" sort-icon-left>
