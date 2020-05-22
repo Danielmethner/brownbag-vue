@@ -23,6 +23,7 @@ export default {
         { label: "Data Type", key: "dataType", sortable: true },
         { label: "Last Modified", key: "timestampModified", sortable: true },
         { label: "Name", key: "name", sortable: true },
+        { label: "Key", key: "key", sortable: true },
         { label: "Value", key: "val", sortable: true }
       ]
     };
@@ -57,6 +58,7 @@ export default {
             dataType: ctrlVar.dataType,
             timestampModified: ctrlVar.timestampModified,
             name: ctrlVar.name,
+            key: ctrlVar.key,
             val: val
           });
         });

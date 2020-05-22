@@ -11,6 +11,9 @@
         <b-tab title="Control Variables" @click="getCtrlVars()">
           <CtrlVars ref="ctrlVars"></CtrlVars>
         </b-tab>
+        <b-tab title="Settings" @click="getSettings()">
+          <Settings ref="settings"></Settings>
+        </b-tab>
       </b-tabs>
     </div>
   </div>
@@ -19,7 +22,7 @@
 <script>
 import Log from "@/components/settings/Log";
 import CtrlVars from "@/components/settings/CtrlVars";
-
+import Settings from "@/components/settings/Settings";
 export default {
   name: "SystemControl",
   data() {
@@ -34,11 +37,15 @@ export default {
     },
     getCtrlVars() {
       this.$refs.ctrlVars.getCtrlVars();
+    },
+    getSettings() {
+      this.$refs.settings.getSettings();
     }
   },
   components: {
     Log,
-    CtrlVars
+    CtrlVars,
+    Settings
   }
 };
 </script>
