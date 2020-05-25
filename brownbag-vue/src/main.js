@@ -58,7 +58,21 @@ Vue.filter('toNumber', function (value) {
   var formatter = new Intl.NumberFormat('en-US', {
     style: 'decimal',
     useGrouping: true,
-    minimumFractionDigits: 2
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+  return formatter.format(value);
+});
+
+Vue.filter('toPercent', function (value) {
+  if (typeof value !== "number") {
+    return value;
+  }
+  var formatter = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    useGrouping: true,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   });
   return formatter.format(value);
 });

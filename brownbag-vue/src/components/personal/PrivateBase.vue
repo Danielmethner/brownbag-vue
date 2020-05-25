@@ -5,8 +5,11 @@
     </header>
     <div>
       <b-tabs content-class="mt-3">
-        <b-tab title="My Portfolio" @click="getPortfolio()">
+        <b-tab title="Portfolio" @click="getPortfolio()">
           <Portfolio ref="portfolio"></Portfolio>
+        </b-tab>
+        <b-tab title="Financing" @click="getFinancing()">
+          <Financing ref="financing"></Financing>
         </b-tab>
         <b-tab title="Transactions" @click="getPositions()">
           <Transactions ref="trx"></Transactions>
@@ -31,6 +34,7 @@
 
 <script>
 import Portfolio from "@/components/entities/pos/Portfolio";
+import Financing from "@/components/entities/pos/Financing";
 import Transactions from "@/components/entities/pos/Transactions";
 import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
@@ -75,6 +79,9 @@ export default {
     getPortfolio() {
       this.$refs.portfolio.getPortfolio(this.getPrivatePerson().id);
     },
+    getFinancing() {
+      this.$refs.financing.getFinancing(this.getPrivatePerson().id);
+    },
     getPositions() {
       this.$refs.trx.getPositions(this.getPrivatePerson());
     },
@@ -84,6 +91,7 @@ export default {
   },
   components: {
     Portfolio,
+    Financing,
     Transactions,
     MyOrders,
     NewOrder,
