@@ -9,7 +9,7 @@
     <div class="row" v-if="hasLogs == 2">
       <div class="col-md-12">
         <b-table striped hover :items="logs" :fields="headers" head-variant="dark" sort-icon-left>
-          <template v-slot:cell(timestamp)="data">{{ data.item.timestamp | formatDate}}</template>
+          <template v-slot:cell(timestamp)="data">{{ data.item.timestamp | toTimestamp}}</template>
         </b-table>
       </div>
     </div>

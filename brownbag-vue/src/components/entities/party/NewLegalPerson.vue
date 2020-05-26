@@ -17,7 +17,7 @@
             <div class="form-group row">
               <div class="form-group col">
                 <label for="inputLegalForm">Legal Form</label>
-                <b-form-select v-model="newLegalPerson.legalform" :options="legalFormList">
+                <b-form-select v-model="newLegalPerson.legalForm" :options="legalFormList">
                   <option disabled value="null">{{legalFormDflt}}</option>
                 </b-form-select>
               </div>
@@ -45,7 +45,7 @@
                   class="form-control"
                   id="avblQty"
                   step="1"
-                  v-model="newLegalPerson.qtyShares"
+                  v-model="newLegalPerson.assetShareQty"
                 />
               </div>
               <div class="form-group col">
@@ -91,25 +91,25 @@ export default {
       status: null,
       newLegalPerson: {
         name: 'MyName',
-        legalform: 'CORP',
+        legalForm: 'CORP',
         shareCapital: 25000,
-        qtyShares: 1
+        assetShareQty: 1
       }
     };
   },
   computed: {
     isCorporation() {
-      return this.newLegalPerson.legalform == "CORP";
+      return this.newLegalPerson.legalForm == "CORP";
     },
     legalFormDflt() {
       return "Select Legal Form";
     },
     nomVal() {
-      if (!this.newLegalPerson.qtyShares > 0) {
+      if (!this.newLegalPerson.assetShareQty > 0) {
         return null;
       }
       let nomVal = Math.round(
-        this.newLegalPerson.shareCapital / this.newLegalPerson.qtyShares,
+        this.newLegalPerson.shareCapital / this.newLegalPerson.assetShareQty,
         2
       );
 
@@ -118,8 +118,8 @@ export default {
   },
   mounted() {
     EnumService.getLegalFormList().then(response => {
-      response.data.forEach(legalform => {
-        let dropdownItem = { value: legalform.key, text: legalform.name };
+      response.data.forEach(legalForm => {
+        let dropdownItem = { value: legalForm.key, text: legalForm.name };
         this.legalFormList.push(dropdownItem);
       });
     });
@@ -127,7 +127,7 @@ export default {
   methods: {
     createBusiness() {
       this.status = " ";
-      if (this.newLegalPerson.legalform == null) {
+      if (this.newLegalPerson.legalForm == null) {
         this.status = "Error: Legal Form must be set!";
         return;
       }
@@ -142,6 +142,8 @@ export default {
       PartyService.createParty(this.newLegalPerson).then(response => {
         this.status = response.data;
         this.clearForm();
+      }).catch(error => {
+        this.status = error;
       });
     },
     clearForm() {

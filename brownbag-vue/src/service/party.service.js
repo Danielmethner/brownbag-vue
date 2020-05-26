@@ -2,7 +2,7 @@ import axios from 'axios';
 import { GLOBAL } from '../store/index.js'
 import authHeader from './auth-header';
 
-const PARTY_CREATE = '/api/party/create';
+const PARTY_LEGALPERSON_CREATE = '/api/party/legalperson/create';
 const PARTY_GET_ALL = '/api/party/all';
 const PARTY_GET_PRIV_PERSON_BY_USER = '/api/party/priv';
 const PARTY_GET_BY_ID = '/api/party/';
@@ -15,7 +15,7 @@ class PartyService {
 
   createParty(party) {
     return axios
-      .post(GLOBAL.API_BASE_URL + PARTY_CREATE, party, { headers: authHeader() });
+      .post(GLOBAL.API_BASE_URL + PARTY_LEGALPERSON_CREATE, party, { headers: authHeader() });
   }
 
   getAll() {
