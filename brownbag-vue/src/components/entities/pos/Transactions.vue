@@ -27,7 +27,7 @@
           thead-tr-class="table-info"
           sort-icon-left
         >
-          <template v-slot:cell(timestamp)="data">{{ data.item.timestamp | formatDate}}</template>
+          <template v-slot:cell(timestamp)="data">{{ data.item.timestamp | toTimestamp}}</template>
         </b-table>
       </div>
     </div>

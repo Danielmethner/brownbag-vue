@@ -77,13 +77,24 @@ Vue.filter('toPercent', function (value) {
   return formatter.format(value);
 });
 // TIMESTAMP
-Vue.filter('formatDate', function (value) {
+Vue.filter('toTimestamp', function (value) {
   let regex = new RegExp('\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d\\+\\d\\d\\d\\d');
   if (!(regex.test(value))) {
     return value;
   }
   if (value) {
     return moment(String(value)).format('DD. MMM  YYYY hh:mm:ss')
+  }
+});
+
+// TIMESTAMP
+Vue.filter('LocalDateTimetoDate', function (value) {
+  let regex = new RegExp('\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d');
+  if (!(regex.test(value))) {
+    return value;
+  }
+  if (value) {
+    return moment(String(value)).format('DD. MMM  YYYY')
   }
 });
 

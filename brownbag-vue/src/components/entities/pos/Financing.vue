@@ -9,8 +9,10 @@
         thead-tr-class="table-info"
         sort-icon-left
       >
-        <template v-slot:cell(qty)="data">{{ data.item.qty | toNumber }}</template>
-        <template v-slot:cell(priceAvg)="data">{{ data.item.priceAvg | toCurrency }}</template>
+        <template v-slot:cell(intrRate)="data">{{ data.item.intrRate/ 100 | toPercent }}</template>
+        <template v-slot:cell(balance)="data">{{ data.item.balance | toCurrency }}</template>
+        <template v-slot:cell(principal)="data">{{ data.item.principal | toCurrency }}</template>
+        <template v-slot:cell(matDate)="data">{{ data.item.matDate | LocalDateTimetoDate }}</template>
       </b-table>
     </div>
   </div>
@@ -27,19 +29,20 @@ export default {
       party: null,
       headers: [
         { label: "Pos ID", key: "id", sortable: true },
-        { label: "Asset", key: "assetName", sortable: true },
-        { label: "Qty", key: "qty", sortable: true },
+        { label: "Lender", key: "lenderName", sortable: true },
+        { label: "Intr. Rate", key: "intrRate", sortable: true },
+        { label: "Balance", key: "balance", sortable: true },
+        { label: "Principal", key: "principal", sortable: true },
+        { label: "Maturity", key: "matDate", sortable: true }
       ]
     };
   },
   methods: {
     getFinancing(partyId) {
       this.positions = [];
-      PosService.getPosByPartyId(partyId).then(response => {
+      PosService.getPosLoanByPartyId(partyId).then(response => {
         response.data.forEach(pos => {
-          if (pos.qty < 0) {
-            this.positions.push(pos);
-          }
+          this.positions.push(pos);
         });
       });
     }
