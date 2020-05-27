@@ -15,12 +15,7 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <b-tabs content-class="mt-3">
-            <div>
-              <b-tab title="Create Business" @click="newLegalPerson()">
-                <NewLegalPerson ref="newlegalperson"></NewLegalPerson>
-              </b-tab>
-            </div>
+          <b-tabs content-class="mt-3" v-model="selectedTab">
             <div v-if="businessId">
               <b-tab title="Portfolio" @click="getPortfolio()">
                 <Portfolio ref="portfolio"></Portfolio>
@@ -35,14 +30,14 @@
                 <NewOrder ref="newOrder"></NewOrder>
               </b-tab>
             </div>
+            <div>
+              <b-tab title="Create Business" @click="newLegalPerson()">
+                <NewLegalPerson ref="newlegalperson"></NewLegalPerson>
+              </b-tab>
+            </div>
           </b-tabs>
         </div>
       </div>
-      <!-- <div class="row" v-show="!businessId">
-        <div class="col-md-12">
-          <h5>To find more information about a business here, please select it from the dropdown.</h5>
-        </div>
-      </div>-->
     </div>
   </div>
 </template>
@@ -53,7 +48,6 @@ import NewOrder from "@/components/entities/order/NewOrder";
 import Portfolio from "@/components/entities/pos/Portfolio";
 import BalSheet from "@/components/entities/party/BalanceSheet";
 import NewLegalPerson from "@/components/entities/party/NewLegalPerson";
-// import AssetBase from "@/components/asset/AssetBase";
 import PartyService from "../../service/party.service";
 
 export default {
@@ -61,13 +55,22 @@ export default {
   data() {
     return {
       businessId: 0,
-      businessListDD: []
+      businessListDD: [],
+      selectedTab: null,
+      prevBus: null,
+      changeTab: false
     };
   },
   mounted() {
     this.getParties();
   },
-
+  updated() {
+    // SET DEFAULT TAB TO 0 WHEN SELECTING A BUSINESS FOR FIRST TIME
+    if (this.selectedTab > 0 && this.prevBus == null) {
+      this.selectedTab = 0;
+      this.prevBus = this.businessId;
+    }
+  },
   computed: {
     selectBusinessDflt() {
       if (this.businessListDD.length > 1) {
@@ -78,9 +81,10 @@ export default {
     }
   },
   methods: {
-    newLegalPerson() {
-    },
+    newLegalPerson() {},
     changeParty() {
+      let party = this.$store.getters["party/business"](this.businessId);
+      this.$store.commit("party/privatePerson", party);
       this.getPortfolio();
       this.getMyOrders();
       this.genNewOrder();
@@ -91,10 +95,10 @@ export default {
         PartyService.getAll().then(response => {
           this.$store.commit("party/businessList", response.data);
           this.businessListDD = [];
-          // response.data.forEach(business => {
-          //   let dropdownItem = { value: business.id, text: business.name };
-          //   this.businessListDD.push(dropdownItem);
-          // });
+          response.data.forEach(business => {
+            let dropdownItem = { value: business.id, text: business.name };
+            this.businessListDD.push(dropdownItem);
+          });
           this.$store.commit("party/businessListDD", this.businessListDD);
         });
       } else {
@@ -102,14 +106,12 @@ export default {
       }
     },
     genNewOrder() {
-      this.getParties();
       if (this.businessId != null) {
         let party = this.$store.getters["party/business"](this.businessId);
         this.$refs.newOrder.genNewOrder(party);
       }
     },
     getMyOrders() {
-      this.getParties();
       if (this.businessId) {
         this.$refs.myOrders.getMyOrders(this.businessId);
       }
