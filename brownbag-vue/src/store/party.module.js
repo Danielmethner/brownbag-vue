@@ -10,14 +10,18 @@ export const party = {
 		},
 		privatePerson(state, privatePerson) {
 			state.privatePerson = privatePerson
+		},
+		business(state, business) {
+			state.business = business
 		}
 	},
 	getters: {
 		businessList: state => state.businessList,
 		businessListDD: state => state.businessListDD,
 		privatePerson: state => state.privatePerson,
-		business: (state) => (id) => {
+		business: state => state.business,
+		businessById: (state) => (id) => {
 			return state.businessList.find(business => business.id === id)
 		}
-    }
-  }
+	}
+}

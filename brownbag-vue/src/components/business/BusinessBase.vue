@@ -58,11 +58,18 @@ export default {
       businessListDD: [],
       selectedTab: null,
       prevBus: null,
-      changeTab: false
+      changeTab: false,
+      business: null
     };
   },
   mounted() {
     this.getParties();
+    console.log(this.$store.state.party.business);
+    this.business = this.$store.state.party.business;
+    if(this.business.id != null) {
+      this.businessId =this.business.id;
+      this.prevBus = 0; 
+    }
   },
   updated() {
     // SET DEFAULT TAB TO 0 WHEN SELECTING A BUSINESS FOR FIRST TIME
@@ -83,8 +90,10 @@ export default {
   methods: {
     newLegalPerson() {},
     changeParty() {
-      let party = this.$store.getters["party/business"](this.businessId);
-      this.$store.commit("party/privatePerson", party);
+      this.business = this.$store.getters["party/businessById"](
+        this.businessId
+      );
+      this.$store.commit("party/business", this.business);
       this.getPortfolio();
       this.getMyOrders();
       this.genNewOrder();
@@ -106,9 +115,8 @@ export default {
       }
     },
     genNewOrder() {
-      if (this.businessId != null) {
-        let party = this.$store.getters["party/business"](this.businessId);
-        this.$refs.newOrder.genNewOrder(party);
+      if (this.business != null) {
+        this.$refs.newOrder.genNewOrder(this.business);
       }
     },
     getMyOrders() {
