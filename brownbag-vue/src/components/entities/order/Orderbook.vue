@@ -175,7 +175,7 @@ export default {
       headers: [
         { label: "Order ID", key: "id", sortable: true },
         { label: "Asset", key: "assetName", sortable: true },
-        { label: "Quantity", key: "qty", sortable: true },
+        { label: "Quantity", key: "qtyRemaining", sortable: true },
         { label: "Price", key: "priceLimit", sortable: true },
         { key: "match" }
       ]
@@ -197,8 +197,8 @@ export default {
       return "Orders are ready to be matched!";
     },
     execQty() {
-      let qtyBuy = this.orderBuy.qty;
-      let qtySell = this.orderSell.qty;
+      let qtyBuy = this.orderBuy.qtyRemaining;
+      let qtySell = this.orderSell.qtyRemaining;
       if (qtyBuy == null || qtySell == null) {
         return null;
       } else {
@@ -244,7 +244,7 @@ export default {
           "'. Party: '" +
           orderStex.partyName +
           "' Qty: " +
-          orderStex.qty +
+          orderStex.qtyRemaining +
           " Price: " +
           orderStex.priceLimit
         );
@@ -281,7 +281,9 @@ export default {
       if (assetId) {
         OrderService.getOrdersByPlacedAndAsset(assetId).then(response => {
           response.data.forEach(order => {
+            order.qtyRemaining = order.qty - order.qtyExec;
             if (order.orderDir == "BUY") {
+              
               this.orderbook.buyOrders.push(order);
             } else {
               this.orderbook.sellOrders.push(order);
