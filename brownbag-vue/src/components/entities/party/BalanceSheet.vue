@@ -2,45 +2,12 @@
   <div>
     <div class="row justify-content-md-center">
       <div class="col-md-2"></div>
-      <div class="col" v-if="balanceSheetPrev.name">
-        <h3>{{balanceSheetPrev.name}}</h3>
-        <div v-for="section in balanceSheetPrev.sections" v-bind:key="section.name">
-          <table class="table table-striped">
-            <thead class="table-dark">
-              <tr v-bind:class="section.style">
-                <th class="col-md-8">{{section.section}}</th>
-                <th class="col-md-2 text-right">{{balanceSheetPrev.finYear}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in section.items" v-bind:key="item.name">
-                <td class="col-md-8">{{item.itemType}}</td>
-                <td class="col-md-4 text-right">{{item.qty | toCurrency}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="col">
+        <FinStmt ref="balSheetPrevYear"></FinStmt>
       </div>
       <div class="col">
-        <h3>{{balanceSheet.name}}</h3>
-        <div v-for="section in balanceSheet.sections" v-bind:key="section.name">
-          <table class="table table-striped">
-            <thead class="table-dark">
-              <tr v-bind:class="section.style">
-                <th class="col-md-8">{{section.section}}</th>
-                <th class="col-md-2 text-right">{{balanceSheet.finYear}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in section.items" v-bind:key="item.name">
-                <td class="col-md-8">{{item.itemType}}</td>
-                <td class="col-md-4 text-right">{{item.qty | toCurrency}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+       <FinStmt ref="balSheetCurrYear"></FinStmt>
       </div>
-
       <div class="col-md-2"></div>
     </div>
   </div>
@@ -48,7 +15,7 @@
 
 <script>
 import PartyService from "@/service/party.service";
-
+import FinStmt from "@/components/entities/party/FinStmt";
 export default {
   name: "BalanceSheet",
   data() {
@@ -61,17 +28,12 @@ export default {
   },
   methods: {
     getBalSheet(partyId) {
-      this.balanceSheet = {};
-      this.balanceSheet.name = "Loading Balance Sheet";
-      PartyService.getBalSheetByPartyId(partyId).then(response => {
-        this.balanceSheet = response.data;
-      });
-
-      this.balanceSheetPrev = {};
-      PartyService.getBalSheetByPartyIdPrev(partyId).then(response => {
-        this.balanceSheetPrev = response.data;
-      });
+      this.$refs.balSheetPrevYear.getBalSheetByPartyIdPrev(partyId);
+      this.$refs.balSheetCurrYear.getBalSheetByPartyId(partyId);
     }
+  },
+  components: {
+    FinStmt
   }
 };
 </script>
