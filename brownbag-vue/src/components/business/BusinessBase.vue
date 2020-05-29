@@ -105,7 +105,7 @@ export default {
           this.$store.commit("party/businessList", response.data);
           this.businessListDD = [];
           response.data.forEach(business => {
-            let dropdownItem = { value: business.id, text: business.name };
+            let dropdownItem = { value: business.id, text: business.technicalName };
             this.businessListDD.push(dropdownItem);
           });
           this.$store.commit("party/businessListDD", this.businessListDD);

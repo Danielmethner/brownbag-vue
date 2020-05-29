@@ -12,7 +12,7 @@
         <template v-slot:cell(intrRate)="data">{{ data.item.intrRate/ 100 | toPercent }}</template>
         <template v-slot:cell(balance)="data">{{ data.item.balance | toCurrency }}</template>
         <template v-slot:cell(principal)="data">{{ data.item.principal | toCurrency }}</template>
-        <template v-slot:cell(matDate)="data">{{ data.item.matDate | LocalDateTimetoDate }}</template>
+        <template v-slot:cell(matDate)="data">{{ data.item.matDate | toLocalDate }}</template>
       </b-table>
     </div>
   </div>

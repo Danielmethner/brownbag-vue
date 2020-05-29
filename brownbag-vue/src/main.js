@@ -87,8 +87,19 @@ Vue.filter('toTimestamp', function (value) {
   }
 });
 
-// TIMESTAMP
-Vue.filter('LocalDateTimetoDate', function (value) {
+// LOCAL TIMESTAMP
+Vue.filter('toLocalDateTime', function (value) {
+  let regex = new RegExp('\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d');
+  if (!(regex.test(value))) {
+    return value;
+  }
+  if (value) {
+    return moment(String(value)).format('DD. MMM  YYYY')
+  }
+});
+
+// LOCAL DATE
+Vue.filter('toLocalDate', function (value) {
   let regex = new RegExp('\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d');
   if (!(regex.test(value))) {
     return value;

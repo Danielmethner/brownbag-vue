@@ -69,12 +69,6 @@
               </td>
               <td>{{privatePerson.partyType}}</td>
             </tr>
-            <tr>
-              <td>
-                <b>Legal Form</b>
-              </td>
-              <td>{{privatePerson.legalForm}}</td>
-            </tr>
           </tbody>
         </table>
       </div>

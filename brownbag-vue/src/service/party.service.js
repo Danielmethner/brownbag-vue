@@ -8,8 +8,8 @@ const PARTY_GET_PRIV_PERSON_BY_USER = '/api/party/priv';
 const PARTY_GET_BY_ID = '/api/party/';
 const AVBL_QTY = "/qty/avbl";
 const ASSET = "/asset/";
-const BAL_SHEET_BY_PARTY_ID = '/api/balsheet/party/';
-const BAL_SHEET_PREV_BY_PARTY_ID = '/api/balsheet/prev/party/';
+const BAL_SHEET_BY_PARTY_ID = '/api/fin-stmt/balsheet/party/';
+const BAL_SHEET_PREV_BY_PARTY_ID = '/api/fin-stmt/balsheet/prev/party/';
 
 class PartyService {
 

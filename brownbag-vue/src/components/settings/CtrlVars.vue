@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-12">
         <b-table striped hover :items="vars" :fields="headers" head-variant="dark" sort-icon-left>
-          <template v-slot:cell(val)="data">{{ data.item.val | formatDate}}</template>
-          <template v-slot:cell(timestampModified)="data">{{ data.item.timestampModified | formatDate}}</template>
+          <template v-slot:cell(val)="data">{{ data.item.val | toLocalDate}}</template>
+          <template v-slot:cell(timestampModified)="data">{{ data.item.timestampModified | toTimestamp}}</template>
         </b-table>
       </div>
     </div>
