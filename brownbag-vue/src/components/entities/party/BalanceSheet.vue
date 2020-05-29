@@ -6,7 +6,7 @@
         <FinStmt ref="balSheetPrevYear"></FinStmt>
       </div>
       <div class="col">
-       <FinStmt ref="balSheetCurrYear"></FinStmt>
+        <FinStmt ref="balSheetCurrYear"></FinStmt>
       </div>
       <div class="col-md-2"></div>
     </div>
@@ -15,7 +15,10 @@
 
 <script>
 import PartyService from "@/service/party.service";
+import SettingsService from "@/service/settings.service";
 import FinStmt from "@/components/entities/party/FinStmt";
+import { GLOBAL } from '@/store/index.js'
+
 export default {
   name: "BalanceSheet",
   data() {
@@ -28,8 +31,21 @@ export default {
   },
   methods: {
     getBalSheet(partyId) {
-      this.$refs.balSheetPrevYear.getBalSheetByPartyIdPrev(partyId);
-      this.$refs.balSheetCurrYear.getBalSheetByPartyId(partyId);
+      let currentYear;
+      SettingsService.getFinYear().then(response => {
+        currentYear = response.data;
+        console.log("load balance sheet");
+        this.$refs.balSheetPrevYear.getFinStmtByPartyIdAndFinYearAndFinStmtType(
+          partyId,
+          currentYear - 1,
+          GLOBAL.FIN_STMT_TYPE.BAL_SHEET
+        );
+        this.$refs.balSheetCurrYear.getFinStmtByPartyIdAndFinYearAndFinStmtType(
+          partyId,
+          currentYear,
+          GLOBAL.FIN_STMT_TYPE.BAL_SHEET
+        );
+      });
     }
   },
   components: {

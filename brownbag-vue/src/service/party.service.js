@@ -10,6 +10,9 @@ const AVBL_QTY = "/qty/avbl";
 const ASSET = "/asset/";
 const BAL_SHEET_BY_PARTY_ID = '/api/fin-stmt/balsheet/party/';
 const BAL_SHEET_PREV_BY_PARTY_ID = '/api/fin-stmt/balsheet/prev/party/';
+const FIN_STMT_BY_TYPE = '/api/fin-stmt/type/';
+const FIN_YEAR = '/finyear/';
+const PARTY_ID = '/party/';
 
 class PartyService {
 
@@ -43,6 +46,11 @@ class PartyService {
   getBalSheetByPartyIdPrev(partyId) {
     return axios
       .get(GLOBAL.API_BASE_URL + BAL_SHEET_PREV_BY_PARTY_ID + partyId, { headers: authHeader() });
+  }
+
+  getFinStmtByPartyIdAndFinYearAndFinStmtType(partyId, finYear, finStmtType) {
+        return axios
+      .get(GLOBAL.API_BASE_URL + FIN_STMT_BY_TYPE + finStmtType + FIN_YEAR + finYear + PARTY_ID + partyId, { headers: authHeader() });
   }
 }
 

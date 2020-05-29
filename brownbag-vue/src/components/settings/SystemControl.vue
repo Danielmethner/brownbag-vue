@@ -1,7 +1,14 @@
 <template>
   <div>
     <header class="jumbotron">
-      <h1>System Control & Monitoring</h1>
+      <div class="row">
+        <div class="col"></div>
+        <div class="mt-3 col-5">
+          <h1>System Control & Monitoring</h1>
+          <h4>Current Environment: <b>{{currentEnvironment}}</b></h4>
+        </div>
+        <div class="col"></div>
+      </div>
     </header>
     <div>
       <b-tabs content-class="mt-3">
@@ -23,10 +30,13 @@
 import Log from "@/components/settings/Log";
 import CtrlVars from "@/components/settings/CtrlVars";
 import Settings from "@/components/settings/Settings";
+import { GLOBAL } from "../../store";
 export default {
   name: "SystemControl",
   data() {
-    return {};
+    return {
+      currentEnvironment: process.env.NODE_ENV
+    };
   },
   mounted() {
     this.getLogs();
@@ -52,5 +62,8 @@ export default {
 <style>
 .jumbotron {
   padding: 2em;
+}
+.title {
+  display: block;
 }
 </style>

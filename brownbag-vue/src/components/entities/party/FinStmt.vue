@@ -39,17 +39,10 @@ export default {
     };
   },
   methods: {
-    getBalSheetByPartyIdPrev(partyId) {
+    getFinStmtByPartyIdAndFinYearAndFinStmtType(partyId, finYear, finStmtType) {
       this.finStmt = {};
       this.finStmt.name = "Loading Balance Sheet";
-      PartyService.getBalSheetByPartyIdPrev(partyId).then(response => {
-        this.finStmt = response.data;
-      });
-    },
-    getBalSheetByPartyId(partyId) {
-      this.finStmt = {};
-      this.finStmt.name = "Loading Balance Sheet";
-      PartyService.getBalSheetByPartyId(partyId).then(response => {
+      PartyService.getFinStmtByPartyIdAndFinYearAndFinStmtType(partyId, finYear, finStmtType).then(response => {
         this.finStmt = response.data;
       });
     }

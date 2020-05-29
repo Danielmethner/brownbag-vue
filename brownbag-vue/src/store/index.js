@@ -13,7 +13,12 @@ export default new Vuex.Store({
   }
 });
 
+// GLOBAL VARIABLES AND ENUMERATIONS
 export const GLOBAL = {
-  API_BASE_URL: process.env.VUE_APP_API_URL
+  API_BASE_URL: process.env.VUE_APP_API_URL,
+  CURRENT_ENV: process.env.NODE_ENV,
+  FIN_STMT_TYPE: {
+    BAL_SHEET: 'balsheet'
+  }
 }
 
