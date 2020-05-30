@@ -44,10 +44,10 @@ body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin-bottom: -4em;
+  margin-bottom: -6em;
 }
 #footer,
 #push {
-  height: 4em;
+  height: 6em;
 }
 </style>

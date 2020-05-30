@@ -1,29 +1,40 @@
 <template>
-<div>
-  <header>
-    <h1>Architecture</h1>
-  </header>
-
-  <body>
-    <div id="content" class="row justify-content-md-center">
+  <div>
+    <div class="row google-page">
+      <div class="col"></div>
       <div class="col-md-6">
-        <p class="text-justify">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        <span v-html="blogpost"></span>
       </div>
+      <div class="col"></div>
     </div>
-  </body>
-</div>
+  </div>
 </template>
 
 <script>
+import BlogService from "@/service/blog.service";
 export default {
-  name: "Architecture"
+  name: "Architecture",
+  data() {
+    return {
+      blogpost: null
+    };
+  },
+  mounted() {
+    this.getBlogPosts();
+  },
+  methods: {
+    getBlogPosts() {
+      BlogService.getBlogPost('ARCHITECTURE').then(response => {
+        console.log(response.data);
+        this.blogpost = response.data;
+      });
+    }
+  }
 };
 </script>
 
-<style scoped>
+<style>
+.google-page { 
+  padding-top: 4em;;
+}
 </style>
