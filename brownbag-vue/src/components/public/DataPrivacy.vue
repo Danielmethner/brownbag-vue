@@ -6,7 +6,7 @@
         <span v-html="blogpost"></span>
       </div>
       <div class="col"></div>
-    </div>
+    </div> 
   </div>
 </template>
 
@@ -14,7 +14,7 @@
 import BlogService from "@/service/blog.service";
 import { PAGE_URL } from "@/service/blog.service";
 export default {
-  name: "TechStack",
+  name: "DataPrivacy",
   data() {
     return {
       blogpost: null
@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     getBlogPosts() {
-      BlogService.getBlogPost(PAGE_URL.TECH_STACK).then(response => {
+      BlogService.getBlogPost(PAGE_URL.DATA_PRIVACY).then(response => {
         this.blogpost = response.data;
       });
     }

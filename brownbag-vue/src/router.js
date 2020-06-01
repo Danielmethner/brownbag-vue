@@ -4,7 +4,6 @@ import Home from './components/Home.vue';
 import Login from './components/auth/Login.vue';
 import Register from './components/auth/Register.vue';
 import Imprint from './components/public/Imprint.vue';
-import Contact from './components/public/Contact.vue';
 
 Vue.use(Router);
 
@@ -47,8 +46,8 @@ export const router = new Router({
       component: () => import('./components/public/TradingSimulation.vue')
     },
     {
-      path: '/contact',
-      component: Contact
+      path: '/data-privacy',
+      component: () => import('./components/public/DataPrivacy.vue')
     },
     {
       path: '/imprint',
@@ -94,7 +93,7 @@ export const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['', '/', '/home', '/architecture', '/tech-stack', '/trading-simulation', '/login', '/register', '/contact', '/imprint'];
+  const publicPages = ['', '/', '/home', '/architecture', '/tech-stack', '/trading-simulation', '/login', '/register', '/data-privacy', '/imprint'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 
