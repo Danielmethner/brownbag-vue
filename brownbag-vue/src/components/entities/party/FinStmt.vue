@@ -1,6 +1,6 @@
 <template>
-  <div v-if="finStmt.name">
-    <h3>{{finStmt.name}}</h3>
+  <div v-if="finStmtName">
+    <h3>{{ finStmtName }}</h3>
     <div v-for="section in finStmt.sections" v-bind:key="section.name">
       <table class="table table-striped">
         <thead class="table-dark">
@@ -34,17 +34,50 @@ export default {
   data() {
     return {
       finStmt: {
-        name: "Financial Statement"
-      }
+      },
+      finStmtNameData: "Financial Statement"
     };
   },
+  computed: {
+    finStmtName: function() {
+      return this.finStmtNameData;
+    }
+  },
   methods: {
-    getFinStmtByPartyIdAndFinYearAndFinStmtType(partyId, finYear, finStmtType) {
+    getFinStmtByPartyIdAndFinYearAndFinStmtType(
+      partyId,
+      finYear,
+      finStmtType,
+      checkExistence
+    ) {
       this.finStmt = {};
-      this.finStmt.name = "Loading Balance Sheet";
-      PartyService.getFinStmtByPartyIdAndFinYearAndFinStmtType(partyId, finYear, finStmtType).then(response => {
-        this.finStmt = response.data;
-      });
+      this.finStmtNameData = "Loading Financial Statement";
+      
+      PartyService.getFinStmtByPartyIdAndFinYearAndFinStmtType(
+        partyId,
+        finYear,
+        finStmtType
+      ).then(
+        response => {
+          if (response.data) {
+            this.finStmt = response.data;
+            this.finStmtNameData = this.finStmt.name;
+            if (checkExistence) {
+              if (!(response.data.length > 0)) {
+                this.$emit("exists", true);
+              } else {
+                this.$emit("exists", false);
+              }
+            }
+          }
+        },
+        error => {
+          console.log("error");
+          this.finStmtNameData =
+            "Financial Statement could not be found: " + error;
+            console.log(this.finStmtName);
+        }
+      );
     }
   }
 };

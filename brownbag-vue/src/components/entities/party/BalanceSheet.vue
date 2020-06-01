@@ -2,11 +2,11 @@
   <div>
     <div class="row justify-content-md-center">
       <div class="col-md-2"></div>
-      <div class="col">
-        <FinStmt ref="balSheetPrevYear"></FinStmt>
+      <div class="col" v-show="showChild">
+        <FinStmt ref="finStmtPrevYear" @exists="childExists" ></FinStmt>
       </div>
       <div class="col">
-        <FinStmt ref="balSheetCurrYear"></FinStmt>
+        <FinStmt ref="finStmtCurrYear"></FinStmt>
       </div>
       <div class="col-md-2"></div>
     </div>
@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import PartyService from "@/service/party.service";
 import SettingsService from "@/service/settings.service";
 import FinStmt from "@/components/entities/party/FinStmt";
 import { GLOBAL } from '@/store/index.js'
@@ -23,27 +22,32 @@ export default {
   name: "BalanceSheet",
   data() {
     return {
-      balanceSheet: {
+      finStmt: {
         name: "Balance Sheet"
       },
-      balanceSheetPrev: {}
+      finStmtPrev: {},
+      showChild: false
     };
   },
   methods: {
-    getBalSheet(partyId) {
+    childExists(exists){
+       this.showChild = exists;
+    },
+    getFinStmt(partyId) {
       let currentYear;
       SettingsService.getFinYear().then(response => {
         currentYear = response.data;
-        console.log("load balance sheet");
-        this.$refs.balSheetPrevYear.getFinStmtByPartyIdAndFinYearAndFinStmtType(
+        this.$refs.finStmtPrevYear.getFinStmtByPartyIdAndFinYearAndFinStmtType(
           partyId,
           currentYear - 1,
-          GLOBAL.FIN_STMT_TYPE.BAL_SHEET
+          GLOBAL.FIN_STMT_TYPE.BAL_SHEET,
+          true
         );
-        this.$refs.balSheetCurrYear.getFinStmtByPartyIdAndFinYearAndFinStmtType(
+        this.$refs.finStmtCurrYear.getFinStmtByPartyIdAndFinYearAndFinStmtType(
           partyId,
           currentYear,
-          GLOBAL.FIN_STMT_TYPE.BAL_SHEET
+          GLOBAL.FIN_STMT_TYPE.BAL_SHEET,
+          false
         );
       });
     }

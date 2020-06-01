@@ -26,6 +26,9 @@
               <b-tab title="Balance Sheet" @click="getBalSheet()">
                 <BalSheet ref="balSheet"></BalSheet>
               </b-tab>
+              <b-tab title="Income Statement" @click="getIncomeStmt()">
+                <IncomeStatement ref="incomeStmt"></IncomeStatement>
+              </b-tab>
               <b-tab title="New Order" @click="genNewOrder()">
                 <NewOrder ref="newOrder"></NewOrder>
               </b-tab>
@@ -47,6 +50,7 @@ import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
 import Portfolio from "@/components/entities/pos/Portfolio";
 import BalSheet from "@/components/entities/party/BalanceSheet";
+import IncomeStatement from "@/components/entities/party/IncomeStatement";
 import NewLegalPerson from "@/components/entities/party/NewLegalPerson";
 import PartyService from "../../service/party.service";
 
@@ -59,16 +63,16 @@ export default {
       selectedTab: null,
       prevBus: null,
       changeTab: false,
-      business: null
+      business: null,
+      selectBusinessDflt: "Loading businesses"
     };
   },
   mounted() {
     this.getParties();
-    console.log(this.$store.state.party.business);
     this.business = this.$store.state.party.business;
-    if(this.business.id != null) {
-      this.businessId =this.business.id;
-      this.prevBus = 0; 
+    if (this.business.id != null) {
+      this.businessId = this.business.id;
+      this.prevBus = 0;
     }
   },
   updated() {
@@ -78,15 +82,7 @@ export default {
       this.prevBus = this.businessId;
     }
   },
-  computed: {
-    selectBusinessDflt() {
-      if (this.businessListDD.length > 1) {
-        return "Please Select Business";
-      } else {
-        return "Please Create Business";
-      }
-    }
-  },
+  computed: {},
   methods: {
     newLegalPerson() {},
     changeParty() {
@@ -101,15 +97,30 @@ export default {
     },
     getParties() {
       if (this.businessListDD.length <= 1) {
-        PartyService.getAll().then(response => {
-          this.$store.commit("party/businessList", response.data);
-          this.businessListDD = [];
-          response.data.forEach(business => {
-            let dropdownItem = { value: business.id, text: business.technicalName };
-            this.businessListDD.push(dropdownItem);
-          });
-          this.$store.commit("party/businessListDD", this.businessListDD);
-        });
+        PartyService.getLegalPersonByOwnerUser().then(
+          response => {
+            this.$store.commit("party/businessList", response.data);
+            this.businessListDD = [];
+
+            response.data.forEach(business => {
+              let dropdownItem = {
+                value: business.id,
+                text: business.technicalName
+              };
+              this.businessListDD.push(dropdownItem);
+            });
+            this.$store.commit("party/businessListDD", this.businessListDD);
+
+            if (this.businessListDD.length == 0) {
+              this.selectBusinessDflt = "Please create business";
+            } else {
+              this.selectBusinessDflt = "Please select business";
+            }
+          },
+          error => {
+            this.selectBusinessDflt = "No Business could be found: " + error;
+          }
+        );
       } else {
         return this.$store.state.party.businessListDD;
       }
@@ -130,7 +141,10 @@ export default {
       }
     },
     getBalSheet() {
-      this.$refs.balSheet.getBalSheet(this.businessId);
+      this.$refs.balSheet.getFinStmt(this.businessId);
+    },
+    getIncomeStmt() {
+      this.$refs.incomeStmt.getFinStmt(this.businessId);
     }
   },
   components: {
@@ -138,7 +152,8 @@ export default {
     MyOrders,
     NewOrder,
     Portfolio,
-    BalSheet
+    BalSheet,
+    IncomeStatement
   }
 };
 </script>

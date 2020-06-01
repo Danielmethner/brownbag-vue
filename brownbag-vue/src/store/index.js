@@ -18,7 +18,8 @@ export const GLOBAL = {
   API_BASE_URL: process.env.VUE_APP_API_URL,
   CURRENT_ENV: process.env.NODE_ENV,
   FIN_STMT_TYPE: {
-    BAL_SHEET: 'balsheet'
+    BAL_SHEET: 'balsheet',
+    INCOME_STMT: 'incomestmt'
   }
 }
 

@@ -3,6 +3,7 @@ import { GLOBAL } from '../store/index.js'
 import authHeader from './auth-header';
 
 const PARTY_LEGALPERSON_CREATE = '/api/party/legalperson/create';
+const PARTY_LEGALPERSON_GET_BY_USER = '/api/party/user/legalpersonlist';
 const PARTY_GET_ALL = '/api/party/all';
 const PARTY_GET_PRIV_PERSON_BY_USER = '/api/party/priv';
 const PARTY_GET_BY_ID = '/api/party/';
@@ -19,6 +20,11 @@ class PartyService {
   createParty(party) {
     return axios
       .post(GLOBAL.API_BASE_URL + PARTY_LEGALPERSON_CREATE, party, { headers: authHeader() });
+  }
+
+  getLegalPersonByOwnerUser() {
+        return axios
+      .get(GLOBAL.API_BASE_URL + PARTY_LEGALPERSON_GET_BY_USER, { headers: authHeader() });
   }
 
   getAll() {
@@ -50,7 +56,7 @@ class PartyService {
 
   getFinStmtByPartyIdAndFinYearAndFinStmtType(partyId, finYear, finStmtType) {
         return axios
-      .get(GLOBAL.API_BASE_URL + FIN_STMT_BY_TYPE + finStmtType + FIN_YEAR + finYear + PARTY_ID + partyId, { headers: authHeader() });
+      .get(GLOBAL.API_BASE_URL + FIN_STMT_BY_TYPE + finStmtType + FIN_YEAR + finYear + PARTY_ID + partyId , { headers: authHeader() });
   }
 }
 
