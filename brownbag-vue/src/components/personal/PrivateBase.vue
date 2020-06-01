@@ -20,10 +20,9 @@
         <b-tab title="Balance Sheet" @click="getBalSheet()">
           <BalSheet ref="balSheet"></BalSheet>
         </b-tab>
-        <!-- <b-tab title="Income Statement">
-        <IncomeStatement></IncomeStatement>-->
-        <!-- </b-tab>-->
-
+        <b-tab title="Income Statement" @click="getIncomeStmt()">
+          <IncomeStatement ref="incomeStmt"></IncomeStatement>
+        </b-tab>
         <b-tab title="New Order" @click="genNewOrder()">
           <NewOrder ref="newOrder"></NewOrder>
         </b-tab>
@@ -39,7 +38,7 @@ import Transactions from "@/components/entities/pos/Transactions";
 import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
 import BalSheet from "@/components/entities/party/BalanceSheet";
-// import AssetBase from "@/components/asset/AssetBase";
+import IncomeStatement from "@/components/entities/party/IncomeStatement";
 import PartyService from "../../service/party.service";
 export default {
   name: "PrivateBase",
@@ -86,7 +85,10 @@ export default {
       this.$refs.trx.getPositions(this.getPrivatePerson());
     },
     getBalSheet() {
-      this.$refs.balSheet.getBalSheet(this.getPrivatePerson().id);
+      this.$refs.balSheet.getFinStmt(this.getPrivatePerson().id);
+    },
+    getIncomeStmt() {
+      this.$refs.incomeStmt.getFinStmt(this.getPrivatePerson().id);
     }
   },
   components: {
@@ -95,7 +97,8 @@ export default {
     Transactions,
     MyOrders,
     NewOrder,
-    BalSheet
+    BalSheet,
+    IncomeStatement
   }
 };
 </script>
