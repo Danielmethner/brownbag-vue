@@ -27,7 +27,8 @@
         </b-navbar-nav>
         <!-- Public pages-->
         <b-navbar-nav v-if="!currentUser">
-          <router-link to="/architecture" class="nav-link">Architecture</router-link>
+          <!-- <router-link to="/architecture" class="nav-link">Architecture</router-link> -->
+          <router-link to="/tech-stack" class="nav-link">Technology Stack</router-link>
           <router-link to="/trading-simulation" class="nav-link">Trading Simulation</router-link>
           <router-link to="/contact" class="nav-link">Contact</router-link>
           <router-link to="/imprint" class="nav-link">Imprint</router-link>

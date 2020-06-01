@@ -25,7 +25,6 @@ export default {
   methods: {
     getBlogPosts() {
       BlogService.getBlogPost('TRADE_SIMULATION').then(response => {
-        console.log(response.data);
         this.blogpost = response.data;
       });
     }

@@ -12,6 +12,7 @@
 
 <script>
 import BlogService from "@/service/blog.service";
+import { PAGE_URL } from "@/service/blog.service";
 export default {
   name: "TechStack",
   data() {
@@ -24,7 +25,8 @@ export default {
   },
   methods: {
     getBlogPosts() {
-      BlogService.getBlogPost('TECH_STACK').then(response => {
+      console.log(PAGE_URL.TECH_STACK);
+      BlogService.getBlogPost(PAGE_URL.TECH_STACK).then(response => {
         this.blogpost = response.data;
       });
     }
@@ -33,7 +35,7 @@ export default {
 </script>
 
 <style>
-.google-page { 
-  padding-top: 4em;;
+.google-page {
+  padding-top: 4em;
 }
 </style>

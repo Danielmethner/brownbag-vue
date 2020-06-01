@@ -39,6 +39,10 @@ export const router = new Router({
       component: () => import('./components/public/Architecture.vue')
     },
     {
+      path: '/tech-stack',
+      component: () => import('./components/public/TechStack.vue')
+    },
+    {
       path: '/trading-simulation',
       component: () => import('./components/public/TradingSimulation.vue')
     },
@@ -90,7 +94,7 @@ export const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['', '/', '/home', '/architecture', '/trading-simulation', '/login', '/register', '/contact', '/imprint'];
+  const publicPages = ['', '/', '/home', '/architecture', '/tech-stack', '/trading-simulation', '/login', '/register', '/contact', '/imprint'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
 
