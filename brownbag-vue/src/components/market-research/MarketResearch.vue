@@ -22,6 +22,9 @@
           <b-tab title="Balance Sheet" @click="getBalSheet()">
             <BalSheet ref="balSheet"></BalSheet>
           </b-tab>
+          <b-tab title="Income Statement" @click="getIncomeStmt()">
+            <IncomeStatement ref="incomeStmt"></IncomeStatement>
+          </b-tab>
         </b-tabs>
       </div>
     </div>
@@ -36,6 +39,7 @@
 <script>
 import Orderbook from "@/components/entities/order/Orderbook";
 import AssetService from "@/service/asset.service";
+import IncomeStatement from "@/components/entities/party/IncomeStatement";
 import BalSheet from "@/components/entities/party/BalanceSheet";
 export default {
   name: "MarketResearch",
@@ -54,6 +58,7 @@ export default {
       this.getOrderbook();
       this.issuerId = this.$store.getters["asset/asset"](this.assetId).issuerId;
       this.getBalSheet();
+      this.getIncomeStmt;
     },
     getAssets() {
       if (this.assetListDD.length <= 1) {
@@ -77,15 +82,20 @@ export default {
       this.$refs.orderbook.getOrderbook(this.assetId);
     },
     getBalSheet() {
-      if(this.issuerId){
-        this.$refs.balSheet.getBalSheet(this.issuerId);
+      if (this.issuerId) {
+        this.$refs.balSheet.getFinStmt(this.issuerId);
       }
-      
+    },
+    getIncomeStmt() {
+      if (this.issuerId) {
+        this.$refs.incomeStmt.getFinStmt(this.issuerId);
+      }
     }
   },
   components: {
     Orderbook,
-    BalSheet
+    BalSheet,
+    IncomeStatement
   }
 };
 </script>
