@@ -11,7 +11,7 @@
         </thead>
         <tbody>
           <tr v-for="item in section.items" v-bind:key="item.name">
-            <td class="col-md-8">{{item.itemType}}</td>
+            <td class="col-md-8">{{item.itemTypeName}}</td>
             <td class="col-md-4 text-right">{{item.qty | toCurrency}}</td>
           </tr>
         </tbody>
