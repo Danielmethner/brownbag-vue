@@ -46,8 +46,6 @@ export default {
     partyProps() {
       var properties = [];
       for (let property in this.party) {
-        console.log(property);
-        console.log(this.party[property]);
         if (this.party[property] != null) {
           properties.push({ name: property, value: this.party[property] });
         }

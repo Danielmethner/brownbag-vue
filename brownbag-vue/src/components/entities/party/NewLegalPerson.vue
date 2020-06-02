@@ -142,6 +142,8 @@ export default {
       PartyService.createParty(this.newLegalPerson).then(response => {
         this.status = response.data;
         this.clearForm();
+        console.log(this.$parent);
+        this.$emit('reloadParties');
       }).catch(error => {
         this.status = error;
       });

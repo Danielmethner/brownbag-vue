@@ -3,7 +3,9 @@ export default class OrderStex {
   name = null;
   technicalName = null;
   partyType = null;
+  partyTypeName = null;
   legalForm = null;
+  legalFormName = null;
   userId = null;
   userName = null;
   ownerPartyId = null;
@@ -13,12 +15,14 @@ export default class OrderStex {
   assetShareQty = null;
   shareCapital = null;
 
-  constructor(id, name, technicalName, partyType, legalForm, userId, userName, ownerPartyId, ownerPartyName, assetId, assetName, assetShareQty, shareCapital) {
+  constructor(id, name, technicalName, partyType, partyTypeName, legalForm, legalFormName, userId, userName, ownerPartyId, ownerPartyName, assetId, assetName, assetShareQty, shareCapital) {
     this.id = id;
     this.name = name;
     this.technicalName = technicalName;
     this.partyType = partyType;
+    this.partyTypeName = partyTypeName;
     this.legalForm = legalForm;
+    this.legalFormName = legalFormName;
     this.userId = userId;
     this.userName = userName;
     this.ownerPartyId = ownerPartyId;

@@ -44,7 +44,7 @@
             </div>
             <div>
               <b-tab title="Create Business" @click="newLegalPerson()">
-                <NewLegalPerson ref="newlegalperson"></NewLegalPerson>
+                <NewLegalPerson ref="newlegalperson" @reloadParties="getParties()"></NewLegalPerson>
               </b-tab>
             </div>
           </b-tabs>
@@ -107,56 +107,47 @@ export default {
       this.getOverview();
     },
     getParties() {
-      if (this.businessList.length <= 1) {
-        PartyService.getLegalPersonByOwnerUser().then(
-          response => {
-            this.$store.commit("party/businessList", response.data);
-            this.businessListDD = [];
+      PartyService.getLegalPersonByOwnerUser().then(
+        response => {
+          this.$store.commit("party/businessList", response.data);
+          this.businessList = [];
 
-            response.data.forEach(business => {
-              let dropdownItem = {
-                value: business.id,
-                text: business.technicalName
-              };
-              let businessCache = new Party(
-                business.id,
-                business.name,
-                business.technicalName,
-                business.partyType,
-                business.legalForm,
-                business.userId,
-                business.userName,
-                business.ownerPartyId,
-                business.ownerPartyName,
-                business.assetId,
-                business.assetName,
-                business.assetShareQty,
-                business.shareCapital
-              );
-              this.businessListDD.push(dropdownItem);
-              this.businessList.push(businessCache);
-            });
-            this.$store.commit("party/businessListDD", this.businessListDD);
-            this.$store.commit("party/businessList", this.businessList);
+          response.data.forEach(business => {
+            let dropdownItem = {
+              value: business.id,
+              text: business.technicalName
+            };
+            let businessCache = new Party(
+              business.id,
+              business.name,
+              business.technicalName,
+              business.partyType,
+              business.partyTypeName,
+              business.legalForm,
+              business.legalFormName,
+              business.userId,
+              business.userName,
+              business.ownerPartyId,
+              business.ownerPartyName,
+              business.assetId,
+              business.assetName,
+              business.assetShareQty,
+              business.shareCapital
+            );
+            this.businessList.push(businessCache);
+          });
+          this.$store.commit("party/businessList", this.businessList);
 
-            if (this.businessListDD.length == 0) {
-              this.selectBusinessDflt = "Please create business";
-            } else {
-              this.selectBusinessDflt = "Please select business";
-            }
-            if (this.businessList.length == 0) {
-              this.selectBusinessDflt = "Please create business";
-            } else {
-              this.selectBusinessDflt = "Please select business";
-            }
-          },
-          error => {
-            this.selectBusinessDflt = "No Business could be found: " + error;
+          if (this.businessList.length == 0) {
+            this.selectBusinessDflt = "Please create business";
+          } else {
+            this.selectBusinessDflt = "Please select business";
           }
-        );
-      } else {
-        return this.$store.state.party.businessListDD;
-      }
+        },
+        error => {
+          this.selectBusinessDflt = "No Business could be found: " + error;
+        }
+      );
     },
     genNewOrder() {
       if (this.business != null) {
