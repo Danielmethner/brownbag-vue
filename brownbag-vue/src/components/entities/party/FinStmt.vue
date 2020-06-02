@@ -72,10 +72,8 @@ export default {
           }
         },
         error => {
-          console.log("error");
           this.finStmtNameData =
             "Financial Statement could not be found: " + error;
-            console.log(this.finStmtName);
         }
       );
     }

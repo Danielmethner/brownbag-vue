@@ -61,7 +61,7 @@
               </div>
               <div class="form-group col" v-show="isSellOrder">
                 <label for="avblQty">Available Quantity</label>
-                <label readonly type="text" class="form-control" id="avblQty">{{newOrder.qtyAvbl}}</label>
+                <label readonly type="text" class="form-control" id="avblQty">{{qtyAvbl}}</label>
               </div>
             </div>
 
@@ -96,7 +96,7 @@
                   type="text"
                   class="form-control"
                   id="avblFunds"
-                >{{newOrder.fundsAvbl | toCurrency}}</label>
+                >{{fundsAvbl | toCurrency}}</label>
               </div>
             </div>
 
@@ -122,6 +122,7 @@
 import AssetService from "@/service/asset.service";
 import OrderService from "@/service/order.service";
 import PartyService from "@/service/party.service";
+import OrderStex from "@/model/OrderStex";
 export default {
   name: "radio1",
   data() {
@@ -138,17 +139,21 @@ export default {
             : "btn-outline-danger";
         }
       },
-      newOrder: {
-        assetId: null,
-        orderDir: "BUY",
-        priceLimit: null,
-        qty: null,
-        qtyAvbl: 0,
-        fundsAvbl: 0,
-        orderType: "STEX",
-        partyId: 0,
-        partyName: "No business selected!"
-      },
+      fundsAvbl: 0,
+      qtyAvbl: 0,
+      newOrder: new OrderStex(
+        null,
+        null,
+        null,
+        "BUY",
+        null,
+        "STEX",
+        null,
+        "No business selected!",
+        null,
+        null,
+        null
+      ),
       status: ""
     };
   },
@@ -173,12 +178,12 @@ export default {
   methods: {
     changeAsset() {
       this.status = "";
-      this.newOrder.qtyAvbl = 0;
+      this.qtyAvbl = 0;
       PartyService.getAvblQty(
         this.newOrder.partyId,
         this.newOrder.assetId
       ).then(response => {
-        this.newOrder.qtyAvbl = response.data;
+        this.qtyAvbl = response.data;
       });
     },
     setParty(party) {
@@ -190,7 +195,7 @@ export default {
       this.setParty(party);
 
       PartyService.getAvblQty(this.newOrder.partyId, 1).then(response => {
-        this.newOrder.fundsAvbl = response.data;
+        this.fundsAvbl = response.data;
       });
     },
     placeOrder() {
@@ -234,9 +239,9 @@ export default {
       this.newOrder.assetId = null;
       this.newOrder.qty = null;
       this.newOrder.priceLimit = null;
-      this.newOrder.qtyAvbl = 0;
+      this.qtyAvbl = 0;
       PartyService.getAvblQty(this.newOrder.partyId, 1).then(response => {
-        this.newOrder.fundsAvbl = response.data;
+        this.fundsAvbl = response.data;
       });
       // vm.$forceUpdate();
     }

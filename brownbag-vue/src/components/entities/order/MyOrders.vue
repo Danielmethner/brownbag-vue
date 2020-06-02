@@ -20,7 +20,12 @@
           <template v-slot:cell(qtyExec)="data">{{ data.item.qtyExec }}</template>
           <template v-slot:cell(priceLimit)="data">{{ data.item.priceLimit | toCurrency }}</template>
           <template v-slot:cell(discard)="row">
-            <b-button size="sm" variant="outline-danger" @click="discardOrder(row.item)" v-if="discardeable(row.item)" >Discard</b-button>
+            <b-button
+              size="sm"
+              variant="outline-danger"
+              @click="discardOrder(row.item)"
+              v-if="discardeable(row.item)"
+            >Discard</b-button>
           </template>
         </b-table>
       </div>
@@ -35,6 +40,7 @@
 
 <script>
 import OrderService from "@/service/order.service";
+import OrderStex from "@/model/OrderStex";
 
 export default {
   name: "MyOrders",
@@ -54,14 +60,14 @@ export default {
           sortable: true,
           filterByFormatted: true
         },
-        {key: "discard" },
+        { key: "discard" }
       ]
     };
   },
   mounted() {},
   methods: {
     discardeable(orderStex) {
-      return ['PLACED'].includes(orderStex.orderStatus);
+      return ["PLACED"].includes(orderStex.orderStatus);
     },
     discardOrder(orderStex) {
       OrderService.discardOrder(orderStex.id).then(() => {
@@ -72,7 +78,16 @@ export default {
       this.myorders = [];
       OrderService.getByParty(partyId).then(response => {
         response.data.forEach(order => {
-          this.myorders.push(order);
+          let orderStex = new OrderStex(
+            order.id,
+            order.assetName,
+            order.orderDir,
+            order.qty,
+            order.qtyExec,
+            order.priceLimit,
+            order.orderStatus
+          );
+          this.myorders.push(orderStex);
         });
       });
     },

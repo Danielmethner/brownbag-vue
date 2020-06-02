@@ -14,12 +14,13 @@
           <div class="col text-right">
             <span>{{finYear}}</span>
           </div>
+
+          <div class="col-md-3">
+            <button @click="switchYear()" class="btn btn-primary btn-block">Switch Year</button>
+          </div>
         </div>
         <div class="row text">
           <div class="col"></div>
-          <div class="form-group col-md-4">
-            <button @click="switchYear()" class="btn btn-primary btn-block">Switch Year</button>
-          </div>
         </div>
       </div>
       <div class="col-md-6 text-center title">

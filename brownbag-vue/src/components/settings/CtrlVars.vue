@@ -4,7 +4,9 @@
       <div class="col-md-12">
         <b-table striped hover :items="vars" :fields="headers" head-variant="dark" sort-icon-left>
           <template v-slot:cell(val)="data">{{ data.item.val | toLocalDate}}</template>
-          <template v-slot:cell(timestampModified)="data">{{ data.item.timestampModified | toTimestamp}}</template>
+          <template
+            v-slot:cell(timestampModified)="data"
+          >{{ data.item.timestampModified | toTimestamp}}</template>
         </b-table>
       </div>
     </div>
@@ -13,6 +15,7 @@
 
 <script>
 import SettingsService from "@/service/settings.service";
+import CtrlVar from "@/model/CtrlVar";
 export default {
   name: "CtrlVars",
   data() {
@@ -35,32 +38,34 @@ export default {
     getCtrlVars() {
       SettingsService.getCtrlVars().then(response => {
         this.vars = [];
-        response.data.forEach(ctrlVar => {
+        response.data.forEach(jsonCtrlVar => {
           let val;
-          switch (ctrlVar.dataType) {
-            case 'DATE':
-              val = ctrlVar.valDate;
+          switch (jsonCtrlVar.dataType) {
+            case "DATE":
+              val = jsonCtrlVar.valDate;
               break;
-            case 'BOOL':
-              val = ctrlVar.valBool;
+            case "BOOL":
+              val = jsonCtrlVar.valBool;
               break;
-            case 'STRING':
-              val = ctrlVar.valString;
+            case "STRING":
+              val = jsonCtrlVar.valString;
               break;
-            case 'DOUBLE':
-              val = ctrlVar.valDouble;
+            case "DOUBLE":
+              val = jsonCtrlVar.valDouble;
               break;
             default:
               val = null;
           }
-          this.vars.push({
-            id: ctrlVar.id,
-            dataType: ctrlVar.dataType,
-            timestampModified: ctrlVar.timestampModified,
-            name: ctrlVar.name,
-            key: ctrlVar.key,
-            val: val
-          });
+          let ctrlVar = new CtrlVar(
+            jsonCtrlVar.id,
+            jsonCtrlVar.dataType,
+            jsonCtrlVar.timestampModified,
+            jsonCtrlVar.name,
+            jsonCtrlVar.key,
+            val,
+            jsonCtrlVar.editable
+          );
+          this.vars.push(ctrlVar);
         });
       });
     }
