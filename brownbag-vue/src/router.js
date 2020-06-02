@@ -34,23 +34,23 @@ export const router = new Router({
     },
     {
       path: '/architecture',
-      component: () => import('./components/public/Architecture.vue')
+      component: () => import('@/components/public/Architecture.vue')
     },
     {
       path: '/tech-stack',
-      component: () => import('./components/public/TechStack.vue')
+      component: () => import('@/components/public/TechStack.vue')
     },
     {
       path: '/trading-simulation',
-      component: () => import('./components/public/TradingSimulation.vue')
+      component: () => import('@/components/public/TradingSimulation.vue')
     },
     {
       path: '/data-privacy',
-      component: () => import('./components/public/DataPrivacy.vue')
+      component: () => import('@/components/public/DataPrivacy.vue')
     },
     {
       path: '/imprint',
-      component: () => import('./components/public/Imprint.vue')
+      component: () => import('@/components/public/Imprint.vue')
     },
     {
       path: '/profile',
