@@ -7,8 +7,14 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <b-form-select v-model="businessId" :options="businessListDD" @change="changeParty()">
-              <option disabled value="0">{{selectBusinessDflt}}</option>
+            <b-form-select
+              v-model="businessId"
+              :options="businessList"
+              @change="changeParty()"
+              value-field="id"
+              text-field="name"
+            >
+              <option disabled value="0">Please Select a Business</option>
             </b-form-select>
           </div>
         </div>
@@ -17,6 +23,9 @@
         <div class="col-md-12">
           <b-tabs content-class="mt-3" v-model="selectedTab">
             <div v-if="businessId">
+              <b-tab title="Overview" @click="getOverview()">
+                <Overview ref="overview"></Overview>
+              </b-tab>
               <b-tab title="Portfolio" @click="getPortfolio()">
                 <Portfolio ref="portfolio"></Portfolio>
               </b-tab>
@@ -50,20 +59,21 @@ import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
 import Portfolio from "@/components/entities/pos/Portfolio";
 import BalSheet from "@/components/entities/party/BalanceSheet";
+import Overview from "@/components/entities/party/Overview";
 import IncomeStatement from "@/components/entities/party/IncomeStatement";
 import NewLegalPerson from "@/components/entities/party/NewLegalPerson";
-import PartyService from "../../service/party.service";
-
+import PartyService from "@/service/party.service";
+import Party from "@/model/Party";
 export default {
   name: "BusinessBase",
   data() {
     return {
       businessId: 0,
-      businessListDD: [],
+      businessList: [],
       selectedTab: null,
       prevBus: null,
       changeTab: false,
-      business: null,
+      business: new Party(),
       selectBusinessDflt: "Loading businesses"
     };
   },
@@ -94,9 +104,10 @@ export default {
       this.getMyOrders();
       this.genNewOrder();
       this.getBalSheet();
+      this.getOverview();
     },
     getParties() {
-      if (this.businessListDD.length <= 1) {
+      if (this.businessList.length <= 1) {
         PartyService.getLegalPersonByOwnerUser().then(
           response => {
             this.$store.commit("party/businessList", response.data);
@@ -107,11 +118,33 @@ export default {
                 value: business.id,
                 text: business.technicalName
               };
+              let businessCache = new Party(
+                business.id,
+                business.name,
+                business.technicalName,
+                business.partyType,
+                business.legalForm,
+                business.userId,
+                business.userName,
+                business.ownerPartyId,
+                business.ownerPartyName,
+                business.assetId,
+                business.assetName,
+                business.assetShareQty,
+                business.shareCapital
+              );
               this.businessListDD.push(dropdownItem);
+              this.businessList.push(businessCache);
             });
             this.$store.commit("party/businessListDD", this.businessListDD);
+            this.$store.commit("party/businessList", this.businessList);
 
             if (this.businessListDD.length == 0) {
+              this.selectBusinessDflt = "Please create business";
+            } else {
+              this.selectBusinessDflt = "Please select business";
+            }
+            if (this.businessList.length == 0) {
               this.selectBusinessDflt = "Please create business";
             } else {
               this.selectBusinessDflt = "Please select business";
@@ -145,9 +178,13 @@ export default {
     },
     getIncomeStmt() {
       this.$refs.incomeStmt.getFinStmt(this.businessId);
+    },
+    getOverview() {
+      this.$refs.overview.getOverview(this.business);
     }
   },
   components: {
+    Overview,
     NewLegalPerson,
     MyOrders,
     NewOrder,
