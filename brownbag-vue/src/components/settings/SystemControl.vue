@@ -30,7 +30,6 @@
 import Log from "@/components/settings/Log";
 import CtrlVars from "@/components/settings/CtrlVars";
 import Settings from "@/components/settings/Settings";
-import { GLOBAL } from "../../store";
 export default {
   name: "SystemControl",
   data() {

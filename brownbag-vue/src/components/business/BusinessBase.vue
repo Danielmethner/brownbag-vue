@@ -113,10 +113,6 @@ export default {
           this.businessList = [];
 
           response.data.forEach(business => {
-            let dropdownItem = {
-              value: business.id,
-              text: business.technicalName
-            };
             let businessCache = new Party(
               business.id,
               business.name,
