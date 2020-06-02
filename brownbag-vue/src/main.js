@@ -111,6 +111,13 @@ Vue.filter('toLocalDate', function (value) {
   }
 });
 
+// CAMEL CASE PRETTY PRINT
+Vue.filter('camelCasePrettyPrint', function (value) {
+  const toUppercase = str => str.toUpperCase();
+  return value.replace(/[A-Z]/g, ' $&').replace(/^./, toUppercase);
+
+});
+
 // BUY/SELL
 Vue.filter('buySell', function (value) {
   if (value === 'BUY') {
