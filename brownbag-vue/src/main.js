@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
 import App from './App.vue';
 import { router } from './router';
 import store from './store';
@@ -29,7 +28,7 @@ Vue.component('tab', Tab);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(Tabs);
-Vue.use(Vuex);
+// Vue.use(Vuex);
 Vue.use(VeeValidate, {
   // This is the default
   inject: true,

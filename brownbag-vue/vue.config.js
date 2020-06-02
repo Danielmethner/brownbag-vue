@@ -1,3 +1,5 @@
 module.exports = {
-  // options...
+  chainWebpack(config) {
+    config.plugins.delete('prefetch');
+  }
 }
