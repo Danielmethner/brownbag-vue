@@ -7,6 +7,7 @@ const PARTY_LEGALPERSON_GET_BY_USER = '/api/party/user/legalpersonlist';
 const PARTY_GET_ALL = '/api/party/all';
 const PARTY_GET_PRIV_PERSON_BY_USER = '/api/party/priv';
 const PARTY_GET_BY_ID = '/api/party/';
+const OWNERSHIP = '/ownership';
 const AVBL_QTY = "/qty/avbl";
 const ASSET = "/asset/";
 const BAL_SHEET_BY_PARTY_ID = '/api/fin-stmt/balsheet/party/';
@@ -16,6 +17,10 @@ const FIN_YEAR = '/finyear/';
 const PARTY_ID = '/party/';
 
 class PartyService {
+  getOwnerShipList(partyId) {
+    return axios
+      .get(GLOBAL.API_BASE_URL + PARTY_GET_BY_ID + partyId + OWNERSHIP, { headers: authHeader() });
+  }
 
   createParty(party) {
     return axios
@@ -23,7 +28,7 @@ class PartyService {
   }
 
   getLegalPersonByOwnerUser() {
-        return axios
+    return axios
       .get(GLOBAL.API_BASE_URL + PARTY_LEGALPERSON_GET_BY_USER, { headers: authHeader() });
   }
 
@@ -55,8 +60,8 @@ class PartyService {
   }
 
   getFinStmtByPartyIdAndFinYearAndFinStmtType(partyId, finYear, finStmtType) {
-        return axios
-      .get(GLOBAL.API_BASE_URL + FIN_STMT_BY_TYPE + finStmtType + FIN_YEAR + finYear + PARTY_ID + partyId , { headers: authHeader() });
+    return axios
+      .get(GLOBAL.API_BASE_URL + FIN_STMT_BY_TYPE + finStmtType + FIN_YEAR + finYear + PARTY_ID + partyId, { headers: authHeader() });
   }
 }
 

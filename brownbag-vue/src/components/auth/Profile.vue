@@ -3,8 +3,15 @@
     <header class="jumbotron">
       <h1>User Profile</h1>
     </header>
+
     <div class="row">
-      <div class="col">
+      <div class="col text-center avatar">
+        <b-avatar rounded variant="primary" size="12rem"></b-avatar>
+      </div>
+    </div>
+    <!-- DATA TABLES -->
+    <div class="row">
+      <div class="col-md-6">
         <table class="table table-striped">
           <thead class="table-dark">
             <tr class="bg-success">
@@ -43,7 +50,7 @@
           </tbody>
         </table>
       </div>
-      <div class="col">
+      <div class="col-md-6">
         <table class="table table-striped">
           <thead class="table-dark">
             <tr>
@@ -94,3 +101,8 @@ export default {
   }
 };
 </script>
+<style>
+.avatar {
+  padding-bottom: 2em;
+}
+</style>
