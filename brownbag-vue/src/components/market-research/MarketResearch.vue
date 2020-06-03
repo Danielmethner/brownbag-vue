@@ -7,8 +7,14 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <b-form-select v-model="assetId" :options="assetListDD" @change="changeAsset()">
-            <option disabled value="0">Please Select Asset</option>
+          <b-form-select
+            v-model="assetId"
+            :options="assetList"
+            @change="changeAsset()"
+            value-field="id"
+            text-field="name"
+          >
+            <option disabled value="0">Please select an Asset</option>
           </b-form-select>
         </div>
       </div>
@@ -16,6 +22,9 @@
     <div class="row" v-show="assetId">
       <div class="col-md-12">
         <b-tabs content-class="mt-3">
+          <b-tab title="Overview" @click="getOverview()">
+            <Overview ref="overview"></Overview>
+          </b-tab>
           <b-tab title="Public Orderbook" @click="getOrderbook()">
             <Orderbook ref="orderbook"></Orderbook>
           </b-tab>
@@ -37,43 +46,57 @@
 </template>
 
 <script>
+import Overview from "@/components/entities/party/Overview";
 import Orderbook from "@/components/entities/order/Orderbook";
 import AssetService from "@/service/asset.service";
 import IncomeStatement from "@/components/entities/party/IncomeStatement";
 import BalSheet from "@/components/entities/party/BalanceSheet";
+import PartyService from "@/service/party.service";
 export default {
   name: "MarketResearch",
   data() {
     return {
+      asset: {},
       assetId: 0,
-      assetListDD: [],
-      issuerId: {}
+      assetList: [],
+      issuer: {},
+      issuerId: null
     };
   },
   mounted() {
     this.getAssets();
+    if (this.asset != null && this.asset.id != null) {
+      this.assetId = this.asset.id;
+      this.prevBus = 0;
+    }
+  },
+  updated() {
+    // SET DEFAULT TAB TO 0 WHEN SELECTING A BUSINESS FOR FIRST TIME
+    if (this.selectedTab > 0 && this.prevBus == null) {
+      this.selectedTab = 0;
+      this.prevBus = this.assetId;
+    } else {
+      this.getOverview();
+    }
   },
   methods: {
     changeAsset() {
-      this.getOrderbook();
+      this.asset = this.$store.getters["asset/asset"](this.assetId);
       this.issuerId = this.$store.getters["asset/asset"](this.assetId).issuerId;
+      this.getOverview(this.issuerId);
+      this.getOrderbook();
       this.getBalSheet();
-      this.getIncomeStmt;
+      this.getIncomeStmt();
     },
     getAssets() {
-      if (this.assetListDD.length <= 1) {
-        AssetService.getAllSec().then(response => {
-          this.$store.commit("asset/assetList", response.data);
-          this.assetListDD = [];
-          response.data.forEach(asset => {
-            let dropdownItem = { value: asset.id, text: asset.name };
-            this.assetListDD.push(dropdownItem);
-          });
-          this.$store.commit("asset/assetListDD", this.assetListDD);
+      AssetService.getAllSec().then(response => {
+        this.$store.commit("asset/assetList", response.data);
+        this.assetList = [];
+        response.data.forEach(asset => {
+          this.assetList.push(asset);
         });
-      } else {
-        return this.$store.state.asset.assetListDD;
-      }
+        this.$store.commit("asset/assetList", this.assetList);
+      });
     },
     getMyOrders() {
       this.$refs.myOrders.getMyOrders();
@@ -90,12 +113,23 @@ export default {
       if (this.issuerId) {
         this.$refs.incomeStmt.getFinStmt(this.issuerId);
       }
+    },
+    getOverview(issuerId) {
+      if (issuerId != null) {
+        PartyService.getById(issuerId).then(response => {
+          if (response.data.id != null) {
+            this.$refs.overview.getOverview(response.data);
+          }
+        });
+      }
     }
   },
   components: {
+    Overview,
     Orderbook,
     BalSheet,
-    IncomeStatement
+    IncomeStatement,
+    PartyService
   }
 };
 </script>

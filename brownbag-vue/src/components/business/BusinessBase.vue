@@ -90,6 +90,10 @@ export default {
     if (this.selectedTab > 0 && this.prevBus == null) {
       this.selectedTab = 0;
       this.prevBus = this.businessId;
+    } else {
+      if (this.$refs.overview != null) {
+        this.getOverview();
+      }
     }
   },
   computed: {},

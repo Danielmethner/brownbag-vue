@@ -3,7 +3,6 @@ import App from './App.vue';
 import { router } from './router';
 import store from './store';
 import VueChart from 'vue-chartjs';
-// import Chart from 'chart.js';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -31,7 +30,6 @@ Vue.component('tab', Tab);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueChart);
-// Vue.use(Chart);
 
 Vue.use(Tabs);
 Vue.use(VeeValidate, {

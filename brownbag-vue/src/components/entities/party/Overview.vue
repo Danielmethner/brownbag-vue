@@ -98,15 +98,14 @@ export default {
       this.loaded = false;
       PartyService.getOwnerShipList(partyId).then(response => {
         this.ownerShipList = response.data;
-        
+
+        this.loaded = true;
         this.ownerShipList.forEach(ownership => {
           this.ownershipShares.push({
             name: ownership.partyName,
             val: ownership.qty
           });
         });
-
-        this.loaded = true;
       });
     }
   },

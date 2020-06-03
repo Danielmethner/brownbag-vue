@@ -34,18 +34,21 @@ export default {
         }
       ]
     };
+    chartData.labels = [];
+    chartData.datasets[0].data = [];
 
     this.data.forEach(item => {
       chartData.labels.push(item.name);
       chartData.datasets[0].data.push(item.val);
     });
 
-    let option = {}
-
-    this.renderChart(chartData, {
+    let option = {
       responsive: true,
-      maintainAspectRatio: false
-    });
+      maintainAspectRatio: true,
+      legend: { position: "right", align: "center" }
+    };
+
+    this.renderChart(chartData, option);
   }
 };
 </script>
