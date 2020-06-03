@@ -2,8 +2,11 @@ import Vue from 'vue';
 import App from './App.vue';
 import { router } from './router';
 import store from './store';
-
+import VueChart from 'vue-chartjs';
+// import Chart from 'chart.js';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import VeeValidate from 'vee-validate';
 import { Tabs, Tab } from 'vue-tabs-component'; // tab in order field
@@ -11,6 +14,7 @@ import moment from 'moment';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
+
 import {
   faHome,
   faUser,
@@ -26,17 +30,13 @@ Vue.component('tab', Tab);
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(VueChart);
+// Vue.use(Chart);
 
 Vue.use(Tabs);
-// Vue.use(Vuex);
 Vue.use(VeeValidate, {
-  // This is the default
   inject: true,
-  // Important to name this something other than 'fields'
   fieldsBagName: 'veeFields',
-  // This is not required but avoids possible naming conflicts
   errorBagName: 'veeErrors'
 });
 

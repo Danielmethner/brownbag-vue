@@ -32,15 +32,26 @@
                 <b-tr>
                   <b-th colspan="3">Ownership</b-th>
                 </b-tr>
+                <b-tr>
+                  <b-th>Owner</b-th>
+                  <b-th class="text-center">Qty</b-th>
+                  <b-th class="text-center">Share</b-th>
+                </b-tr>
               </b-thead>
               <b-tbody>
                 <b-tr v-for="ownerShip in ownerShipList" :key="ownerShip.id">
-                  <b-th>{{ ownerShip.partyName | camelCasePrettyPrint }}</b-th>
-                  <b-th class="font-weight-normal">{{ ownerShip.qty }}</b-th>
-                  <b-th class="font-weight-normal">{{ ownerShip.ownershipPerc | toPercent }}</b-th>
+                  <b-th>{{ ownerShip.partyName }}</b-th>
+                  <b-th class="font-weight-normal text-center">{{ ownerShip.qty }}</b-th>
+                  <b-th
+                    class="font-weight-normal text-center"
+                  >{{ ownerShip.ownershipPerc | toPercent }}</b-th>
                 </b-tr>
               </b-tbody>
             </b-table-simple>
+
+            <div class="row">
+              <PieChart v-if="loaded" :data="ownershipShares"></PieChart>
+            </div>
           </div>
         </div>
       </div>
@@ -53,13 +64,15 @@
 import FinStmt from "@/components/entities/party/FinStmt";
 import Party from "@/model/Party";
 import PartyService from "@/service/party.service";
-
+import PieChart from "@/components/charts/PieChart";
 export default {
   name: "Overview",
   data() {
     return {
       party: new Party(),
-      ownerShipList: []
+      ownerShipList: [],
+      loaded: false,
+      ownershipShares: []
     };
   },
   mounted() {},
@@ -81,13 +94,25 @@ export default {
       this.getOwnerShipList(party.id);
     },
     getOwnerShipList(partyId) {
+      this.ownershipShares = [];
+      this.loaded = false;
       PartyService.getOwnerShipList(partyId).then(response => {
         this.ownerShipList = response.data;
+        
+        this.ownerShipList.forEach(ownership => {
+          this.ownershipShares.push({
+            name: ownership.partyName,
+            val: ownership.qty
+          });
+        });
+
+        this.loaded = true;
       });
     }
   },
   components: {
-    FinStmt
+    FinStmt,
+    PieChart
   }
 };
 </script>
