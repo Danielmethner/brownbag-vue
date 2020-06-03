@@ -16,7 +16,7 @@
               :class="formatDir(data.item.orderDir)"
             >{{ data.item.orderDir }}</span>
           </template>
-          <!-- <template v-slot:cell(qty)="data">{{ data.item.qty | toNumber }}</template> -->
+          <template v-slot:cell(qty)="data">{{ data.item.qty | toNumber }}</template>
           <template v-slot:cell(qtyExec)="data">{{ data.item.qtyExec }}</template>
           <template v-slot:cell(priceLimit)="data">{{ data.item.priceLimit | toCurrency }}</template>
           <template v-slot:cell(discard)="row">
@@ -80,12 +80,16 @@ export default {
         response.data.forEach(order => {
           let orderStex = new OrderStex(
             order.id,
+            order.assetId,
             order.assetName,
             order.orderDir,
+            order.orderStatus,
+            order.ordertype,
+            order.partyId,
+            order.partyName,
+            order.priceLimit,
             order.qty,
             order.qtyExec,
-            order.priceLimit,
-            order.orderStatus
           );
           this.myorders.push(orderStex);
         });

@@ -11,7 +11,7 @@
       <div class="col-md-2"></div>
       <div class="col-md-8">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6 col-sm-12">
             <b-table-simple hover responsive>
               <b-thead head-variant="dark">
                 <b-tr>
@@ -41,12 +41,19 @@
               <b-tbody>
                 <b-tr v-for="ownerShip in ownerShipList" :key="ownerShip.id">
                   <b-th>{{ ownerShip.partyName }}</b-th>
-                  <b-th class="font-weight-normal text-center">{{ ownerShip.qty }}</b-th>
+                  <b-th class="font-weight-normal text-center">{{ ownerShip.qty | toInt}}</b-th>
                   <b-th
                     class="font-weight-normal text-center"
                   >{{ ownerShip.ownershipPerc | toPercent }}</b-th>
                 </b-tr>
               </b-tbody>
+              <b-tfoot>
+                <b-tr>
+                  <b-th>Total</b-th>
+                  <b-th class="text-center">{{party.assetShareQty | toInt }}</b-th>
+                  <b-th class="text-center">{{ 1 | toPercent}}</b-th>
+                </b-tr>
+              </b-tfoot>
             </b-table-simple>
 
             <div class="row">

@@ -52,6 +52,20 @@ Vue.filter('toCurrency', function (value) {
   });
   return formatter.format(value);
 });
+
+Vue.filter('toInt', function (value) {
+  if (typeof value !== "number") {
+    return value;
+  }
+  var formatter = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    useGrouping: true,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
+  return formatter.format(value);
+});
+
 Vue.filter('toNumber', function (value) {
   if (typeof value !== "number") {
     return value;
