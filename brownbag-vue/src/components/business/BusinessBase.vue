@@ -12,7 +12,7 @@
               :options="businessList"
               @change="changeParty()"
               value-field="id"
-              text-field="name"
+              text-field="technicalName"
             >
               <option disabled value="0">Please Select a Business</option>
             </b-form-select>
@@ -28,6 +28,12 @@
               </b-tab>
               <b-tab title="Portfolio" @click="getPortfolio()">
                 <Portfolio ref="portfolio"></Portfolio>
+              </b-tab>
+              <b-tab title="Transactions" @click="getPositions()">
+                <Transactions ref="trx"></Transactions>
+              </b-tab>
+              <b-tab title="Financing" @click="getFinancingBase()">
+                <FinancingBase ref="financingBase"></FinancingBase>
               </b-tab>
               <b-tab title="Orders" @click="getMyOrders()">
                 <MyOrders ref="myOrders"></MyOrders>
@@ -57,6 +63,7 @@
 <script>
 import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
+import FinancingBase from "@/components/entities/pos/FinancingBase";
 import Portfolio from "@/components/entities/pos/Portfolio";
 import BalSheet from "@/components/entities/party/BalanceSheet";
 import Overview from "@/components/entities/party/Overview";
@@ -64,6 +71,7 @@ import IncomeStatement from "@/components/entities/party/IncomeStatement";
 import NewLegalPerson from "@/components/entities/party/NewLegalPerson";
 import PartyService from "@/service/party.service";
 import Party from "@/model/Party";
+import Transactions from "@/components/entities/pos/Transactions";
 export default {
   name: "BusinessBase",
   data() {
@@ -103,12 +111,17 @@ export default {
       this.business = this.$store.getters["party/businessById"](
         this.businessId
       );
-      this.$store.commit("party/business", this.business);
-      this.getPortfolio();
-      this.getMyOrders();
-      this.genNewOrder();
-      this.getBalSheet();
-      this.getOverview();
+      PartyService.getById(this.businessId).then(response => {
+        let business = response.data;
+        this.$store.commit("party/business", business);
+        this.business = business;
+        this.getFinancingBase();
+        this.getPortfolio();
+        this.getMyOrders();
+        this.genNewOrder();
+        this.getBalSheet();
+        this.getOverview(business);
+      });
     },
     getParties() {
       PartyService.getLegalPersonByOwnerUser().then(
@@ -164,24 +177,41 @@ export default {
         this.$refs.portfolio.getPortfolio(this.businessId);
       }
     },
+    getPositions() {
+      this.$refs.trx.getPositions(this.business);
+    },
     getBalSheet() {
       this.$refs.balSheet.getFinStmt(this.businessId);
     },
     getIncomeStmt() {
       this.$refs.incomeStmt.getFinStmt(this.businessId);
     },
-    getOverview() {
-      this.$refs.overview.getOverview(this.business);
+    getOverview(business) {
+      if (business != null) {
+        this.$refs.overview.getOverview(business);
+      } else {
+        PartyService.getById(this.businessId).then(response => {
+          let businessDB = response.data;
+          this.$refs.overview.getOverview(businessDB);
+        });
+      }
+    },
+    getFinancingBase() {
+      if (this.business != null) {
+        this.$refs.financingBase.getFinancingBase(this.business);
+      }
     }
   },
   components: {
     Overview,
     NewLegalPerson,
+    FinancingBase,
     MyOrders,
     NewOrder,
     Portfolio,
     BalSheet,
-    IncomeStatement
+    IncomeStatement,
+    Transactions
   }
 };
 </script>

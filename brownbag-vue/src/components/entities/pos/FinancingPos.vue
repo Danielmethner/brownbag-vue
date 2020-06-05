@@ -21,7 +21,7 @@
 import PosService from "@/service/pos.service";
 
 export default {
-  name: "Financing",
+  name: "FinancingPos",
   data() {
     return {
       content: "",
