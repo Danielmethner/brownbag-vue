@@ -79,7 +79,7 @@ import OrderService from "@/service/order.service";
 import PartyService from "@/service/party.service";
 import OrderStex from "@/model/OrderStex";
 export default {
-  name: "radio1",
+  name: "NewShareIssue",
   data() {
     return {
       assets: [],
@@ -123,10 +123,6 @@ export default {
     },
     newShareIssuance(party) {
       this.setParty(party);
-
-      PartyService.getAvblQty(this.newOrder.partyId, 1).then(response => {
-        this.fundsAvbl = response.data;
-      });
     },
     placeOrder() {
       if (this.newOrder.partyId == null || this.newOrder.partyId == 0) {

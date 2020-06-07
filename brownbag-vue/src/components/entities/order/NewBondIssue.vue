@@ -1,6 +1,6 @@
 <template>
   <div id="content" class="row justify-content-md-center">
-    <div class="col-md-6">
+    <div class="col-md-7">
       <div class="row">
         <div class="col-md-12 text-center"></div>
       </div>
@@ -8,66 +8,30 @@
       <div class="row">
         <div class="col-md-12">
           <div class="card p-4 bg-light">
-            <div class="form-group">
-              <b-form-group>
-                <div class="btn-group btn-group-toggle trade-dir">
-                  <label class="btn btn-lg button-dir" v-bind:class="btnFormat('BUY')">
-                    <input
-                      type="radio"
-                      name="options"
-                      value="BUY"
-                      id="buy"
-                      v-model="newOrder.orderDir"
-                      autocomplete="off"
-                    />Buy
-                  </label>
-                  <label class="btn btn-lg button-dir" v-bind:class="btnFormat('SELL')">
-                    <input
-                      type="radio"
-                      name="options"
-                      value="SELL"
-                      id="sell"
-                      v-model="newOrder.orderDir"
-                      autocomplete="off"
-                    />Sell
-                  </label>
-                </div>
-              </b-form-group>
-            </div>
             <div class="form-group row">
               <div class="form-group col">
-                <label for="inputAddress">Ordering Party</label>
+                <label for="inputAddress">Issuing Party</label>
                 <label readonly type="text" class="form-control" id="party">{{newOrder.partyName}}</label>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="form-group col">
-                <label for="inputAsset">Asset</label>
-                <b-form-select v-model="newOrder.assetId" :options="assets" @change="changeAsset()"></b-form-select>
               </div>
             </div>
 
             <div class="form-group row">
               <div class="form-group col">
-                <label for="qty">Qty</label>
+                <label for="qty">Quantity</label>
                 <input
                   type="number"
                   min="0"
                   class="form-control"
                   id="qty"
-                  placeholder="0,0"
+                  placeholder="0,00"
                   v-model="newOrder.qty"
                 />
-              </div>
-              <div class="form-group col" v-show="isSellOrder">
-                <label for="avblQty">Available Quantity</label>
-                <label readonly type="text" class="form-control" id="avblQty">{{qtyAvbl}}</label>
               </div>
             </div>
 
             <div class="form-group row">
               <div class="form-group col">
-                <label for="inputPrice">Price</label>
+                <label for="inputPrice">Nominal Value</label>
                 <input
                   type="number"
                   min="0"
@@ -89,14 +53,28 @@
                   id="orderAmount"
                 >{{newOrderAmt | toCurrency}}</label>
               </div>
-              <div class="form-group col" v-show="!isSellOrder">
-                <label for="avblFunds">Available Funds</label>
+            </div>
+            <div class="form-group row">
+              <div class="form-group col">
+                <label for="inputPrice">Interest Rate [%]</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  class="form-control"
+                  id="price"
+                  placeholder="0.00"
+                  v-model="newOrder.intrRate"
+                />
+              </div>
+              <div class="form-group col">
+                <label for="inputPrice">Annual Coupon</label>
                 <label
                   readonly
                   type="text"
                   class="form-control"
-                  id="avblFunds"
-                >{{fundsAvbl | toCurrency}}</label>
+                  id="orderAmount"
+                >{{coupon | toCurrency}}</label>
               </div>
             </div>
 
@@ -124,46 +102,36 @@ import OrderService from "@/service/order.service";
 import PartyService from "@/service/party.service";
 import OrderStex from "@/model/OrderStex";
 export default {
-  name: "radio1",
+  name: "NewBondIssue",
   data() {
     return {
       assets: [],
-      btnFormat: function(direction) {
-        if (direction == "BUY") {
-          return this.newOrder.orderDir == "BUY"
-            ? "btn-success"
-            : "btn-outline-success";
-        } else {
-          return this.newOrder.orderDir == "SELL"
-            ? "btn-danger"
-            : "btn-outline-danger";
-        }
-      },
-      fundsAvbl: 0,
-      qtyAvbl: 0,
       newOrder: new OrderStex(
         null,
         null,
         null,
-        "BUY",
+        "SELL",
         null,
-        "STEX",
+        "STEX_IPO",
         null,
         "No business selected!",
         null,
         null,
-        null
+        null,
+        0
       ),
       status: ""
     };
   },
   computed: {
+    
     newOrderAmt: function() {
       let amt = this.newOrder.priceLimit * this.newOrder.qty;
       return amt;
     },
-    isSellOrder: function() {
-      return this.newOrder.orderDir == "SELL";
+    coupon: function() {
+      let coupon = this.newOrder.priceLimit * this.newOrder.qty * (this.newOrder.intrRate / 100);
+      return coupon > 0 ? coupon : 0;
     }
   },
   mounted() {
@@ -176,52 +144,33 @@ export default {
     });
   },
   methods: {
-    changeAsset() {
-      this.status = "";
-      this.qtyAvbl = 0;
-      PartyService.getAvblQty(
-        this.newOrder.partyId,
-        this.newOrder.assetId
-      ).then(response => {
-        this.qtyAvbl = response.data;
-      });
-    },
     setParty(party) {
       this.status = "";
       this.newOrder.partyId = party.id;
       this.newOrder.partyName = party.name;
     },
-    genNewOrder(party) {
+    newBondIssuance(party) {
       this.setParty(party);
-
-      PartyService.getAvblQty(this.newOrder.partyId, 1).then(response => {
-        this.fundsAvbl = response.data;
-      });
     },
     placeOrder() {
       if (this.newOrder.partyId == null || this.newOrder.partyId == 0) {
-        this.status = "Error: No business selected!";
-        return;
-      }
-      if (this.newOrder.assetId == null) {
-        this.status = "Error: No asset selected!";
+        this.status = "Error: Issuer could not be found: " + this.newOrder.partyId;
         return;
       }
       if (this.newOrder.qty <= 0) {
-        this.status = "Error: Order Quantity must be greater 0!";
+        this.status = "Error: Order Quantity must be greater 0. Qty: " + this.newOrder.qty;
         return;
       }
       if (this.newOrder.priceLimit <= 0) {
-        this.status = "Error: Price Limit must be greater 0!";
+        this.status = "Error: Price Limit must be greater 0. Price Limit: " + this.newOrder.priceLimit;
         return;
       }
-      if (
-        !this.isSellOrder &&
-        this.newOrder.qty * this.newOrder.priceLimit > this.newOrder.fundsAvbl
-      ) {
-        this.status = "Error: Insufficient Funds!";
+      
+      if (this.newOrder.intrRate <= 0) {
+        this.status = "Error: Interest Rate must be greater 0. Interest Rate: " + this.newOrder.intrRate;
         return;
       }
+      
       OrderService.placeOrder(this.newOrder).then(
         response => {
           this.status = response.data;
@@ -236,14 +185,12 @@ export default {
       if (clearStatus) {
         this.status = "";
       }
-      this.newOrder.assetId = null;
       this.newOrder.qty = null;
       this.newOrder.priceLimit = null;
       this.qtyAvbl = 0;
       PartyService.getAvblQty(this.newOrder.partyId, 1).then(response => {
         this.fundsAvbl = response.data;
       });
-      // vm.$forceUpdate();
     }
   }
 };

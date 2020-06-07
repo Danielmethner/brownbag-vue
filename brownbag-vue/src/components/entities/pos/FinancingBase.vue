@@ -9,7 +9,7 @@
           <LoanAppl ref="loanAppl"></LoanAppl>
         </b-tab>
 
-        <b-tab v-if="isBusiness" title="Bond Issuance" @click="getFinancing()">
+        <b-tab v-if="isBusiness" title="Bond Issuance" @click="newBondIssuance()">
           <BondIssue ref="bondIssuance"></BondIssue>
         </b-tab>
 
@@ -49,6 +49,12 @@ export default {
     getFinancingBase(party) {
       this.party = party;
       this.getFinancing(party);
+      if(this.$refs.bondIssuance != null) {
+        this.newBondIssuance();
+      }
+      if(this.$refs.bondIssuance != null) {
+        this.newShareIssuance();
+      }
     },
     getFinancing(party) {
       if (party != null) {
@@ -58,6 +64,12 @@ export default {
     newShareIssuance() {
       if (this.party != null) {
         this.$refs.shareIssuance.newShareIssuance(this.party);
+      } 
+    }
+    ,
+    newBondIssuance() {
+      if (this.party != null) {
+        this.$refs.bondIssuance.newBondIssuance(this.party);
       } 
     }
   },
