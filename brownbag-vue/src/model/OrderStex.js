@@ -11,8 +11,10 @@ export default class OrderStex {
   qty = null;
   qtyExec = null;
   intrRate = null;
+  nomVal = null;
+  matDate = null;
 
-  constructor(id, assetId, assetName, orderDir, orderStatus, ordertype, partyId, partyName, priceLimit, qty, qtyExec, intrRate) {
+  constructor(id, assetId, assetName, orderDir, orderStatus, ordertype, partyId, partyName, priceLimit, qty, qtyExec, intrRate, nomVal, matDate) {
     this.id = id;
     this.assetId = assetId;
     this.assetName = assetName;
@@ -25,5 +27,7 @@ export default class OrderStex {
     this.qty = qty;
     this.qtyExec = qtyExec;
     this.intrRate = intrRate;
+    this.nomVal = nomVal;
+    this.matDate = matDate;
   }
 }

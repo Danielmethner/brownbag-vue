@@ -53,7 +53,7 @@ export default {
             this.hasLogs = 1;
           }
         });
-      }, 1000);
+      }, 1);
     }
   }
 };

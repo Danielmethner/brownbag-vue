@@ -48,6 +48,8 @@
                   v-model="newLegalPerson.assetShareQty"
                 />
               </div>
+              </div>
+                          <div class="form-group row" v-if="isCorporation">
               <div class="form-group col">
                 <label for="inputName">Nominal Value per Share</label>
                 <label
