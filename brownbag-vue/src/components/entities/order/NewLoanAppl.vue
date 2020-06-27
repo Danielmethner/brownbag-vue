@@ -8,95 +8,58 @@
       <div class="row">
         <div class="col-md-12">
           <div class="card p-4 bg-light">
-            <div class="form-group">
-              <b-form-group>
-                <div class="btn-group btn-group-toggle trade-dir">
-                  <label class="btn btn-lg button-dir" v-bind:class="btnFormat('BUY')">
-                    <input
-                      type="radio"
-                      name="options"
-                      value="BUY"
-                      id="buy"
-                      v-model="newOrder.orderDir"
-                      autocomplete="off"
-                    />Buy
-                  </label>
-                  <label class="btn btn-lg button-dir" v-bind:class="btnFormat('SELL')">
-                    <input
-                      type="radio"
-                      name="options"
-                      value="SELL"
-                      id="sell"
-                      v-model="newOrder.orderDir"
-                      autocomplete="off"
-                    />Sell
-                  </label>
-                </div>
-              </b-form-group>
-            </div>
             <div class="form-group row">
               <div class="form-group col">
-                <label for="inputAddress">Ordering Party</label>
-                <label readonly type="text" class="form-control" id="party">{{newOrder.partyName}}</label>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="form-group col">
-                <label for="inputAsset">Asset</label>
-                <b-form-select v-model="newOrder.assetId" :options="assets" @change="changeAsset()"></b-form-select>
+                <label for="party">Ordering Party</label>
+                <label readonly type="text" class="form-control" id="party">{{loanAppl.partyName}}</label>
               </div>
             </div>
 
             <div class="form-group row">
-              <div class="form-group col">
-                <label for="qty">Qty</label>
+              <div class="form-group col-md-6">
+                <label for="orderAmount">Loan Amount</label>
                 <input
                   type="number"
                   min="0"
                   class="form-control"
                   id="qty"
                   placeholder="0,0"
-                  v-model="newOrder.qty"
+                  v-model="loanAppl.amount"
                 />
               </div>
-              <div class="form-group col" v-show="isSellOrder">
-                <label for="avblQty">Available Quantity</label>
-                <label readonly type="text" class="form-control" id="avblQty">{{qtyAvbl}}</label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="form-group col">
-                <label for="inputPrice">Price</label>
-                <input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  class="form-control"
-                  id="price"
-                  placeholder="0.00"
-                  v-model="newOrder.priceLimit"
-                />
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="form-group col">
-                <label for="orderAmount">Order Amount</label>
-                <label
-                  readonly
-                  type="text"
-                  class="form-control"
-                  id="orderAmount"
-                >{{newOrderAmt | toCurrency}}</label>
-              </div>
-              <div class="form-group col" v-show="!isSellOrder">
-                <label for="avblFunds">Available Funds</label>
+              <div class="form-group col-md-6" v-show="!isSellOrder">
+                <label for="credFacility">Credit Facility</label>
                 <label
                   readonly
                   type="text"
                   class="form-control"
                   id="avblFunds"
-                >{{fundsAvbl | toCurrency}}</label>
+                >{{credFacility | toCurrency}}</label>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="form-group col-md-6">
+                <label for="duration">Credit Period</label>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  id="qty"
+                  placeholder="0,0"
+                  v-model="loanAppl.credPeriod"
+                />
+              </div>
+              <div class="form-group col-md-6" v-show="!isSellOrder">
+                <label for="intrRate">Interest Rate</label>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  id="qty"
+                  placeholder="0,0"
+                  v-model="loanAppl.intrRate"
+                />
               </div>
             </div>
 
@@ -128,26 +91,15 @@ export default {
   data() {
     return {
       assets: [],
-      btnFormat: function(direction) {
-        if (direction == "BUY") {
-          return this.newOrder.orderDir == "BUY"
-            ? "btn-success"
-            : "btn-outline-success";
-        } else {
-          return this.newOrder.orderDir == "SELL"
-            ? "btn-danger"
-            : "btn-outline-danger";
-        }
-      },
-      fundsAvbl: 0,
+      credFacility: 0,
       qtyAvbl: 0,
-      newOrder: new OrderStex(
+      loanAppl: new OrderLoan(
         null,
         null,
         null,
         "BUY",
         null,
-        "STEX",
+        "LOAN",
         null,
         "No business selected!",
         null,

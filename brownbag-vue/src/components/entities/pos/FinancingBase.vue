@@ -52,7 +52,7 @@ export default {
       if(this.$refs.bondIssuance != null) {
         this.newBondIssuance();
       }
-      if(this.$refs.bondIssuance != null) {
+      if(this.$refs.shareIssuance  != null) {
         this.newShareIssuance();
       }
     },
@@ -62,7 +62,7 @@ export default {
       }
     },
     newShareIssuance() {
-      if (this.party != null) {
+      if (this.party != null && this.$refs.shareIssuance  != null) {
         this.$refs.shareIssuance.newShareIssuance(this.party);
       } 
     }

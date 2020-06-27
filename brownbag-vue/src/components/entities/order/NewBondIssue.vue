@@ -125,7 +125,9 @@
             </div>
             <div class="form-group row">
               <div class="form-group col-6">
-                <button @click="placeOrder()" class="btn btn-primary btn-block">Place Order</button>
+                <button @click="placeOrder()" class="btn btn-primary btn-block">
+                  <b-spinner small v-if="loading"></b-spinner>Place Order
+                </button>
               </div>
               <div class="form-group col-6">
                 <button @click="clearForm(true  )" class="btn btn-dark btn-block">Clear Form</button>
@@ -166,7 +168,8 @@ export default {
         10,
         new Date(new Date().getFullYear(), 11, 31)
       ),
-      status: ""
+      status: "",
+      loading: false
     };
   },
   computed: {
@@ -192,16 +195,18 @@ export default {
     });
   },
   methods: {
-    setParty(party) {
-      this.status = "";
-      this.newOrder.partyId = party.id;
-      this.newOrder.partyName = party.name;
-
+    setMatDate() {
       SettingsService.getFinYear().then(response => {
         let finYear = response.data;
         this.newOrder.matDate = new Date(finYear + 1, 11, 31);
         this.minMatDate = new Date(finYear + 1, 11, 31);
       });
+    },
+    setParty(party) {
+      this.status = "";
+      this.newOrder.partyId = party.id;
+      this.newOrder.partyName = party.name;
+      this.setMatDate();
     },
     newBondIssuance(party) {
       this.setParty(party);
@@ -231,21 +236,28 @@ export default {
         return;
       }
 
-      OrderService.placeOrder(this.newOrder).then(
-        response => {
-          this.status = response.data;
-          this.clearForm(false);
-        },
-        error => {
-          this.status = "Error: " && error;
-        }
-      );
+      this.status = "Processing Order";
+      this.loading = true;
+      setTimeout(() => {
+        OrderService.placeOrder(this.newOrder).then(
+          response => {
+            this.status = response.data;
+            this.clearForm(false);
+          },
+          error => {
+            this.status = "Error: " && error;
+          }
+        ).finally(() => {
+          this.loading = false;
+        });
+      }, 1000);
     },
     clearForm(clearStatus) {
       if (clearStatus) {
         this.status = "";
       }
-      this.newOrder.matDate = new Date(new Date().getFullYear(), 11, 31);
+      
+      this.setMatDate();
       // this.newOrder.qty = null;
       // this.newOrder.priceLimit = null;
       // this.newOrder.intrRate = null;

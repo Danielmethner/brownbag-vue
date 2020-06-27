@@ -3,7 +3,7 @@ import { GLOBAL } from '../store/index.js'
 import authHeader from './auth-header';
 import store from '../store';
 
-const ASSET_GET_ALL_SEC = '/api/asset/stock/all';
+const ASSET_GET_ALL_SEC = '/api/asset/sec/all';
 
 
 class AssetService {

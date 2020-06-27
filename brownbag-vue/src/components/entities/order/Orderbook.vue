@@ -53,8 +53,8 @@
         </div>
         <div class="row form-group">
           <div class="col-md-5 form-group">
-            <div class="row  form-group">
-              <div class="col-md-12  form-group">
+            <div class="row form-group">
+              <div class="col-md-12 form-group">
                 <label for="orderSell" class="orderbook-input-caption">Execution Quantity</label>
                 <input readonly class="form-control" id="orderBuy" v-model="execQty" />
               </div>
@@ -62,8 +62,8 @@
           </div>
           <div class="col-md-1 form-group"></div>
           <div class="col-md-5 form-group">
-            <div class="row  form-group">
-              <div class="col-md-12  form-group">
+            <div class="row form-group">
+              <div class="col-md-12 form-group">
                 <label for="orderSell" class="orderbook-input-caption">Execution Price</label>
                 <input readonly class="form-control" id="orderBuy" v-model="execPrice" />
               </div>
@@ -72,8 +72,8 @@
         </div>
         <div class="row form-group">
           <div class="col-md-12 form-group">
-            <div class="row  form-group">
-              <div class="col  form-group">
+            <div class="row form-group">
+              <div class="col form-group">
                 <label for="orderBuy" class="orderbook-input-caption">Matching Validation Status</label>
               </div>
             </div>
@@ -177,9 +177,10 @@ export default {
         { label: "Asset", key: "assetName", sortable: true },
         { label: "Quantity", key: "qtyRemaining", sortable: true },
         { label: "Price", key: "priceLimit", sortable: true },
-        { key: "match" }
+    
       ]
     };
+    //    { key: "match" }
   },
   computed: {
     validationStatus() {
@@ -283,7 +284,6 @@ export default {
           response.data.forEach(order => {
             order.qtyRemaining = order.qty - order.qtyExec;
             if (order.orderDir == "BUY") {
-              
               this.orderbook.buyOrders.push(order);
             } else {
               this.orderbook.sellOrders.push(order);
@@ -294,6 +294,9 @@ export default {
     }
   },
   mounted() {
+    if (this.userIsBroker) {
+      this.headers.push({ key: "match" });
+    }
     this.getOrderbook();
   }
 };

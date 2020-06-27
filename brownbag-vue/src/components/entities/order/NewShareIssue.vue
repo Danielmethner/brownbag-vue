@@ -60,7 +60,9 @@
             </div>
             <div class="form-group row">
               <div class="form-group col-6">
-                <button @click="placeOrder()" class="btn btn-primary btn-block">Place Order</button>
+                <button @click="placeOrder()" class="btn btn-primary btn-block">
+                  <b-spinner small v-if="loading"></b-spinner>Place Order
+                </button>
               </div>
               <div class="form-group col-6">
                 <button @click="clearForm(true  )" class="btn btn-dark btn-block">Clear Form</button>
@@ -96,7 +98,8 @@ export default {
         null,
         null
       ),
-      status: ""
+      status: "",
+      loading: false
     };
   },
   computed: {
@@ -126,30 +129,43 @@ export default {
     },
     placeOrder() {
       if (this.newOrder.partyId == null || this.newOrder.partyId == 0) {
-        this.status = "Error: Issuer could not be found: " + this.newOrder.partyId;
+        this.status =
+          "Error: Issuer could not be found: " + this.newOrder.partyId;
         return;
       }
       if (this.newOrder.assetId == null) {
-        this.status = "Error: Asset ID could not be found. Asset ID: " + this.newOrder.assetId;
+        this.status =
+          "Error: Asset ID could not be found. Asset ID: " +
+          this.newOrder.assetId;
         return;
       }
       if (this.newOrder.qty <= 0) {
-        this.status = "Error: Order Quantity must be greater 0. Qty: " + this.newOrder.qty;
+        this.status =
+          "Error: Order Quantity must be greater 0. Qty: " + this.newOrder.qty;
         return;
       }
       if (this.newOrder.priceLimit <= 0) {
-        this.status = "Error: Price Limit must be greater 0. Price Limit: " + this.newOrder.priceLimit;
+        this.status =
+          "Error: Price Limit must be greater 0. Price Limit: " +
+          this.newOrder.priceLimit;
         return;
       }
-      OrderService.placeOrder(this.newOrder).then(
-        response => {
-          this.status = response.data;
-          this.clearForm(false);
-        },
-        error => {
-          this.status = "Error: " && error;
-        }
-      );
+      this.loading = true;
+      setTimeout(() => {
+        OrderService.placeOrder(this.newOrder)
+          .then(
+            response => {
+              this.status = response.data;
+              this.clearForm(false);
+            },
+            error => {
+              this.status = "Error: " && error;
+            }
+          )
+          .finally(() => {
+            this.loading = false;
+          });
+      }, 1000);
     },
     clearForm(clearStatus) {
       if (clearStatus) {
