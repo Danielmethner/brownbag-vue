@@ -198,8 +198,9 @@ export default {
     setMatDate() {
       SettingsService.getFinYear().then(response => {
         let finYear = response.data;
-        this.newOrder.matDate = new Date(finYear + 1, 11, 31);
-        this.minMatDate = new Date(finYear + 1, 11, 31);
+         let finDate = new Date(finYear + 1, 11, 31);
+        this.newOrder.matDate = finDate;
+        this.minMatDate = finDate;
       });
     },
     setParty(party) {

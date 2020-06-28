@@ -124,6 +124,15 @@ Vue.filter('toLocalDate', function (value) {
   }
 });
 
+// LOCAL DATE
+Vue.filter('jsDateToLocalDate', function (value) {
+  if (value && value instanceof Date) {
+    return moment(String(value.toISOString())).format('DD. MMM  YYYY')
+  } else {
+    return value;
+  }
+});
+
 // CAMEL CASE PRETTY PRINT
 Vue.filter('camelCasePrettyPrint', function (value) {
   const toUppercase = str => str.toUpperCase();

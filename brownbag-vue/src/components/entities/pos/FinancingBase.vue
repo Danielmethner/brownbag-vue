@@ -5,7 +5,7 @@
         <b-tab title="Present Financing" @click="getFinancing()">
           <FinancingPos ref="financingPos"></FinancingPos>
         </b-tab>
-        <b-tab title="Loan Application" @click="getFinancing()">
+        <b-tab title="Loan Application" @click="newLoanAppl()">
           <LoanAppl ref="loanAppl"></LoanAppl>
         </b-tab>
 
@@ -61,12 +61,16 @@ export default {
         this.$refs.financingPos.getFinancing(party.id);
       }
     },
+    newLoanAppl() {
+      if (this.party != null && this.$refs.loanAppl  != null) {
+        this.$refs.loanAppl.newLoanAppl(this.party);
+      }
+    },
     newShareIssuance() {
       if (this.party != null && this.$refs.shareIssuance  != null) {
         this.$refs.shareIssuance.newShareIssuance(this.party);
       } 
-    }
-    ,
+    },
     newBondIssuance() {
       if (this.party != null) {
         this.$refs.bondIssuance.newBondIssuance(this.party);

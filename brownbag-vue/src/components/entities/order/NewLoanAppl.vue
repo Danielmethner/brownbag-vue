@@ -11,7 +11,7 @@
             <div class="form-group row">
               <div class="form-group col">
                 <label for="party">Ordering Party</label>
-                <label readonly type="text" class="form-control" id="party">{{loanAppl.partyName}}</label>
+                <label readonly type="text" class="form-control" id="party">{{orderLoan.partyName}}</label>
               </div>
             </div>
 
@@ -24,10 +24,10 @@
                   class="form-control"
                   id="qty"
                   placeholder="0,0"
-                  v-model="loanAppl.amount"
+                  v-model="orderLoan.qty"
                 />
               </div>
-              <div class="form-group col-md-6" v-show="!isSellOrder">
+              <div class="form-group col-md-6">
                 <label for="credFacility">Credit Facility</label>
                 <label
                   readonly
@@ -37,29 +37,47 @@
                 >{{credFacility | toCurrency}}</label>
               </div>
             </div>
-
+            <div class="form-group row">
+              <div class="form-group col-md-6">
+                <label for="intrRate">Interest Rate</label>
+                <label
+                  readonly
+                  type="text"
+                  class="form-control"
+                  id="intrRate"
+                >{{intrRate | toPercent}}</label>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="intrRate">Interest p.a.</label>
+                <label
+                  readonly
+                  type="text"
+                  class="form-control"
+                  id="intrAmt"
+                >{{intrAmt | toCurrency}}</label>
+              </div>
+            </div>
             <div class="form-group row">
               <div class="form-group col-md-6">
                 <label for="duration">Credit Period</label>
                 <input
                   type="number"
-                  min="0"
+                  min="1"
+                  step="1"
                   class="form-control"
                   id="qty"
-                  placeholder="0,0"
-                  v-model="loanAppl.credPeriod"
+                  placeholder="0"
+                  v-model="credPeriod"
                 />
               </div>
-              <div class="form-group col-md-6" v-show="!isSellOrder">
-                <label for="intrRate">Interest Rate</label>
-                <input
-                  type="number"
-                  min="0"
+              <div class="form-group col-md-6">
+                <label for="intrRate">Redemption Date</label>
+                <label
+                  readonly
+                  type="text"
                   class="form-control"
-                  id="qty"
-                  placeholder="0,0"
-                  v-model="loanAppl.intrRate"
-                />
+                  id="intrAmt"
+                >{{matDate | jsDateToLocalDate}}</label>
               </div>
             </div>
 
@@ -68,7 +86,9 @@
             </div>
             <div class="form-group row">
               <div class="form-group col-6">
-                <button @click="placeOrder()" class="btn btn-primary btn-block">Place Order</button>
+                <button @click="placeOrder()" class="btn btn-primary btn-block">
+                  <b-spinner small v-if="isLoading"></b-spinner>Place Order
+                </button>
               </div>
               <div class="form-group col-6">
                 <button @click="clearForm(true  )" class="btn btn-dark btn-block">Clear Form</button>
@@ -82,119 +102,112 @@
 </template>
 
 <script>
-import AssetService from "@/service/asset.service";
+// import AssetService from "@/service/asset.service";
 import OrderService from "@/service/order.service";
 import PartyService from "@/service/party.service";
-import OrderStex from "@/model/OrderStex";
+import SettingsService from "@/service/settings.service";
+import OrderLoan from "@/model/OrderLoan";
 export default {
-  name: "radio1",
   data() {
     return {
       assets: [],
       credFacility: 0,
-      qtyAvbl: 0,
-      loanAppl: new OrderLoan(
-        null,
-        null,
-        null,
-        "BUY",
-        null,
-        "LOAN",
-        null,
-        "No business selected!",
-        null,
-        null,
-        null
-      ),
+      credPeriod: 1,
+      intrRate: 0,
+      isLoading: false,
+      minMatDate: new Date(),
+      orderLoan: new OrderLoan(),
+      party: {},
       status: ""
     };
   },
   computed: {
-    newOrderAmt: function() {
-      let amt = this.newOrder.priceLimit * this.newOrder.qty;
-      return amt;
+    intrAmt: function() {
+      let intrAmt = this.orderLoan.getQty() * this.intrRate;
+      return intrAmt > 0 ? intrAmt : 0;
     },
-    isSellOrder: function() {
-      return this.newOrder.orderDir == "SELL";
+    matDate: function() {
+      let newMatDate = null;
+      let localMinMatDate = this.minMatDate; 
+      if (localMinMatDate != null) {
+        newMatDate = new Date(localMinMatDate.valueOf());
+
+        if (newMatDate instanceof Date) {
+          newMatDate.setFullYear(
+            this.minMatDate.getFullYear() + parseInt(this.credPeriod)
+          );
+          this.orderLoan.setMatDate(newMatDate);
+        }
+      }
+      return newMatDate;
     }
   },
-  mounted() {
-    this.assets = [{ value: null, text: "Please Select Asset" }];
-    AssetService.getAllSec().then(response => {
-      response.data.forEach(asset => {
-        let dropdownItem = { value: asset.id, text: asset.name };
-        this.assets.push(dropdownItem);
-      });
-    });
-  },
+  mounted() {},
   methods: {
-    changeAsset() {
-      this.status = "";
-      this.qtyAvbl = 0;
-      PartyService.getAvblQty(
-        this.newOrder.partyId,
-        this.newOrder.assetId
-      ).then(response => {
-        this.qtyAvbl = response.data;
+    setMatDate() {
+      SettingsService.getFinYear().then(response => {
+        let finYear = response.data;
+        let finDate = new Date(finYear + 1, 11, 31);
+        this.orderLoan.matDate = finDate;
+        this.minMatDate = finDate;
+      });
+    },
+    setCredFacility(partyId) {
+      PartyService.getCredFacility(partyId).then(response => {
+        this.credFacility = response.data;
       });
     },
     setParty(party) {
-      this.status = "";
-      this.newOrder.partyId = party.id;
-      this.newOrder.partyName = party.name;
+      this.orderLoan.setPartyId(party.id);
+      this.orderLoan.partyName = party.name;
+      this.party = party;
     },
-    genNewOrder(party) {
+    newLoanAppl(party) {
+      this.status = "";
       this.setParty(party);
-
-      PartyService.getAvblQty(this.newOrder.partyId, 1).then(response => {
-        this.fundsAvbl = response.data;
-      });
+      this.setMatDate();
+      this.setCredFacility(party.id);
     },
     placeOrder() {
-      if (this.newOrder.partyId == null || this.newOrder.partyId == 0) {
-        this.status = "Error: No business selected!";
-        return;
-      }
-      if (this.newOrder.assetId == null) {
-        this.status = "Error: No asset selected!";
-        return;
-      }
-      if (this.newOrder.qty <= 0) {
-        this.status = "Error: Order Quantity must be greater 0!";
-        return;
-      }
-      if (this.newOrder.priceLimit <= 0) {
-        this.status = "Error: Price Limit must be greater 0!";
-        return;
-      }
+      // PARTY SET
       if (
-        !this.isSellOrder &&
-        this.newOrder.qty * this.newOrder.priceLimit > this.newOrder.fundsAvbl
+        this.orderLoan.getPartyId() == null ||
+        this.orderLoan.getPartyId() == 0
       ) {
-        this.status = "Error: Insufficient Funds!";
+        this.status = "Error: No business selected";
         return;
       }
-      OrderService.placeOrder(this.newOrder).then(
-        response => {
-          this.status = response.data;
-          this.clearForm(false);
-        },
-        error => {
-          this.status = "Error: " && error;
-        }
-      );
+      // AMOUNT > 0
+      if (this.orderLoan.getQty() <= 0) {
+        this.status = "Error: Loan amount must be greater 0";
+        return;
+      }
+      // MATURITY SET
+      if (this.orderLoan.getMatDate() <= this.minMatDate) {
+        this.status = "Error: Price Limit must be greater 0";
+        return;
+      }
+      this.isLoading = true;
+      OrderService.placeOrder(this.orderLoan)
+        .then(
+          response => {
+            this.status = response.data;
+            this.clearForm(false);
+          },
+          error => {
+            this.status = "Error: " && error;
+          }
+        )
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     clearForm(clearStatus) {
       if (clearStatus) {
         this.status = "";
       }
-      this.newOrder.assetId = null;
-      this.newOrder.qty = null;
-      this.newOrder.priceLimit = null;
-      this.qtyAvbl = 0;
-      PartyService.getAvblQty(this.newOrder.partyId, 1).then(response => {
-        this.fundsAvbl = response.data;
-      });
+      this.orderLoan.qty = null;
+      this.setCredFacility(this.orderLoan.getPartyId());
       // vm.$forceUpdate();
     }
   }
