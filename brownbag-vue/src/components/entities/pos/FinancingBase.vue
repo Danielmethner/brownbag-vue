@@ -57,6 +57,9 @@ export default {
       }
     },
     getFinancing(party) {
+      if(party== null) {
+        party = this.party 
+      }
       if (party != null) {
         this.$refs.financingPos.getFinancing(party.id);
       }

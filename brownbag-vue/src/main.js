@@ -14,6 +14,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
+
 import {
   faHome,
   faUser,
@@ -75,6 +76,19 @@ Vue.filter('toNumber', function (value) {
     useGrouping: true,
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
+  });
+  return formatter.format(value);
+});
+
+Vue.filter('toQty', function (value) {
+  if (typeof value !== "number") {
+    return value;
+  }
+  var formatter = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    useGrouping: true,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
   });
   return formatter.format(value);
 });

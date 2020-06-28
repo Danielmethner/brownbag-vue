@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { GLOBAL } from '../store/index.js';
 const ORDER_STEX_PLACE = '/api/order/stex/place';
+const ORDER_LOAN_PLACE = '/api/order/loan/place';
 const ORDER_GET_BY_USER = '/api/order/stex/user'
 const ORDER_GET_BY_PARTY = '/api/order/stex/party/'
 const ORDER_GET_PLACED_AND_ASSET = '/api/order/stex/placed/asset/'
@@ -14,6 +15,11 @@ class OrderService {
   placeOrder(order) {
     return axios
       .post(GLOBAL.API_BASE_URL + ORDER_STEX_PLACE, order, { headers: jsonHeader() });
+  }
+
+  placeOrderLoan(order) {
+        return axios
+      .post(GLOBAL.API_BASE_URL + ORDER_LOAN_PLACE, order, { headers: jsonHeader() });
   }
 
   discardOrder(orderId) {

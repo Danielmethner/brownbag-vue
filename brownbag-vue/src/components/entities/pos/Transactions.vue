@@ -28,6 +28,8 @@
           sort-icon-left
         >
           <template v-slot:cell(timestamp)="data">{{ data.item.timestamp | toTimestamp}}</template>
+          <template v-slot:cell(posBalOld)="data">{{ data.item.posBalOld | toQty}}</template>
+          <template v-slot:cell(posBalNew)="data">{{ data.item.posBalNew | toQty}}</template>
         </b-table>
       </div>
     </div>

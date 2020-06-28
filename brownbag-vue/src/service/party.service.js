@@ -15,7 +15,7 @@ const BAL_SHEET_PREV_BY_PARTY_ID = '/api/fin-stmt/balsheet/prev/party/';
 const FIN_STMT_BY_TYPE = '/api/fin-stmt/type/';
 const FIN_YEAR = '/finyear/';
 const PARTY_ID = '/party/';
-const CRED_FACILITY_GET_BY_PARTY_ID = '/cred-facility/party/';
+const CRED_FACILITY_GET_BY_PARTY_ID = '/api/party/cred-facility/party/';
 
 class PartyService {
   getOwnerShipList(partyId) {

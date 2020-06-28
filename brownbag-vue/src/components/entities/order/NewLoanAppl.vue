@@ -21,9 +21,11 @@
                 <input
                   type="number"
                   min="0"
+                  :max="credFacility"
+                  step="0.01"
                   class="form-control"
                   id="qty"
-                  placeholder="0,0"
+                  placeholder="0.00"
                   v-model="orderLoan.qty"
                 />
               </div>
@@ -107,6 +109,8 @@ import OrderService from "@/service/order.service";
 import PartyService from "@/service/party.service";
 import SettingsService from "@/service/settings.service";
 import OrderLoan from "@/model/OrderLoan";
+import { GLOBAL } from "@/store/index.js";
+
 export default {
   data() {
     return {
@@ -116,7 +120,7 @@ export default {
       intrRate: 0,
       isLoading: false,
       minMatDate: new Date(),
-      orderLoan: new OrderLoan(),
+      orderLoan: new OrderLoan(null, 1000),
       party: {},
       status: ""
     };
@@ -128,7 +132,7 @@ export default {
     },
     matDate: function() {
       let newMatDate = null;
-      let localMinMatDate = this.minMatDate; 
+      let localMinMatDate = this.minMatDate;
       if (localMinMatDate != null) {
         newMatDate = new Date(localMinMatDate.valueOf());
 
@@ -157,6 +161,13 @@ export default {
         this.credFacility = response.data;
       });
     },
+    setIntrRate() {
+      SettingsService.getCtrlVarByEnum(
+        GLOBAL.CTRL_VAR.NATP_INIT_DEPOSIT_INTR_RATE
+      ).then(response => {
+        this.intrRate = response.data.valDouble / 100;
+      });
+    },
     setParty(party) {
       this.orderLoan.setPartyId(party.id);
       this.orderLoan.partyName = party.name;
@@ -167,6 +178,7 @@ export default {
       this.setParty(party);
       this.setMatDate();
       this.setCredFacility(party.id);
+      this.setIntrRate();
     },
     placeOrder() {
       // PARTY SET
@@ -188,7 +200,7 @@ export default {
         return;
       }
       this.isLoading = true;
-      OrderService.placeOrder(this.orderLoan)
+      OrderService.placeOrderLoan(this.orderLoan)
         .then(
           response => {
             this.status = response.data;
