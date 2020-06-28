@@ -33,8 +33,7 @@ export default {
   name: "FinStmt",
   data() {
     return {
-      finStmt: {
-      },
+      finStmt: {},
       finStmtNameData: "Financial Statement"
     };
   },
@@ -44,6 +43,7 @@ export default {
     }
   },
   methods: {
+    // getFinStmts(partyId, finYear, finStmtType, checkExistence) {},
     getFinStmtByPartyIdAndFinYearAndFinStmtType(
       partyId,
       finYear,
@@ -52,7 +52,7 @@ export default {
     ) {
       this.finStmt = {};
       this.finStmtNameData = "Loading Financial Statement";
-      
+
       PartyService.getFinStmtByPartyIdAndFinYearAndFinStmtType(
         partyId,
         finYear,

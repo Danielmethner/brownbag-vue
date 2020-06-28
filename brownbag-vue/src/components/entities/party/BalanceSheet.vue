@@ -37,12 +37,12 @@ export default {
       let currentYear;
       SettingsService.getFinYear().then(response => {
         currentYear = response.data;
-        this.$refs.finStmtPrevYear.getFinStmtByPartyIdAndFinYearAndFinStmtType(
-          partyId,
-          currentYear - 1,
-          GLOBAL.FIN_STMT_TYPE.BAL_SHEET,
-          true
-        );
+        // this.$refs.finStmtPrevYear.getFinStmtByPartyIdAndFinYearAndFinStmtType(
+        //   partyId,
+        //   currentYear - 1,
+        //   GLOBAL.FIN_STMT_TYPE.BAL_SHEET,
+        //   true
+        // );
         this.$refs.finStmtCurrYear.getFinStmtByPartyIdAndFinYearAndFinStmtType(
           partyId,
           currentYear,
