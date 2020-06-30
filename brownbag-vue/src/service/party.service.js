@@ -14,6 +14,7 @@ const BAL_SHEET_BY_PARTY_ID = '/api/fin-stmt/balsheet/party/';
 const BAL_SHEET_PREV_BY_PARTY_ID = '/api/fin-stmt/balsheet/prev/party/';
 const FIN_STMT_BY_TYPE = '/api/fin-stmt/type/';
 const FIN_YEAR = '/finyear/';
+const HIST_CNT = '/hist-cnt/';
 const PARTY_ID = '/party/';
 const CRED_FACILITY_GET_BY_PARTY_ID = '/api/party/cred-facility/party/';
 
@@ -68,6 +69,11 @@ class PartyService {
   getFinStmtByPartyIdAndFinYearAndFinStmtType(partyId, finYear, finStmtType) {
     return axios
       .get(GLOBAL.API_BASE_URL + FIN_STMT_BY_TYPE + finStmtType + FIN_YEAR + finYear + PARTY_ID + partyId, { headers: authHeader() });
+  }
+
+  getFinStmtByPartyIdAndFinYearAndFinStmtTypeHist(partyId, finYear, finStmtType, histCnt) {
+    return axios
+      .get(GLOBAL.API_BASE_URL + FIN_STMT_BY_TYPE + finStmtType + FIN_YEAR + finYear + PARTY_ID + partyId + HIST_CNT + histCnt, { headers: authHeader() });
   }
 }
 

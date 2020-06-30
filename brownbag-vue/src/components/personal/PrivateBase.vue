@@ -20,6 +20,9 @@
         <b-tab title="Balance Sheet" @click="getBalSheet()">
           <BalSheet ref="balSheet"></BalSheet>
         </b-tab>
+        <b-tab title="New Balance Sheet" @click="getNewBalSheet()">
+          <NewBalSheet ref="newBalSheet"></NewBalSheet>
+        </b-tab>
         <b-tab title="Income Statement" @click="getIncomeStmt()">
           <IncomeStatement ref="incomeStmt"></IncomeStatement>
         </b-tab>
@@ -38,6 +41,7 @@ import Transactions from "@/components/entities/pos/Transactions";
 import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
 import BalSheet from "@/components/entities/party/BalanceSheet";
+import NewBalSheet from "@/components/entities/party/NewBalanceSheet";
 import IncomeStatement from "@/components/entities/party/IncomeStatement";
 import PartyService from "../../service/party.service";
 export default {
@@ -87,6 +91,10 @@ export default {
     getBalSheet() {
       this.$refs.balSheet.getFinStmt(this.getPrivatePerson().id);
     },
+
+    getNewBalSheet() {
+      this.$refs.newBalSheet.getFinStmt(this.getPrivatePerson().id);
+    },
     getIncomeStmt() {
       this.$refs.incomeStmt.getFinStmt(this.getPrivatePerson().id);
     },
@@ -101,6 +109,7 @@ export default {
     MyOrders,
     NewOrder,
     BalSheet,
+    NewBalSheet,
     IncomeStatement
   }
 };
