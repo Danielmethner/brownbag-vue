@@ -7,38 +7,18 @@
         <div class="form-group">
           <label for="username">Username</label>
           <input v-model="user.username" type="text" class="form-control" name="username" />
-          <!-- <input
-            v-model="user.username"
-            v-validate="'required'"
-            type="text"
-            class="form-control"
-            name="username"
-          />-->
-          <!-- <div
-            v-if="errors.has('username')"
-            class="alert alert-danger"
-            role="alert"
-          >Username is required!</div>-->
         </div>
         <div class="form-group">
           <label for="password">Password</label>
           <input v-model="user.password" type="password" class="form-control" name="password" />
-          <!-- <input
-            v-model="user.password"
-            v-validate="'required'"
-            type="password"
-            class="form-control"
-            name="password"
-          />-->
-          <!-- <div
-            v-if="errors.has('password')"
-            class="alert alert-danger"
-            role="alert"
-          >Password is required!</div>-->
         </div>
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
-            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+            <span
+              v-show="loading"
+              v-on:keyup.esc="stopLoading()"
+              class="spinner-border spinner-border-sm"
+            ></span>
             <span>Login</span>
           </button>
         </div>
@@ -71,10 +51,16 @@ export default {
   },
   created() {
     if (this.loggedIn) {
+      console.log(this.loggedIn);
+      console.log("user is logged in");
       this.$router.push("/profile");
     }
   },
   methods: {
+    stopLoading() {
+      console.log("ESC key");
+      this.loading = false;
+    },
     handleLogin() {
       this.loading = true;
       this.$validator.validateAll().then(isValid => {
@@ -85,11 +71,17 @@ export default {
 
         if (this.user.username && this.user.password) {
           this.$store.dispatch("auth/login", this.user).then(
-            () => {
-              this.$router.push("/profile");
-              PartyService.getPrivatePerson().then(response => {
-                this.$store.commit("party/privatePerson", response.data);
-              });
+            response => {
+              console.log(response);
+              if (response != null) {
+                this.$router.push("/profile");
+                PartyService.getPrivatePerson().then(response => {
+                  this.$store.commit("party/privatePerson", response.data);
+                });
+              } else {
+                this.message = "Login failed"
+                this.loading = false;
+              }
             },
             error => {
               this.loading = false;

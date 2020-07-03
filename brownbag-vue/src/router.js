@@ -62,19 +62,19 @@ export const router = new Router({
       path: '/brokerage',
       name: 'brokerage',
       // lazy-loaded
-      component: () => import('./components/broker/BrokerBase.vue')
+      component: () => import('./components/entities/party/BrokerBase.vue')
     },
     {
       path: '/private',
       name: 'private',
       // lazy-loaded
-      component: () => import('./components/personal/PrivateBase.vue')
+      component: () => import('./components/entities/party/PrivateBase.vue')
     },
     {
       path: '/business',
       name: 'business',
       // lazy-loaded
-      component: () => import('./components/business/BusinessBase.vue')
+      component: () => import('./components/entities/party/BusinessBase.vue')
     },
     {
       path: '/marketresearch',

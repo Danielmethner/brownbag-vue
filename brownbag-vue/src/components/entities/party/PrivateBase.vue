@@ -40,10 +40,10 @@ import FinancingBase from "@/components/entities/pos/FinancingBase";
 import Transactions from "@/components/entities/pos/Transactions";
 import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
-import BalSheet from "@/components/entities/party/BalanceSheet";
-import NewBalSheet from "@/components/entities/party/NewBalanceSheet";
+// import BalSheet from "@/components/entities/party/BalanceSheet";
+import NewBalSheet from "@/components/entities/party/BalanceSheet";
 import IncomeStatement from "@/components/entities/party/IncomeStatement";
-import PartyService from "../../service/party.service";
+import PartyService from "@/service/party.service";
 export default {
   name: "PrivateBase",
   data() {
@@ -108,7 +108,7 @@ export default {
     Transactions,
     MyOrders,
     NewOrder,
-    BalSheet,
+    // BalSheet,
     NewBalSheet,
     IncomeStatement
   }

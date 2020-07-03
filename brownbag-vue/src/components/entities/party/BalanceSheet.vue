@@ -10,7 +10,7 @@
 import SettingsService from "@/service/settings.service";
 import PartyService from "@/service/party.service";
 import FinStmt from "@/components/entities/party/NewFinStmt";
-import { GLOBAL } from "@/store/index.js";
+// import { GLOBAL } from "@/store/index.js";
 
 export default {
   name: "NewBalanceSheet",
@@ -35,7 +35,7 @@ export default {
           2
         ).then(
           response => {
-            console.log();
+            // console.log();
             this.finStmtList = response.data;
             this.$refs.finStmtList.showFinStmtList(this.finStmtList);
           },

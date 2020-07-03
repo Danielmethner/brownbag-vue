@@ -38,9 +38,9 @@
               <b-tab title="Orders" @click="getMyOrders()">
                 <MyOrders ref="myOrders"></MyOrders>
               </b-tab>
-              <b-tab title="Balance Sheet" @click="getBalSheet()">
+              <!-- <b-tab title="Balance Sheet" @click="getBalSheet()">
                 <BalSheet ref="balSheet"></BalSheet>
-              </b-tab>
+              </b-tab> -->
               <b-tab title="Income Statement" @click="getIncomeStmt()">
                 <IncomeStatement ref="incomeStmt"></IncomeStatement>
               </b-tab>
