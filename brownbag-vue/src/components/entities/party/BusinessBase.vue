@@ -38,11 +38,11 @@
               <b-tab title="Orders" @click="getMyOrders()">
                 <MyOrders ref="myOrders"></MyOrders>
               </b-tab>
-              <!-- <b-tab title="Balance Sheet" @click="getBalSheet()">
-                <BalSheet ref="balSheet"></BalSheet>
-              </b-tab> -->
+              <b-tab title="Balance Sheet" @click="getBalSheet()">
+                <FinStmt ref="balSheet"></FinStmt>
+              </b-tab>
               <b-tab title="Income Statement" @click="getIncomeStmt()">
-                <IncomeStatement ref="incomeStmt"></IncomeStatement>
+                <FinStmt ref="incStmt"></FinStmt>
               </b-tab>
               <b-tab title="New Order" @click="genNewOrder()">
                 <NewOrder ref="newOrder"></NewOrder>
@@ -65,13 +65,14 @@ import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
 import FinancingBase from "@/components/entities/pos/FinancingBase";
 import Portfolio from "@/components/entities/pos/Portfolio";
-import BalSheet from "@/components/entities/party/BalanceSheet";
 import Overview from "@/components/entities/party/Overview";
-import IncomeStatement from "@/components/entities/party/IncomeStatement";
 import NewLegalPerson from "@/components/entities/party/NewLegalPerson";
 import PartyService from "@/service/party.service";
 import Party from "@/model/Party";
+import FinStmt from "@/components/entities/party/FinStmt";
 import Transactions from "@/components/entities/pos/Transactions";
+import { GLOBAL } from '@/store/index.js'
+
 export default {
   name: "BusinessBase",
   data() {
@@ -181,10 +182,11 @@ export default {
       this.$refs.trx.getPositions(this.business);
     },
     getBalSheet() {
-      this.$refs.balSheet.getFinStmt(this.businessId);
+      this.$refs.balSheet.getFinStmt(this.businessId, GLOBAL.FIN_STMT_TYPE.BAL_SHEET);
     },
+
     getIncomeStmt() {
-      this.$refs.incomeStmt.getFinStmt(this.businessId);
+      this.$refs.incStmt.getFinStmt(this.businessId, GLOBAL.FIN_STMT_TYPE.INCOME_STMT);
     },
     getOverview(business) {
       if (business != null) {
@@ -209,8 +211,7 @@ export default {
     MyOrders,
     NewOrder,
     Portfolio,
-    BalSheet,
-    IncomeStatement,
+    FinStmt,
     Transactions
   }
 };

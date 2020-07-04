@@ -51,14 +51,11 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      console.log(this.loggedIn);
-      console.log("user is logged in");
       this.$router.push("/profile");
     }
   },
   methods: {
     stopLoading() {
-      console.log("ESC key");
       this.loading = false;
     },
     handleLogin() {
@@ -72,7 +69,6 @@ export default {
         if (this.user.username && this.user.password) {
           this.$store.dispatch("auth/login", this.user).then(
             response => {
-              console.log(response);
               if (response != null) {
                 this.$router.push("/profile");
                 PartyService.getPrivatePerson().then(response => {

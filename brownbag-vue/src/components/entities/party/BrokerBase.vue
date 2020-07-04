@@ -19,9 +19,9 @@
           <b-tab title="Public Orderbook" @click="getOrderbook()">
             <Orderbook ref="orderbook"></Orderbook>
           </b-tab>
-          <b-tab title="Balance Sheet" @click="getBalSheet()">
+          <!-- <b-tab title="Balance Sheet" @click="getBalSheet()">
             <BalSheet ref="balSheet"></BalSheet>
-          </b-tab>
+          </b-tab> -->
         </b-tabs>
       </div>
     </div>
@@ -36,7 +36,6 @@
 <script>
 import Orderbook from "@/components/entities/order/Orderbook";
 import AssetService from "@/service/asset.service";
-import BalSheet from "@/components/entities/party/BalanceSheet";
 export default {
   name: "MarketResearch",
   data() {
@@ -84,8 +83,7 @@ export default {
     }
   },
   components: {
-    Orderbook,
-    BalSheet
+    Orderbook
   }
 };
 </script>

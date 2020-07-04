@@ -28,11 +28,12 @@
           <b-tab title="Public Orderbook" @click="getOrderbook()">
             <Orderbook ref="orderbook"></Orderbook>
           </b-tab>
+
           <b-tab title="Balance Sheet" @click="getBalSheet()">
-            <BalSheet ref="balSheet"></BalSheet>
+            <FinStmt ref="balSheet"></FinStmt>
           </b-tab>
           <b-tab title="Income Statement" @click="getIncomeStmt()">
-            <IncomeStatement ref="incomeStmt"></IncomeStatement>
+            <FinStmt ref="incStmt"></FinStmt>
           </b-tab>
         </b-tabs>
       </div>
@@ -49,9 +50,9 @@
 import Overview from "@/components/entities/party/Overview";
 import Orderbook from "@/components/entities/order/Orderbook";
 import AssetService from "@/service/asset.service";
-import IncomeStatement from "@/components/entities/party/IncomeStatement";
-import BalSheet from "@/components/entities/party/BalanceSheet";
+import FinStmt from "@/components/entities/party/FinStmt";
 import PartyService from "@/service/party.service";
+import { GLOBAL } from '@/store/index.js'
 export default {
   name: "MarketResearch",
   data() {
@@ -106,12 +107,13 @@ export default {
     },
     getBalSheet() {
       if (this.issuerId) {
-        this.$refs.balSheet.getFinStmt(this.issuerId);
+        this.$refs.balSheet.getFinStmt(this.issuerId, GLOBAL.FIN_STMT_TYPE.BAL_SHEET);
       }
     },
+
     getIncomeStmt() {
       if (this.issuerId) {
-        this.$refs.incomeStmt.getFinStmt(this.issuerId);
+        this.$refs.incStmt.getFinStmt(this.issuerId, GLOBAL.FIN_STMT_TYPE.INCOME_STMT);
       }
     },
     getOverview(issuerId) {
@@ -127,9 +129,8 @@ export default {
   components: {
     Overview,
     Orderbook,
-    BalSheet,
-    IncomeStatement,
-    PartyService
+    PartyService,
+    FinStmt
   }
 };
 </script>

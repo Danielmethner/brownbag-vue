@@ -18,13 +18,10 @@
           <MyOrders ref="myOrders"></MyOrders>
         </b-tab>
         <b-tab title="Balance Sheet" @click="getBalSheet()">
-          <BalSheet ref="balSheet"></BalSheet>
-        </b-tab>
-        <b-tab title="New Balance Sheet" @click="getNewBalSheet()">
-          <NewBalSheet ref="newBalSheet"></NewBalSheet>
+          <FinStmt ref="balSheet"></FinStmt>
         </b-tab>
         <b-tab title="Income Statement" @click="getIncomeStmt()">
-          <IncomeStatement ref="incomeStmt"></IncomeStatement>
+          <FinStmt ref="incStmt"></FinStmt>
         </b-tab>
         <b-tab title="New Order" @click="genNewOrder()">
           <NewOrder ref="newOrder"></NewOrder>
@@ -40,10 +37,10 @@ import FinancingBase from "@/components/entities/pos/FinancingBase";
 import Transactions from "@/components/entities/pos/Transactions";
 import MyOrders from "@/components/entities/order/MyOrders";
 import NewOrder from "@/components/entities/order/NewOrder";
-// import BalSheet from "@/components/entities/party/BalanceSheet";
-import NewBalSheet from "@/components/entities/party/BalanceSheet";
-import IncomeStatement from "@/components/entities/party/IncomeStatement";
+import FinStmt from "@/components/entities/party/FinStmt";
 import PartyService from "@/service/party.service";
+import { GLOBAL } from '@/store/index.js'
+
 export default {
   name: "PrivateBase",
   data() {
@@ -89,14 +86,11 @@ export default {
       this.$refs.trx.getPositions(this.getPrivatePerson());
     },
     getBalSheet() {
-      this.$refs.balSheet.getFinStmt(this.getPrivatePerson().id);
+      this.$refs.balSheet.getFinStmt(this.getPrivatePerson().id, GLOBAL.FIN_STMT_TYPE.BAL_SHEET);
     },
-
-    getNewBalSheet() {
-      this.$refs.newBalSheet.getFinStmt(this.getPrivatePerson().id);
-    },
+    
     getIncomeStmt() {
-      this.$refs.incomeStmt.getFinStmt(this.getPrivatePerson().id);
+      this.$refs.incStmt.getFinStmt(this.getPrivatePerson().id, GLOBAL.FIN_STMT_TYPE.INCOME_STMT);
     },
     getFinancingBase() {
       this.$refs.financingBase.getFinancingBase(this.getPrivatePerson());
@@ -108,9 +102,7 @@ export default {
     Transactions,
     MyOrders,
     NewOrder,
-    // BalSheet,
-    NewBalSheet,
-    IncomeStatement
+    FinStmt
   }
 };
 </script>
