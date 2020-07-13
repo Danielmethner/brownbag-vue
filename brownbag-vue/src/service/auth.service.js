@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import {GLOBAL} from '../store/index.js'
+import {GLOBAL} from '../store/index.js'
 const API_AUTH= '/api/auth/';
 
 class AuthService {
