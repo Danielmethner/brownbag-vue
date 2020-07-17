@@ -2,8 +2,8 @@
   <div>
     <b-navbar class="bg-dark" toggleable="md" type="dark" variant="info">
       <b-navbar-brand>
-        <router-link to="/home" class="nav-link nav-brand">
-          <font-awesome-icon icon="home" /> Home
+        <router-link v-if="!currentUser" to="/home" class="nav-link nav-brand">
+          <b-icon icon="bootstrap-fill" aria-hidden="false" class="profile-img-card"></b-icon> Home
         </router-link>
       </b-navbar-brand>
 
@@ -11,19 +11,30 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <router-link v-if="currentUser" to="/private" class="nav-link">Personal Finance</router-link>
+          <router-link v-if="currentUser" to="/private" class="nav-link">
+            <b-icon icon="person" aria-hidden="true"></b-icon> Personal Finance
+          </router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link v-if="currentUser" to="/business" class="nav-link">Business Management</router-link>
+          <router-link v-if="currentUser" to="/business" class="nav-link">
+            <b-icon icon="building" aria-hidden="true"></b-icon> Business Management
+          </router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link v-if="currentUser" to="/marketresearch" class="nav-link">Market Research</router-link>
+          <router-link v-if="currentUser" to="/marketresearch" class="nav-link">
+            <b-icon icon="graph-up" aria-hidden="true"></b-icon> Market Research
+          </router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link v-if="userIsBroker" to="/brokerage" class="nav-link">Brokerage</router-link>
+          <router-link v-if="userIsBroker" to="/brokerage" class="nav-link">
+            <b-icon icon="book" aria-hidden="true"></b-icon> Brokerage
+          </router-link>
         </b-navbar-nav>
         <b-navbar-nav>
-          <router-link v-if="currentUser" to="/system-control" class="nav-link">System Control</router-link>
+          <router-link v-if="currentUser" to="/system-control" class="nav-link">
+            <b-icon icon="gear-fill" aria-hidden="true"></b-icon>
+            <span> Settings</span>
+          </router-link>
         </b-navbar-nav>
         <!-- Public pages-->
         <b-navbar-nav v-if="!currentUser">
@@ -37,19 +48,19 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <router-link v-if="currentUser" to="/profile" class="nav-link">
-            <font-awesome-icon icon="user" />
-            User: {{ currentUser.username }}
+            <b-icon icon="person-square" aria-hidden="true"></b-icon>
+            {{ currentUser.username }}
           </router-link>
           <a v-if="currentUser" class="nav-link" href @click.prevent="logOut">
-            <font-awesome-icon icon="sign-out-alt" />LogOut
+            <font-awesome-icon icon="sign-out-alt" /> LogOut
           </a>
           <!-- Public pages-->
           <b-navbar-nav v-if="!currentUser">
             <router-link to="/login" class="nav-link">
-              <font-awesome-icon icon="sign-in-alt" />Login
+              <font-awesome-icon icon="sign-in-alt" /> Login
             </router-link>
             <router-link to="/register" class="nav-link">
-              <font-awesome-icon icon="user-plus" />Sign-up
+              <font-awesome-icon icon="user-plus" /> Sign-up
             </router-link>
           </b-navbar-nav>
         </b-navbar-nav>

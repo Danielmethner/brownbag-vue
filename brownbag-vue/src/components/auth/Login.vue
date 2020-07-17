@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container">
-      <img id="profile-img" src="@/assets/logo.png" class="profile-img-card" />
+      <b-icon icon="bootstrap-fill" aria-hidden="false" variant="success" class="profile-img-card"></b-icon>
       <h3>Login</h3>
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
@@ -75,7 +75,7 @@ export default {
                   this.$store.commit("party/privatePerson", response.data);
                 });
               } else {
-                this.message = "Login failed"
+                this.message = "Login failed";
                 this.loading = false;
               }
             },
@@ -122,6 +122,7 @@ label {
   width: 96px;
   height: 96px;
   margin: 0 auto 10px;
+  margin-bottom: 2em;
   display: block;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;

@@ -1,24 +1,29 @@
 <template>
 <div>
   <header>
-    <div class="row">
-      <div class="col">
-        <h1>Value Investing</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h4>
-          No account yet?
-          <router-link to="/register" class>Sign up here!</router-link>
-        </h4>
-      </div>
-    </div>
+    <b-jumbotron class="jumbo" text-variant="white" fluid>
+      <h1>Value Investing</h1>
+    </b-jumbotron>
   </header>
   <body>
-    <div class="row">
-      <div class="col-md-12">
-        <Login></Login>
+    <div class="row intro-cont">
+      <div class="col">
+        <Benefits></Benefits>
+      </div>
+      <div class="col">
+        <div class="row" align="left">
+          <div class="col">
+            <h4 class="text-center">
+              <span>
+                No account yet?
+                <router-link to="/register" class>Sign up here!</router-link>
+              </span>
+            </h4>
+
+            <Login></Login>
+          </div>
+          <div class="col"></div>
+        </div>
       </div>
     </div>
   </body>
@@ -27,6 +32,8 @@
 
 <script>
 import Login from "@/components/auth/Login";
+import Benefits from "@/components/public/landing-page/Benefits";
+
 import authHeader from "../service/auth-header";
 import axios from "axios";
 export default {
@@ -45,9 +52,22 @@ export default {
     }
   },
   components: {
-    Login
+    Login,
+    Benefits
   }
 };
 </script>
 <style scoped>
+h1 {
+  font-weight: bold;
+}
+header {
+  padding-top:0;
+}
+.intro-cont {
+  padding-top: 2em;
+}
+.jumbo{
+  background-color:mediumseagreen
+}
 </style>
