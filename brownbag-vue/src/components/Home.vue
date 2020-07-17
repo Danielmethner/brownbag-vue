@@ -13,12 +13,6 @@
       <div class="col">
         <div class="row" align="left">
           <div class="col">
-            <h4 class="text-center">
-              <span>
-                No account yet?
-                <router-link to="/register" class>Sign up here!</router-link>
-              </span>
-            </h4>
 
             <Login></Login>
           </div>
