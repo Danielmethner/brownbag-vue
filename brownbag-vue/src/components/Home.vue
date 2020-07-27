@@ -7,17 +7,16 @@
   </header>
   <body>
     <div class="row intro-cont">
-      <div class="col">
+      <div class="col-md-6">
         <Benefits></Benefits>
       </div>
-      <div class="col">
-        <div class="row" align="left">
-          <div class="col">
-
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-8">
             <Login></Login>
           </div>
-          <div class="col"></div>
         </div>
+        <div class="col-md-4"></div>
       </div>
     </div>
   </body>

@@ -1,13 +1,30 @@
+<div>
+	<div class="row align-center">
+		<div class="col-1 col-md-3"></div>
+		<div class="col-11 col-md-9">
+			<div class="row">
+				<h2 class="text-center padding-bottom-1em padding-top-1em">Financial education made easy!</h2>
+			</div>
+			<div class="row padding-bottom-1em" *ngFor="let benefit of benefitList">
+
+				<span>
+					<fa-icon class="checkmark" [icon]="faCheck" [styles]="{'stroke': 'green', 'color': 'green'}"></fa-icon> {{benefit.text}}
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+
 <template>
   <div>
-    <h3 class="text-center">
-      <span>Financial education made easy!</span>
-    </h3>
     <div class="row align-center">
-      <div class="col"></div>
-      <div class="col-md-10">
+      <div class="col-1 col-md-3"></div>
+      <div class="col-11 col-md-9">
+        <div class="row">
+          <h2 class="text-center padding-bottom-1em padding-top-1em">Financial education made easy!</h2>
+        </div>
         <div class="row bullet-point-row" v-for="benefit in benefitList" v-bind:key="benefit.text">
-          <div class="col-md">
+          <span>
             <b-icon
               icon="check"
               font-scale="2"
@@ -15,13 +32,10 @@
               class="font-weight-bold text-center"
               aria-hidden="false"
             ></b-icon>
-          </div>
-          <div class="bullet-point-text col-md-10">
-            <span>{{benefit.text}}</span>
-          </div>
+            {{benefit.text}}
+          </span>
         </div>
       </div>
-      <div class="col"></div>
     </div>
   </div>
 </template>
