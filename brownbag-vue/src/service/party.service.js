@@ -19,6 +19,7 @@ const PARTY_ID = '/party/';
 const CRED_FACILITY_GET_BY_PARTY_ID = '/api/party/cred-facility/party/';
 
 class PartyService {
+  
   getOwnerShipList(partyId) {
     return axios
       .get(GLOBAL.API_BASE_URL + PARTY_GET_BY_ID + partyId + OWNERSHIP, { headers: authHeader() });

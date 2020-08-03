@@ -1,4 +1,6 @@
-const CompressionPlugin = require('compression-webpack-plugin');module.exports = {
+const CompressionPlugin = require('compression-webpack-plugin');
+
+module.exports = {
   chainWebpack(config) {
     config.plugins.delete('prefetch');
     
